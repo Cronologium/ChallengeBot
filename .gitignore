@@ -32,8 +32,10 @@ node_modules
 
 #ChallengeBot
 db.sqlite3
-logs/*
-sources/*
-environment/*
+logs/*.txt
+sources/*.py
+sources/*.pyc
+sources/*.cpp
+sources/*.c
 backend/runners/*
 
