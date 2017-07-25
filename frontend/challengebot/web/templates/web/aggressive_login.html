@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Entrance</title>
+</head>
+<body>
+    <p>Not eveybody is invited to all parties. This one will be open soon, but you can enter early if you have an invitation</p>
+    {% load static %}
+    <img src="{% static 'web/style/res/user.png' %}">
+      <form action='/auth/' method="POST">
+          {% csrf_token %}
+          <label>Username</label>
+          <input type="text" placeholder="Enter Username" name="username" required>
+	      <label>Password</label>
+          <input type="password" placeholder="Enter Password" name="password" required>
+      <input type="submit" value="Login">
+      </form>
+</body>
+</html>

@@ -1,0 +1,91 @@
+        {%load static %}
+        <script type="text/javascript" src="{% static 'web/script/log.js' %}"></script>
+        {%load static %}
+        <script type="text/javascript" src="{% static 'web/script/jquery-3.2.1.min.js' %}"></script>
+        {% load static %}
+        <link rel="stylesheet" type='text/css' href="{% static 'web/style/challenge.css' %}" />
+        <div class="wrapper">
+            {% if participants %}
+                <h1 hidden>Participants:
+                {% for p in participants %}
+                    {{p}}
+                    <input type="text" id="player{{forloop.counter}}" value="{{p}}" hidden>
+                {% endfor %}
+                </h1>
+                <input type="text" id="winner" value="{{challenge.winner.user.username}}" hidden>
+                <br>
+                <div id="field-wrapper">
+                    <div id="field-transparency-wrapper">
+                        <div id="field">
+                            <div class="game-wrapper">
+                                <table id="game">
+                                    <caption class="player-caption" id="p1_caption"></caption>
+                                    <tbody>
+                                        {% for i in "0123456789" %}
+                                            <tr>
+                                                {% for j in "0123456789" %}
+                                                    <td name="1_block"> </td>
+                                                {% endfor %}
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="game-wrapper">
+                                <table id="gamee">
+                                    <caption class="player-caption" id="p2_caption"></caption>
+                                    <tbody>
+                                        {% for i in "0123456789" %}
+                                            <tr>
+                                                {% for j in "0123456789" %}
+                                                    <td name="2_block"> </td>
+                                                {% endfor %}
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="controls">
+                            <div id="current_shooter"></div>
+                            <input class="challenge-controls" type="button" id="firstButton" onclick="first()" value="<<">
+                            <input class="challenge-controls" type="button" id="prevButton" onclick="prev()" value="<">
+                            <input class="challenge-controls" type="button" id="nextButton" onclick="next()" value=">">
+                            <input class="challenge-controls" type="button" id="lastButton" onclick="last()" value=">>">
+                        </div>
+                        <br>
+                        <div class="controls">
+                            <input class="challenge-controls" type="button" id="autoButton" onclick="autoplay()" value="Play">
+                            <input class="challenge-field" type="text" id="autoInterval" maxlength="4" size="4" value="125">
+                            <input class="challenge-controls" type="button" id="stopButton" onclick="stop()" value="Stop">
+                        </div>
+                    </div>
+                </div>
+                <div id="data" style="display: none;">
+                    <table id="ships">
+                        {% for key, values in ships.items %}
+                            {% for ship in values %}
+                            <tr name="{{key}}_ship">
+                                <td>{{ship.x1}}</td>
+                                <td>{{ship.y1}}</td>
+                                <td>{{ship.x2}}</td>
+                                <td>{{ship.y2}}</td>
+                            </tr>
+                            {% endfor %}
+                        {% endfor %}
+                    </table>
+                    <table id="shots">
+                        {% for key, values in shots.items %}
+                            {% for shot in values %}
+                            <tr name="{{key}}_shot">
+                                <td>{{shot.x}}</td>
+                                <td>{{shot.y}}</td>
+                            </tr>
+                            {% endfor %}
+                        {% endfor %}
+                    </table>
+                </div>
+            {% else %}
+                <p>Nothing to show.</p>
+            {% endif %}
+        </div>

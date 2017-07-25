@@ -1,0 +1,22 @@
+{% load static %}
+<link rel="stylesheet" type='text/css' href="{% static 'web/style/table.css' %}" />
+
+<div >
+    <table>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Min. players</th>
+            <th>Max. players</th>
+        </tr>
+        {% if games_list %}
+            {% for game in games_list %}
+                    <td>{{game.id}}</td>
+                    <td><a href="/game/{{ game.id }}/">{{game.name}}</a></td>
+                    <td>{{ game.players_min}}</td>
+                    <td>{{ game.players_max}}</td>
+                </td>
+            {% endfor %}
+{% endif %}
+    </table>
+</div>

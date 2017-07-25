@@ -1,0 +1,51 @@
+{% load static %}
+    <link rel="stylesheet" type='text/css' href="{% static 'web/style/support.css' %}" />
+{% load static %}
+    <link rel="stylesheet" type='text/css' href="{% static 'web/style/table.css' %}" />
+<div id="table-wrapper">
+    <table>
+        <tr>
+            <th>
+                No.
+            </th>
+            <th>
+                Title
+            </th>
+            <th>
+                Type
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                Publish date
+            </th>
+        </tr>
+        {% for ticket in ticket_list %}
+            <tr>
+                <td>
+                    {{ticket.id}}
+                </td>
+                <td>
+                    {{ticket.title}}
+                </td>
+                <td>
+                    {{ticket.get_type_display}}
+                </td>
+                <td>
+                    {{ticket.get_status_display}}
+                </td>
+                <td>
+                    {{ticket.date}}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+<div id="form-wrapper">
+    <form action="/ticketsubmit/" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Submit" />
+    </form>
+</div>

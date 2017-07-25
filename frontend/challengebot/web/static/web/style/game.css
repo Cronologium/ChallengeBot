@@ -1,0 +1,142 @@
+
+#infoTable {
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+#infoTable th, td {
+    text-align: left;
+    padding: 8px;
+    border: 1px solid black;
+
+}
+#infoTable tr:nth-child(even){
+    background-color: white;
+    color: black;
+}
+
+#infoTable tr{
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+}
+
+#infoTable th {
+    background-color: #C1C4D3;
+    color: black;
+}
+#wrapperForms{
+
+}
+
+.form-wrapper {
+    background-color:#8A8797;
+    padding: 25px;
+    margin: 25px;
+    border-radius: 10px;
+    color:black;
+}
+
+#form1 {
+    width: 100%;
+}
+
+#form2 {
+    width: 100%;
+    height: 40%;
+    text-align: center;
+}
+
+p{
+   color:black;
+}
+
+input[type=submit] {
+    width: 20%;
+    background-color: #20072B;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#id_eligible_opponents {
+    width: 20%;
+    height: 100px;
+    margin: 8px 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#id_eligible_opponents option {
+    padding: 12px 20px;
+}
+
+#id_selected_opponents {
+    width: 20%;
+    height: 100px;
+    margin: 8px 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#id_selected_opponents option{
+    padding: 12px 20px;
+}
+
+#id_language {
+    width: 100%;
+    margin: 0px;
+    margin-bottom: 10px;
+    height: 50px;
+    padding: 12px 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=button]{
+    background-color: #20072B;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+#submission-submit {
+    margin: 8px auto;
+    width: 100%;
+}
+
+.challenge-options {
+    width: 50%;
+    margin: auto;
+    display: inline;
+    text-align: center;
+    vertical-align: middle;
+}
+
+#addButton {
+}
+
+#removeButton {
+}
+
+#challenge-submit {
+    margin: auto;
+    display: block;
+    width: 100%;
+}
+
+
+
+

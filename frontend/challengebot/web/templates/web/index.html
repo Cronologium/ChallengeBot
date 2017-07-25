@@ -1,0 +1,65 @@
+{% load static %}
+    <link rel="stylesheet" type='text/css' href="{% static 'web/style/index.css' %}" />
+
+<div class="questions-wrapper">
+    <h2>
+        Welcome to Challenge Bot!
+    </h2>
+    <div class="question-div" id="question-div-1">
+        <h3>
+            What?
+        </h3>
+        <p>
+            This is a platform for gamers and coders (at the same time) to test their AI skills and game strategies. It
+            is the perfect combination between coding and playing. The idea is simple: you read the game rules,
+            implement a solution for different game situation, which as whole, make the AI of a game. You submit it and
+            then you can challenge other people!
+        </p>
+    </div>
+    <div class="question-div" id="question-div-2">
+        <h3>
+            How?
+        </h3>
+        <ul>
+            <li>Register using the upper-right button</li>
+            <li>Log in</li>
+            <li>Choose a game</li>
+            <li>Submit your code</li>
+            <li>Play with others by challengeing them!</li>
+        </ul>
+    </div>
+</div>
+<div class="questions-wrapper">
+    <div class="question-div" id="question-div-3">
+        <h3>
+            What's next?
+        </h3>
+        <p>
+            Our simplest game is <a href="/game/1">Battleships</a>. We recommend you check out that game and submit your
+            solution!
+        </p>
+    </div>
+    <div class="question-div" id="question-div-4">
+        <h3>
+            Supported languages
+        </h3>
+        <ul>
+            We have support for the following:
+            <li>Python 2.7</li>
+            <li>C++</li>
+        </ul>
+    </div>
+</div>
+<div class="questions-wrapper">
+    <div class="question-div" id="question-div-5">
+        <h3>
+            Screenshots
+        </h3>
+        {% load static %}
+        <img src="{% static 'web/style/res/battleships1.png' %}" />
+        {% load static %}
+        <img src="{% static 'web/style/res/battleships2.png' %}" />
+        {% load static %}
+        <img src="{% static 'web/style/res/battleships3.png' %}" />
+    </div>
+</div>

@@ -1,0 +1,38 @@
+<div>
+{% if challenges_list %}
+    <table>
+        <tr>
+            <th>#</th>
+            <th>Game</th>
+            <th>Challengers</th>
+            <th>Winner</th>
+            <th>Link</th>
+        </tr>
+        {% for challenge in challenges_list %}
+            <tr>
+                <td>
+                    <p>{{ challenge.id }} </p>
+                </td>
+                <td>
+                    <a href = "/game/{{ challenge.job.game.id }}/">{{ challenge.job.game.name }}</a>
+                </td>
+                <td>
+                    <ol>
+                        {% for c in challenge.challengers.all %}
+                            <li>{{c.user.username}}</li>
+                        {% endfor %}
+                    </ol>
+                </td>
+                <td>
+                    <b>{{ challenge.winner.user.username }}</b>
+                </td>
+                <td>
+                    <a href="/challenge/{{ challenge.id }}/">[v]</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>No challenges are currently available.</p>
+{% endif %}
+</div>

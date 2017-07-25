@@ -1,0 +1,117 @@
+{% load static %}
+<link rel="stylesheet" type='text/css' href="{% static 'web/style/game.css' %}">
+
+{% load static %}
+<script src="{% static 'codemirror2/lib/codemirror.js' %}"></script>
+
+{% load static %}
+<script src="{% static 'codemirror2/mode/python/python.js' %}"></script>
+
+{% load static %}
+<script src="{% static 'codemirror2/mode/clike/clike.js' %}"></script>
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'codemirror2/lib/codemirror.css' %}">
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'codemirror2/theme/material.css' %}">
+
+{% load static %}
+<script src="{% static 'web/script/game.js' %}"></script>
+
+{% load mathfilters %}
+<div>
+        {% load static %}
+        <script src="{% static 'web/script/challenge.js' %}"></script>
+
+        <table id="infoTable">
+            <tr>
+                <th>
+                    <p><b>Name</b></p>
+                </th>
+                <th>
+                    <p><b>Memory limit</b></p>
+                </th>
+                <th>
+                    <p><b>Time limit</b></p>
+                </th>
+                <th>
+                    <p><b>Min. players</b></p>
+                </th>
+                <th>
+                    <p><b>Max. players</b></p>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <p>
+                        {{game.name}}
+                    </p>
+                </td>
+                <td>
+                    <p>
+                        {{game.memory_limit}} Mb
+                    </p>
+                </td>
+                <td>
+                    <p>
+                        {{game.time_limit}} ms
+                    </p>
+                </td>
+                <td>
+                    <p>
+                        {{game.players_min}}
+                    </p>
+                </td>
+                <td>
+                    <p>
+                        {{game.players_max}}
+                    </p>
+                </td>
+            </tr>
+        </table>
+        {{ game_description }}
+        <div id="wrapperForms">
+        {% if request.user.is_authenticated %}
+             <div class="form-wrapper">
+                 <form id="form1" action="/submit/{{game.id}}/" method="post">
+                     {% csrf_token %}
+                     <h3><b><i>Submit your code</i></b></h3>
+                     <b>Language:{{form.language}}</b>
+                     <textarea name="your_code" id="id_your_code" rows="10" cols="40"></textarea>
+                     <input type="submit" value="Submit" id="submission-submit"/>
+                 </form>
+             </div>
+             {% if p1_source %}
+             <div class="form-wrapper">
+                 <form id="form2" action="/challenge_source/{{p1_source.id}}/" method="post">
+                     {% csrf_token %}
+                     <h3><b><i>
+                     {% if game.players_min != game.players_max %}
+                        Challenge bots (choose between {{game.players_min|sub:1}} and {{game.players_max|sub:1}} bots)
+                     {% else %}
+                        {% if game.players_min == 2 %}
+                            Challenge bot (choose exactly 1 bot)
+                        {% else %}
+                            Challenge bots (choose exactly {{game.players_min|sub:1}} bots)
+                        {% endif %}
+                     {% endif %}
+                     </i></b></h3>
+                     <br>
+                     <div class="challenge-options">
+                         {{ opponents.eligible_opponents }}
+                         <input type="button" value=">" id="addButton" onclick="add_opponent()"/>
+                     </div>
+                     <div class="challenge-options">
+                         <input type="button" value="<" id="removeButton" onclick="remove_opponent()"/>
+                         {{ opponents.selected_opponents }}
+                     </div>
+                     <input type="submit" value="Challenge" id="challenge-submit" onclick="validate_opponents()"/>
+                     <input type="hidden" id="min_players" value="{{game.players_min}}"/>
+                     <input type="hidden" id="max_players" value="{{game.players_max}}"/>
+                 </form>
+             </div>
+            {% endif %}
+        {% endif %}
+         </div>
+</div>

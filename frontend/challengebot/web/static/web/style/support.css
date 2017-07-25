@@ -1,0 +1,47 @@
+select {
+    width: 100%;
+    padding: 12px 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: rgb(221, 221, 221);
+    color: rgb(0, 0, 0);
+}
+
+#text-title {
+    color:rgb(0, 0, 0);
+    width: 100%;
+    margin: auto;
+}
+
+input[type=submit] {
+    width: 20%;
+    background-color: #20072B;
+    color: white;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#form-wrapper {
+    width: 100%;
+    margin: auto;
+    margin-top: 30px;
+}
+
+label {
+    padding: 2px;
+    text-decoration: none;
+    font-size: 28px;
+    color: rgb(85, 154, 144);
+    display: block;
+}
+
+#text-description {
+    resize: none;
+    width: 100%;
+    margin: auto;
+    color: rgb(0, 0, 0);
+}
+

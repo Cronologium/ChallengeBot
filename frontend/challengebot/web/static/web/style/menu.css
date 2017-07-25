@@ -1,0 +1,277 @@
+#menu {
+    position: fixed;
+    width: 99%;
+    margin-top: 5px;
+    padding: 0px;
+    min-width: 1200px;
+    z-index: 99;
+}
+
+#menuhead {
+	width:99%;
+	padding:0px;
+	margin: 0px;
+	margin: auto;
+	margin-left: 10px;
+	margin-top: 5px;
+	background-color:rgb(91,78,119);
+	border:0px;
+	border-top:5px;
+	border-style:solid;
+	border-color:rgb(34,69,130);
+	-webkit-box-shadow: 0px 0px 20px 2px rgba(58,32,58,1);
+    -moz-box-shadow: 0px 0px 20px 2px rgba(58,32,58,1);
+    box-shadow: 0px 0px 20px 2px rgba(58,32,58,1);
+}
+
+.blurred {
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);
+    filter: blur(5px);
+    transition: 5s;
+}
+
+.logo-container{
+    background: rgb(83, 70, 108);
+	width:100%;
+	padding:0px;
+	margin:0px;
+	border:0px;
+	transition: 1s;
+}
+.logo-container:hover{
+	background: #53466c; /* Old browsers */
+    background: -moz-linear-gradient(-45deg, #53466c 0%, #403556 9%, #4a3f62 11%, #5b4e77 54%, #5b4e77 54%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(-45deg, #53466c 0%,#403556 9%,#4a3f62 11%,#5b4e77 54%,#5b4e77 54%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(135deg, #53466c 0%,#403556 9%,#4a3f62 11%,#5b4e77 54%,#5b4e77 54%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#53466c', endColorstr='#5b4e77',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+    transition: 1s;
+}
+
+#logo {
+	margin-left:20px;
+	margin-top:0px;
+	width:90px;
+	display: inline-block;
+	height:75px;
+	background: url('res/logo_clean.png');
+	background-size: 100%;
+	background-repeat:no-repeat;
+	transition: 1s
+}
+#logo:hover {
+	background: url('res/logo_original.png') ;
+	background-size: 100%;
+	background-repeat:no-repeat;
+	transition: 1s
+}
+#logo-text {
+	width:400px;
+	display: inline-block;
+	height:65px;
+	background: url('res/logo_text.png');
+	background-size: 100%;
+	background-repeat:no-repeat;
+	background-position:0px 15px;
+}
+
+.user-face {
+    margin-right: 8px;
+    width:90px;
+    display: inline-block;
+    float: right;
+    height:79px;
+	background: url('res/user.png');
+	background-size: 100%;
+	background-repeat: no-repeat;
+	background-position:0px 17px;
+	transition: 1s;
+}
+
+.user-face:hover {
+    background-position:0px -10px;
+    transition: 1s;
+}
+
+#user-face-showing {
+    background-position:0px -10px;
+    transition: 1s;
+}
+
+#user-face-hiding {
+    background-position:0px 80px;
+    transition: 1s;
+}
+
+.menu{
+	padding:0px;
+	margin:0px;
+	margin-left: 10px;
+	width: 99%;
+	border:0px;
+	border-style:solid;
+	border-color:rgb(34,69,130);
+	-webkit-box-shadow: 0px 0px 20px 2px rgba(58,32,58,3);
+    -moz-box-shadow: 0px 0px 20px 2px rgba(58,32,58,3);
+    box-shadow: 0px 0px 20px 2px rgba(58,32,58,3);
+    transition: 1s;
+}
+
+#menu-options {
+    margin-left: 225px;
+    margin-right: 10px;
+}
+
+.menu ul {
+	width:100%;
+	height:100%;
+    list-style-type: none;
+    margin: 0;
+	padding:0px;
+	overflow: hidden;
+    background-color:rgb(65,54,87);
+	height:30px;
+}
+#mixer {
+	display: block;
+	float: right;
+	position: absolute;
+	pointer-events: none;
+    opacity: 1;
+}
+.menu li .left-link{
+    display: inline;
+	float: left;
+}
+
+.menu li .right-link {
+    display: inline;
+    float:right;
+}
+
+.menu li a {
+    display: block;
+	height:30px;
+	width: 85px;
+    color: rgb(142,204,255);
+    text-align: center;
+    padding: 6px 10px;
+    text-decoration: none;
+	transition: 0.5s
+}
+.menu li a:hover {
+    /*background-color: rgb(46,35,64);*/
+    background-color: #20072B;
+	color: rgb(104,154,112);
+	transition: 1s;
+	cursor: pointer;
+	-webkit-box-shadow: 0px 0px 20px 2px rgba(222,222,222,1);
+	-moz-box-shadow: 0px 0px 20px 2px rgba(222,222,222,1);
+	box-shadow: 0px 0px 20px 2px rgba(222,222,222,1);
+
+}
+
+.left-floater {
+	margin-top:124px;
+	float:left;
+	width:20%;
+	height:600px;
+	background-color: rgb(46,35,64);
+	-webkit-box-shadow: 0px 0px 20px 2px rgba(58,32,58,1);
+	-moz-box-shadow: 0px 0px 20px 2px rgba(58,32,58,1);
+	box-shadow: 0px 0px 20px 2px rgba(58,32,58,1);
+}
+
+/* The Overlay (background) */
+.overlay {
+    /* Height & width depends on how you want to reveal the overlay (see JS below) */
+    height: 100%;
+    width: 0;
+    position: fixed; /* Stay in place */
+    z-index: 100; /* Sit on top */
+    left: 0;
+    top: 0;
+    background-color: rgb(0,0,0); /* Black fallback color */
+    background-color: rgba(46,35,64, 0.7); /* Black w/opacity */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    transition: 0.5s; /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
+}
+
+/* Position the content inside the overlay */
+.overlay-content {
+    position: relative;
+    top: 7%; /* 25% from the top */
+    width: 100%; /* 100% width */
+    text-align: center; /* Centered text/links */
+    margin-top: 30px; /* 30px top margin to avoid conflict with the close button on smaller screens */
+}
+
+/* The navigation links inside the overlay */
+.overlay a {
+    padding: 2px;
+    text-decoration: none;
+    font-size: 26px;
+    color: rgb(104,154,112);
+    display: block; /* Display block instead of inline */
+    transition: 0.3s; /* Transition effects on hover (color) */
+}
+.overlay label {
+    padding: 2px;
+    text-decoration: none;
+    font-size: 28px;
+    color: rgb(85, 154, 144);
+    display: block; /* Display block instead of inline */
+    transition: 0.3s; /* Transition effects on hover (color) */
+}
+/* When you mouse over the navigation links, change their color */
+.overlay a:hover, .overlay a:focus {
+    color: rgb(142,204,148);
+}
+
+/* Position the close button (top right corner) */
+.overlay .closebtn {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    font-size: 60px;
+}
+
+/* When the height of the screen is less than 450 pixels, change the font-size of the links and position the close button again, so they don't overlap */
+@media screen and (max-height: 450px) {
+    .overlay a {font-size: 20px}
+    .overlay .closebtn {
+        font-size: 40px;
+        top: 15px;
+        right: 35px;
+    }
+}
+
+.overlay input {
+    background-color:rgb(79,45,120);
+    color:rgb(255,255,255);
+}
+
+.overlay input[type=submit] {
+    width: 20%;
+    background-color: #20072B;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.inputfield {
+    border-color:rgb(104,154,112);
+	height:32px;
+	width:400px;
+	font-size: 28px;
+}
+
+#inputbutton {
+    height:40px;
+    width:150px;
+}

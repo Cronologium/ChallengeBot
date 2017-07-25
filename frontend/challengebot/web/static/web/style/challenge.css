@@ -1,0 +1,125 @@
+#game {
+    border-collapse: separate;
+    border-spacing: 1px;
+}
+
+#wrapper {
+    width: 100px;
+    background-color: rgb(80,120,180);
+
+}
+
+#game td {
+    height: 25px;
+    width: 25px;
+    text-align: center;
+    padding: 0;
+}
+
+.player-caption {
+    color: white;
+    text-align: center;
+}
+
+#gamee {
+    border-collapse: separate;
+    border-spacing: 1px;
+}
+
+#gamee td {
+    height: 25px;
+    width: 25px;
+    text-align: center;
+    padding: 0;
+}
+
+#field-wrapper {
+    background: url('res/control.jpg');
+    width:800px;
+    margin: auto;
+    padding: 0px;
+    border-radius: 30px;
+    -webkit-box-shadow: 0px 0px 20px 2px rgba(58,32,58,1);
+	-moz-box-shadow: 0px 0px 20px 2px rgba(58,32,58,1);
+	box-shadow: 0px 0px 20px 2px rgba(58,32,58,1);
+}
+
+#field-transparency-wrapper {
+    border: solid 2px black;
+    padding: 0px;
+    padding-bottom: 20px;
+    border-radius: 30px;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+#field {
+    margin: auto;
+    width: 800px;
+    text-align: center;
+    background-color: rgba(80,120,180, 0.1);
+    padding: 20px;
+    padding-bottom: 30px;
+    border-radius: 30px;
+}
+
+.game-wrapper {
+    background-color: rgba(91,78,119, 0.5);
+    display: inline-block;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 20px;
+    border: solid 2px black;
+    -webkit-box-shadow: 0px 0px 20px 2px rgba(58,32,58,1);
+	-moz-box-shadow: 0px 0px 20px 2px rgba(58,32,58,1);
+	box-shadow: 0px 0px 20px 2px rgba(58,32,58,1);
+}
+
+.controls {
+    text-align: center;
+    vertical-align: middle;
+    margin: auto;
+    height: 70px;
+}
+
+.challenge-controls {
+    background-color: #40274B;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    text-align: center;
+    -webkit-box-shadow: 0px 0px 20px 2px rgba(58,32,58,1);
+	-moz-box-shadow: 0px 0px 20px 2px rgba(58,32,58,1);
+	box-shadow: 0px 0px 20px 2px rgba(58,32,58,1);
+	transition: 0.5s
+}
+
+.challenge-controls:hover {
+    font-size: 20px;
+    transition: 1s;
+    border-radius: 2px;
+}
+
+.challenge-field {
+    background-color:rgb(79,45,120);
+    color:rgb(255,255,255);
+    text-align: center;
+    height: 42px;
+    padding: 5px;
+    transition: 1s;
+}
+
+.challenge-field:hover {
+    font-size: 20px;
+    transition: 1s;
+}
+
+h1{
+    text-align: center;
+}
+
+#current_shooter {
+    background-color: rgba(0, 0, 0, 0.7);
+}

@@ -1,0 +1,82 @@
+{% load mathfilters %}
+<table>
+    {% load static %}
+    <link rel="stylesheet" type='text/css' href="{% static 'web/style/jobs.css' %}" />
+    {% load static %}
+    <link rel="stylesheet" type='text/css' href="{% static 'web/style/table.css' %}" />
+
+            <tr style="font-size:120%;">
+                <th>#</th>
+                <th>Status</th>
+                <th>Game</th>
+                <th>Date</th>
+                <th>User(s)</th>
+                <th>Source(s)</th>
+                <th>Result</th>
+            </tr>
+            {% for job in job_list %}
+                <tr>
+                    <td>#{{job.id}}</td>
+                    <td>{{job.get_status_display}}</td>
+                    <td>{{job.game.name}}</td>
+                    <td>{{job.date}}</td>
+                    {% for challenge in challenge_list%}
+                        {% if challenge.job == job %}
+                            <td >
+                                {% for source in challenge.challengers.all %}
+                                {{source.user.username}}<br>
+                                {% endfor %}
+                            </td>
+                            <td>
+                                {% for source in challenge.challengers.all %}
+                                {{source.id}}<br>
+                                {% endfor %}
+                            </td>
+                            <td id ="status">
+                                {% if challenge.job.status == 'F' %}
+                                    {% if challenge.winner.user.username %}
+                                        <a href="/challenge/{{ challenge.id }}/">{{challenge.winner.user.username}} won!</a>
+                                    {% else %}
+                                        <a href="/challenge/{{ challenge.id }}/">No winner</a>
+                                    {% endif %}
+                                {% else %}
+                                    <p id="pending">Pending</p>
+                                {% endif %}
+                            </td>
+                        {% endif %}
+                    {% endfor %}
+                    {% for sub in submission_list%}
+                        {% if sub.job == job %}
+                            <td>
+                                {{sub.source.user.username}}
+                            </td>
+                            <td>
+                                {{sub.source.id}}
+                            </td>
+                            <td>
+                                {{sub.source.get_result_display}}
+                            </td >
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+</table>
+<div id="jobs-nav">
+    <div id="jobs-options">
+        {% if job_page != 1 %}
+        <a class="jobs-button jobs-button-left" href="/jobs/1/">Newest</a>
+        {% endif %}
+
+        {% if job_page > 1 %}
+        <a class="jobs-button jobs-button-left" href="/jobs/{{ job_page|sub:1 }}/">Newer</a>
+        {% endif %}
+
+        {% if job_page != max_page %}
+        <a class="jobs-button jobs-button-right" href="/jobs/{{ max_page }}/">Oldest</a>
+        {% endif %}
+
+        {% if job_page < max_page %}
+        <a class="jobs-button jobs-button-right" href="/jobs/{{ job_page|add:1 }}/">Older</a>
+        {% endif %}
+    </div>
+</div>

@@ -1,0 +1,43 @@
+.questions-wrapper {
+    margin-top: 10px;
+    width: 100%;
+    text-align: center;
+    height: 20%;
+}
+
+.question-div {
+    width: 49%;
+    display: inline-block;
+    border: solid 1px black;
+    margin-top: 0px;
+    vertical-align: top;
+    height: 100%;
+    transition: 0.5s;
+}
+
+#question-div-5 {
+    width: 99%;
+}
+
+.question-div h3 {
+    margin-top: 0px;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.question-div p {
+    padding-left: 2px;
+    padding-right: 2px;
+    height: 150px;
+}
+
+.question-div p a {
+    color: rgb(255, 255, 255);
+}
+
+.question-div img {
+    height: 250px;
+}
+
+.question-div ul {
+    height: 150px;
+}
