@@ -101,18 +101,18 @@ def challenge(request, challenge_id):
             shots[participant] = []
         else:
             line = line.strip().split(' ')
-            if line[1] == 'ship':
+            if line[1] == 'puts':
                 x1 = int(line[2])
                 y1 = int(line[3])
                 x2 = int(line[4])
                 y2 = int(line[5])
                 ship_size = abs(x1-x2) + abs(y1-y2) + 1
-                player = line[0][:-1]
+                player = line[0]
                 ships[player].append(Ship(x1, y1, x2, y2, ship_size, player))
-            if line[1] == 'shoot':
+            if line[1] == 'shoots':
                 x = int(line[2])
                 y = int(line[3])
-                player = line[0][:-1]
+                player = line[0]
                 shots[player].append(Shot(x, y, player))
 
         line_index += 1
