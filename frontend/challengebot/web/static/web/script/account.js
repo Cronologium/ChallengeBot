@@ -1,6 +1,7 @@
 $(document).ready(function () {
     $('#auth-button').click(function() {
         var data = {};
+        $('#auth-error').text(' ');
         $('#authentication input').each(function() {
             if ($(this).hasClass('inputfield')) {
                 data[$(this).attr('name')] = $(this).val();
@@ -9,6 +10,18 @@ $(document).ready(function () {
                 data[$(this).attr('name')] = $(this).val();
             }
         });
+        if (data['username'] == '') {
+            $('#auth-error').text('Please fill out the username form');
+            return;
+        }
+        if (data['password'] == '') {
+            $('#auth-error').text('Please fill out the password form');
+            return;
+        }
+        if (data['csrfmiddlewaretoken'] == '') {
+            $('#auth-error').text('No login token!');
+            return;
+        }
         $.ajax({
             dataType: 'json',
             type: 'POST',
@@ -17,7 +30,7 @@ $(document).ready(function () {
             success: function(data) {
                 if (data['msg'] == 'success') {
                     window.location = '/';
-                    $('#auth-error').text('');
+                    $('#auth-error').text(' ');
                 }
                 else {
                     $('#auth-error').text(data['msg']);
