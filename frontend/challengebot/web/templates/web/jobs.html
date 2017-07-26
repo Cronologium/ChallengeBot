@@ -35,9 +35,9 @@
                             <td id ="status">
                                 {% if challenge.job.status == 'F' %}
                                     {% if challenge.winner.user.username %}
-                                        <a href="/challenge/{{ challenge.id }}/">{{challenge.winner.user.username}} won!</a>
+                                        <a href="/challenge/{{ challenge.id }}">{{challenge.winner.user.username}} won!</a>
                                     {% else %}
-                                        <a href="/challenge/{{ challenge.id }}/">No winner</a>
+                                        <a href="/challenge/{{ challenge.id }}">No winner</a>
                                     {% endif %}
                                 {% else %}
                                     <p id="pending">Pending</p>
@@ -64,19 +64,19 @@
 <div id="jobs-nav">
     <div id="jobs-options">
         {% if job_page != 1 %}
-        <a class="jobs-button jobs-button-left" href="/jobs/1/">Newest</a>
+        <a class="jobs-button jobs-button-left" href="/jobs/1">Newest</a>
         {% endif %}
 
         {% if job_page > 1 %}
-        <a class="jobs-button jobs-button-left" href="/jobs/{{ job_page|sub:1 }}/">Newer</a>
+        <a class="jobs-button jobs-button-left" href="/jobs/{{ job_page|sub:1 }}">Newer</a>
         {% endif %}
 
         {% if job_page != max_page %}
-        <a class="jobs-button jobs-button-right" href="/jobs/{{ max_page }}/">Oldest</a>
+        <a class="jobs-button jobs-button-right" href="/jobs/{{ max_page }}">Oldest</a>
         {% endif %}
 
         {% if job_page < max_page %}
-        <a class="jobs-button jobs-button-right" href="/jobs/{{ job_page|add:1 }}/">Older</a>
+        <a class="jobs-button jobs-button-right" href="/jobs/{{ job_page|add:1 }}">Older</a>
         {% endif %}
     </div>
 </div>

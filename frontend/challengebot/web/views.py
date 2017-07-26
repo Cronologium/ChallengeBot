@@ -10,7 +10,7 @@ from django.contrib.auth import authenticate, login, logout
 # Create your views here.
 from django.contrib.auth.models import User
 
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, JsonResponse
 from django.shortcuts import redirect, get_object_or_404
 from django.template import loader
 from django.utils import timezone
@@ -182,6 +182,19 @@ def game(request, game_id):
     context['content'] = [content_template.render(content_context, request)]
     template = loader.get_template(os.path.join('web', 'template.html'))
     return HttpResponse(template.render(context, request))
+
+
+def auth_ajax(request):
+    if request.user.is_authenticated:
+        logout(request)
+    if 'username' in request.POST and 'password' in request.POST:
+        user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
+        if user is not None:
+            login(request, user)
+            return JsonResponse({'msg': 'success'})
+        else:
+            return JsonResponse({'msg': 'Invalid username or password'})
+    return JsonResponse({'msg': 'Missing username or password'})
 
 
 def auth(request):

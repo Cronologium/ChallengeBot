@@ -12,7 +12,7 @@
         {% if games_list %}
             {% for game in games_list %}
                     <td>{{game.id}}</td>
-                    <td><a href="/game/{{ game.id }}/">{{game.name}}</a></td>
+                    <td><a href="/game/{{ game.id }}">{{game.name}}</a></td>
                     <td>{{ game.players_min}}</td>
                     <td>{{ game.players_max}}</td>
                 </td>

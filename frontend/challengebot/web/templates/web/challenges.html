@@ -14,7 +14,7 @@
                     <p>{{ challenge.id }} </p>
                 </td>
                 <td>
-                    <a href = "/game/{{ challenge.job.game.id }}/">{{ challenge.job.game.name }}</a>
+                    <a href = "/game/{{ challenge.job.game.id }}">{{ challenge.job.game.name }}</a>
                 </td>
                 <td>
                     <ol>
@@ -27,7 +27,7 @@
                     <b>{{ challenge.winner.user.username }}</b>
                 </td>
                 <td>
-                    <a href="/challenge/{{ challenge.id }}/">[v]</a>
+                    <a href="/challenge/{{ challenge.id }}">[v]</a>
                 </td>
             </tr>
         {% endfor %}
