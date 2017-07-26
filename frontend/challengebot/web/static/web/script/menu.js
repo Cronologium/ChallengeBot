@@ -1,4 +1,4 @@
-$( document ).ready(function() {
+$(document).ready(function () {
 
     $("#login-prompt").click(function () {
         $("#login-page").css("width", "100%");
@@ -24,52 +24,74 @@ $( document ).ready(function() {
         $("#content-wrapper").removeClass("blurred");
     });
 
-     $( window ).resize(change_opacity);
+    $(window).on('scroll', change_size);
 
-     function change_opacity() {
-        var s = $(window).width() * 1.0;
-        var minw_css = $("body").css("min-width");
-        var min_w = parseInt(minw_css.substring(0, minw_css.length - 2));
-        var op = 1.0;
-        if (s < min_w)
-            op = 0.2;
-        else
-            if (s < min_w + 400)
-                op = 0.2 + (s - min_w) / 400 * 0.8;
-        $("#mixer").css("opacity", String(op));
-     }
+    function change_size() {
+        var doc = document.documentElement;
+        var top = Math.round((window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0));
+        var menu_size = $("#menu").css("height");
+        var min_ratio = 0.4;
+        menu_size = parseInt(menu_size.substring(0, menu_size.length - 2));
+        var max_top_position = -(min_ratio * 100);
+        var ratio = (menu_size - top) / menu_size;
 
-     $("#user-button").mouseenter(function () {
+        if (ratio < min_ratio) {
+            ratio = min_ratio;
+        }
+
+        var top_position = menu_size - top - (1 - ratio)*50;
+
+
+        // console.log(top_position);
+        // console.log(max_top_position);
+        // console.log();
+
+        if (top_position < max_top_position)
+            top_position = max_top_position;
+
+        $("#mixer").css("transform", "scale(" + String(ratio) + "," + String(ratio) + ")");
+        $("#mixer").css("top", String(top_position) + "px");
+    }
+
+    function show_menu() {
+        console.log("CALLED");
+    }
+
+    function hide_menu() {
+
+    }
+
+    $("#user-button").mouseenter(function () {
         $(".user-face").attr("id", "user-face-showing");
-     });
+    });
 
-     $("#user-button").mouseleave( function () {
+    $("#user-button").mouseleave(function () {
         $(".user-face").attr("id", "");
-     })
+    })
 
-     $("#logout-button").mouseenter(function () {
+    $("#logout-button").mouseenter(function () {
         $(".user-face").attr("id", "user-face-hiding");
-     });
+    });
 
-     $("#logout-button").mouseleave( function () {
+    $("#logout-button").mouseleave(function () {
         $(".user-face").attr("id", "");
-     })
+    })
 
-     $("#login-prompt").mouseenter(function () {
+    $("#login-prompt").mouseenter(function () {
         $(".user-face").attr("id", "");
-     });
+    });
 
-     $("#login-prompt").mouseleave(function () {
+    $("#login-prompt").mouseleave(function () {
         $(".user-face").attr("id", "user-face-hiding");
-     });
+    });
 
-     $("#register-prompt").mouseenter(function () {
+    $("#register-prompt").mouseenter(function () {
         $(".user-face").attr("id", "");
-     });
+    });
 
-     $("#register-prompt").mouseleave(function () {
+    $("#register-prompt").mouseleave(function () {
         $(".user-face").attr("id", "user-face-hiding");
-     });
+    });
 
-     change_opacity();
+    change_size();
 });

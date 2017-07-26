@@ -1,21 +1,50 @@
-body {
-	background-color: rgb(100,140,200);
+html, body {
+	background-color: rgb(37, 37, 37);
 	min-width: 1200px;
+    height: 99%;
+    /*overflow: scroll;*/
 }
 
-#eater {
-    height: 10px;
-    width: 99%;
-    margin-top: 0px;
-    position: fixed;
-    background-color: rgb(100,140,200);
-    z-index: 98;
+
+::-webkit-scrollbar
+{
+    width: 5px;
+    height: 0;
+    background-color: #8eccff;
 }
+
+::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+	background-color: #8eccff;
+}
+
+::-webkit-scrollbar-thumb
+{
+  border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #262b2f;
+}
+
+/*::-webkit-scrollbar {*/
+    /*width: 0;*/
+    /*background: transparent;*/
+/*}*/
 
 #content-wrapper {
     padding-top: 100px;
     transition: 1s;
     padding-bottom: 20px;
+    height: 100%;
+    width: 100vw;
+
+    padding-left: 130px;
+    font-family: "Courier new", Courier, monospace;
+    font-size: 1em;
+    font-weight: bold;
+    /*color: #17f52a;*/
+    color: #507546;
 }
 
 .content {
@@ -27,10 +56,17 @@ body {
     padding-right: 20px;
     padding-top: 15px;
     padding-bottom: 15px;
-    color: rgb(222,222,255);
-    background-color: rgb(101,88,129);
-    -webkit-box-shadow: 0px 0px 20px 2px rgba(58,32,58,1);
-    -moz-box-shadow: 0px 0px 20px 2px rgba(58,32,58,1);
-    box-shadow: 0px 0px 20px 2px rgba(58,32,58,1);
-    font-size: 14px;
+    background-color: rgb(38, 43, 47);
+    -webkit-box-shadow: 0px 0px 20px 2px rgb(79, 79, 79);
+    -moz-box-shadow: 0px 0px 20px 2px rgb(79, 79, 79);
+    box-shadow: 0px 0px 20px 2px rgb(79, 79, 79);
+
+    /*font-size: 14px;*/
+    /*color: rgb(222,222,255);*/
+
+    font-family: "Courier new", Courier, monospace;
+    font-size: 1em;
+    font-weight: bold;
+    /*color: #17f52a;*/
+    color: #507546;
 }

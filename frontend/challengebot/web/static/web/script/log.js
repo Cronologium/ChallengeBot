@@ -45,9 +45,6 @@ $( document ).ready(function() {
                     else if (x2 - x1 == 3){
                         img = 'url(/static/web/style/res/ship4_' + (i - x1 + 1) + 'v.png)';
                     }
-                    else if (x2 - x1 == 4) {
-                        img = 'url(/static/web/style/res/ship5_' + (i - x1 + 1) + 'v.png)';
-                    }
                     p1_original_values[block_id] = img;
                     $("#1_"+block_id+"").css('background-image', img);
                     $("#1_"+block_id+"").attr('class', 'ship');
@@ -65,9 +62,6 @@ $( document ).ready(function() {
                     }
                     else if (x1 - x2 == 3){
                         img = 'url(/static/web/style/res/ship4_' + (i - x2 + 1) + 'v.png)';
-                    }
-                    else if (x1 - x2 == 4){
-                        img = 'url(/static/web/style/res/ship5_' + (i - x2 + 1) + 'v.png)';
                     }
                     p1_original_values[block_id] = img;
                     $("#1_"+block_id+"").css('background-image', img);
@@ -89,9 +83,6 @@ $( document ).ready(function() {
                     else if (y2 - y1 == 3){
                         img = 'url(/static/web/style/res/ship4_' + (i - y1 + 1) + '.png)';
                     }
-                    else if (y2 - y1 == 4){
-                        img = 'url(/static/web/style/res/ship5_' + (i - y1 + 1) + '.png)';
-                    }
                     p1_original_values[block_id] = img;
                     $("#1_"+block_id+"").css('background-image', img);
                     $("#1_"+block_id+"").attr('class', 'ship');
@@ -109,9 +100,6 @@ $( document ).ready(function() {
                     }
                     else if (y1 - y2 == 3){
                         img = 'url(/static/web/style/res/ship4_' + (i - y2 + 1) + '.png)';
-                    }
-                    else if (y1 - y2 == 4){
-                        img = 'url(/static/web/style/res/ship5_' + (i - y2 + 1) + '.png)';
                     }
                     p1_original_values[block_id] = img;
                     $("#1_"+block_id+"").css('background-image', img);
@@ -148,9 +136,6 @@ $( document ).ready(function() {
                     else if (x2 - x1 == 3){
                         img = 'url(/static/web/style/res/ship4_' + (i - x1 + 1) + 'v.png)';
                     }
-                    else if (x2 - x1 == 4){
-                        img = 'url(/static/web/style/res/ship5_' + (i - x1 + 1) + 'v.png)';
-                    }
                     p2_original_values[block_id] = img;
                     $("#2_"+block_id+"").css('background-image', img);
                     $("#2_"+block_id+"").attr('class', 'ship');
@@ -168,9 +153,6 @@ $( document ).ready(function() {
                     }
                     else if (x1 - x2 == 3){
                         img = 'url(/static/web/style/res/ship4_' + (i - x2 + 1) + 'v.png)';
-                    }
-                    else if (x1 - x2 == 4){
-                        img = 'url(/static/web/style/res/ship5_' + (i - x2 + 1) + 'v.png)';
                     }
                     p2_original_values[block_id] = img;
                     $("#2_"+block_id+"").css('background-image', img);
@@ -192,9 +174,6 @@ $( document ).ready(function() {
                     else if (y2 - y1 == 3){
                         img = 'url(/static/web/style/res/ship4_' + (i - y1 + 1) + '.png)';
                     }
-                    else if (y2 - y1 == 4){
-                        img = 'url(/static/web/style/res/ship5_' + (i - y1 + 1) + '.png)';
-                    }
                     p2_original_values[block_id] = img;
                     $("#2_"+block_id+"").css('background-image', img);
                     $("#2_"+block_id+"").attr('class', 'ship');
@@ -212,9 +191,6 @@ $( document ).ready(function() {
                     }
                     else if (y1 - y2 == 3){
                         img = 'url(/static/web/style/res/ship4_' + (i - y2 + 1) + '.png)';
-                    }
-                    else if (y1 - y2 == 4){
-                        img = 'url(/static/web/style/res/ship5_' + (i - y2 + 1) + '.png)';
                     }
                     p2_original_values[block_id] = img;
                     $("#2_"+block_id+"").css('background-image', img);

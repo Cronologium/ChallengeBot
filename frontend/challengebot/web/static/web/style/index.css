@@ -31,7 +31,8 @@
 }
 
 .question-div p a {
-    color: rgb(255, 255, 255);
+    font-weight: bold;
+    color: rgb(119, 188, 109);
 }
 
 .question-div img {

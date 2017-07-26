@@ -17,9 +17,9 @@ a:active {
     height: 20px;
     width: 60px;
     text-align: center;
-    color: white;
+    color: #8eccff;
     background-color: rgb(95,84,117);
-    background-color:
+    /*background-color:*/
     padding: 2px;
     margin: 2px;
     border: solid 1px black;
