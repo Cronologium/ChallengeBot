@@ -17,6 +17,7 @@ $(document).ready(function () {
             success: function(data) {
                 if (data['msg'] == 'success') {
                     window.location = '/';
+                    $('#auth-error').text('');
                 }
                 else {
                     $('#auth-error').text(data['msg']);
