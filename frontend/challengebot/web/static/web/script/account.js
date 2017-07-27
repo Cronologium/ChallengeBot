@@ -1,7 +1,7 @@
 $(document).ready(function () {
     $('#auth-button').click(function() {
         var data = {};
-        $('#auth-error').text(' ');
+        $('#auth-error').text('\n');
         $('#authentication input').each(function() {
             if ($(this).hasClass('inputfield')) {
                 data[$(this).attr('name')] = $(this).val();
@@ -11,11 +11,11 @@ $(document).ready(function () {
             }
         });
         if (data['username'] == '') {
-            $('#auth-error').text('Please fill out the username form');
+            $('#auth-error').text('Please enter your username');
             return;
         }
         if (data['password'] == '') {
-            $('#auth-error').text('Please fill out the password form');
+            $('#auth-error').text('Please enter your password');
             return;
         }
         if (data['csrfmiddlewaretoken'] == '') {
@@ -29,8 +29,8 @@ $(document).ready(function () {
             data: data,
             success: function(data) {
                 if (data['msg'] == 'success') {
-                    window.location = '/';
-                    $('#auth-error').text(' ');
+                    location.reload();
+                    $('#auth-error').text('\n');
                 }
                 else {
                     $('#auth-error').text(data['msg']);
@@ -41,7 +41,44 @@ $(document).ready(function () {
             }
         });
     });
-    $('#reg-button').click(function() {
 
+    $('#reg-button').click(function() {
+        var data = {};
+        var err = false;
+
+        $('#reg-user-error').text(' ');
+        $('#reg-email-error').text(' ');
+        $('#reg-pass-error').text(' ');
+        $('#reg-confirm-error').text(' ');
+        $('#registration input').each(function() {
+            if ($(this).hasClass('inputfield')) {
+                data[$(this).attr('name')] = $(this).val();
+            }
+            else if($(this).attr('name') == 'csrfmiddlewaretoken') {
+                data[$(this).attr('name')] = $(this).val();
+            }
+        });
+        console.log(data);
+        $.ajax({
+            dataType: 'json',
+            type: 'POST',
+            url: '/account/register',
+            data: data,
+            success: function(data) {
+                console.log(data);
+                if ('' in data) {
+                    location.reload();
+                }
+                else {
+                    for (key in data)
+                    {
+                        $('#' + key).text(data[key]);
+                    }
+                }
+            },
+            error: function() {
+                $('#reg-confirm-error').text('A problem occured on the server.');
+            }
+        });
     });
 });

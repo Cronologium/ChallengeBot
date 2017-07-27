@@ -58,7 +58,7 @@
             <label>Password</label>
             <input class="inputfield" type="password" placeholder="Password" name="password" required>
             <br><br>
-            <p class="error" id="auth-error"></p>
+            <p class="error" id="auth-error">&nbsp;</p>
         </form>
         <input class="inputbutton" type="submit" id="auth-button" value="Login">
     </div>
@@ -71,14 +71,13 @@
         <form id ='registration' action='/new_user/' method="POST">
             {% csrf_token %}
             <label>Username</label>
-            <input class="inputfield" type="text" placeholder="Username" name="username" required><
+            <input class="inputfield" type="text" placeholder="Username" name="username" required><br><p class="error" id="reg-user-error"><br></p>
             <label>E-mail</label>
-            <input class="inputfield" type="text" placeholder="E-mail" name="email" required>
+            <input class="inputfield" type="text" placeholder="E-mail" name="email" required><br><p class="error" id="reg-email-error"><br></p>
             <label>Password</label>
-            <input class="inputfield" type="password" placeholder="Password" name="password" required>
+            <input class="inputfield" type="password" placeholder="Password" name="password" required><br><p class="error" id="reg-pass-error"><br></p>
             <label>Confirm password</label>
-            <input class="inputfield" type="password" placeholder="Password" name="confirm-password" required>
-            <br><br>
+            <input class="inputfield" type="password" placeholder="Password" name="confirm-password" required><br><p class="error" id="reg-confirm-error"><br></p>
             <p class="error" id="reg-error"></p>
         </form>
         <input class="inputbutton" type="submit" id="reg-button" value="Register">
