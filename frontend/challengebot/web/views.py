@@ -4,23 +4,19 @@ from __future__ import unicode_literals
 import os
 
 import re
-from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
 
 # Create your views here.
 from django.contrib.auth.models import User
 
-from django.http import HttpResponse, Http404, JsonResponse
+from django.http import HttpResponse, Http404
 from django.shortcuts import redirect, get_object_or_404
 from django.template import loader
 from django.utils import timezone
 
+from .code_submit import submit_submission, submit_challenge
 from .forms import SubmissionForm, ChallengeForm, TicketForm
 
-from . import backendWizard
 from .models import Game, Challenge, Job, Submission, Source, Ticket
-
-aggressive_auth = False
 
 
 def get_rendered_menu(request):
@@ -32,8 +28,6 @@ def get_rendered_menu(request):
 
 
 def games(request):
-    if aggressive_auth is True and not request.user.is_authenticated:
-        return redirect('/aggressive_login/')
     games_list = Game.objects.all()
     content_template = loader.get_template(os.path.join('web', 'games.html'))
     content_context = {'games_list': games_list}
@@ -45,8 +39,6 @@ def games(request):
 
 
 def challenges(request):
-    if aggressive_auth is True and not request.user.is_authenticated:
-        return redirect('/aggressive_login/')
     challenges_list = Challenge.objects.order_by('-id')
     content_template = loader.get_template(os.path.join('web', 'challenges.html'))
     content_context = {'challenges_list': challenges_list}
@@ -75,13 +67,7 @@ class Shot:
 
 
 def challenge(request, challenge_id):
-    if aggressive_auth is True and not request.user.is_authenticated:
-        return redirect('/aggressive_login/')
-    challenge_obj = None
-    try:
-        challenge_obj = Challenge.objects.get(pk=int(challenge_id))
-    except Challenge.DoesNotExist:
-        raise Http404('Challenge does not exist')
+    challenge_obj = get_object_or_404(Challenge, pk=int(challenge_id))
     content_template = loader.get_template(os.path.join('web', 'challenge.html'))
     log = None
     try:
@@ -89,6 +75,7 @@ def challenge(request, challenge_id):
     except IOError:
         pass
 
+    # What follows is bad code and *has* to changed
     participants = []
     ships = {}
     shots = {}
@@ -116,6 +103,7 @@ def challenge(request, challenge_id):
                 shots[player].append(Shot(x, y, player))
 
         line_index += 1
+    # Until here
 
     content_context = {'challenge': challenge_obj, 'participants': participants, 'ships': ships, 'shots': shots}
     context = {}
@@ -126,8 +114,6 @@ def challenge(request, challenge_id):
 
 
 def submit(request, game_id):
-    if aggressive_auth is True and not request.user.is_authenticated:
-        return redirect('/aggressive_login/')
     game_obj = None
     try:
         game_obj = Game.objects.get(pk=int(game_id))
@@ -136,13 +122,11 @@ def submit(request, game_id):
     form = SubmissionForm(request.POST)
     if request.POST['your_code'] == '':
         return redirect('/game/' + str(game_id) + '/')
-    backendWizard.send_submission(game_obj, request.user, request.POST['your_code'], request.POST['language'])
+    submit_submission(game_obj, request.user, request.POST['your_code'], request.POST['language'])
     return redirect('/jobs/')
 
 
 def challenge_source(request, source_id):
-    if aggressive_auth is True and not request.user.is_authenticated:
-        return redirect('/aggressive_login/')
     source_obj = get_object_or_404(Source, pk=int(source_id))
     game_obj = Game.objects.get(pk=source_obj.game_id)
     selected_opponents = request.POST.getlist('selected_opponents')
@@ -154,19 +138,13 @@ def challenge_source(request, source_id):
         user = get_object_or_404(User, pk=opponent_source.user_id)
         users.append(user)
     if game_obj.players_min <= len(users) <= game_obj.players_max:
-        challenge = backendWizard.send_challenge(game_obj, users, sources)
+        challenge = submit_challenge(game_obj, sources)
         return redirect('/jobs/')
     return redirect('/game/' + str(game_obj.id) + '/')
 
 
 def game(request, game_id):
-    if aggressive_auth is True and not request.user.is_authenticated:
-        return redirect('/aggressive_login/')
-    game_obj = None
-    try:
-        game_obj = Game.objects.get(pk=int(game_id))
-    except Game.DoesNotExist:
-        raise Http404("Game does not exist")
+    game_obj = get_object_or_404(Game, pk=int(game_id))
     content_template = loader.get_template(os.path.join('web', 'game.html'))
     content_context = {'game': game_obj}
     if request.user.is_authenticated:
@@ -184,154 +162,8 @@ def game(request, game_id):
     return HttpResponse(template.render(context, request))
 
 
-def auth_ajax(request):
-    if request.user.is_authenticated:
-        logout(request)
-    if 'username' in request.POST and 'password' in request.POST:
-        if request.POST['username'] == '':
-            return JsonResponse({'msg': 'Empty username.'})
-        if request.POST['password'] == '':
-            return JsonResponse({'msg': 'Empty password.'})
-        user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
-        if user is not None:
-            login(request, user)
-            return JsonResponse({'msg': 'success'})
-        else:
-            return JsonResponse({'msg': 'Invalid username or password'})
-    return JsonResponse({'msg': 'Missing username or password'})
-
-
-def check_empty_fields(request):
-    if 'username' not in request.POST:
-        return {'reg-user-err': 'Please enter a username'}
-    if 'email' not in request.POST:
-        return {'reg-email-error': 'Please enter an e-mail address'}
-    if 'password' not in request.POST:
-        return {'reg-pass-error': 'Please enter a password'}
-    if 'confirm-password' not in request.POST:
-        return {'reg-confirm-error': 'Please confirm password'}
-    return None
-
-
-def validate_username(request):
-    if request.POST['username'] == '':
-        return {'reg-user-error': 'Please enter a username'}
-    username = request.POST['username']
-    if len(username) < 8:
-        return {'reg-user-error': 'Username must contain at least 8 characters.'}
-    if len(username) > 20:
-        return {'reg-user-error': 'Username must contain at most 20 characters.'}
-    if not re.match(r'^[A-Za-z].*', username):
-        return {'reg-user-error': 'Username does not start with a letter'}
-    if User.objects.filter(username=username).exists():
-        return {'reg-user-error': 'Username is taken.'}
-    if not re.match(r'^\w+$', username):
-        return {'reg-user-error': 'Username can only contain letters, numbers and the underscore'}
-    return None
-
-
-def validate_email(request):
-    if request.POST['email'] == '':
-        return {'reg-email-error': 'Please enter an e-mail address.'}
-    email = request.POST['email']
-    if len(email) > 254:
-        return {'reg-email-error': 'E-mail address is too long'}
-    if User.objects.filter(email=email).exists():
-        return {'reg-email-error': 'E-mail address already in use'}
-    if re.search(r"[^@]+@[^@]+\.[a-zA-Z]+", email) is None:
-        return {'reg-email-error': 'E-mail address looks invalid'}
-    return None
-
-
-def validate_password(request):
-    if request.POST['password'] == '':
-        return {'reg-pass-error': 'Please enter a password'}
-    password = request.POST['password']
-    if len(password) < 8:
-        return {'reg-pass-error': 'Password too short.'}
-    if len(password) > 35:
-        return {'reg-pass-error': 'Password too long. How will you remember that?'}
-    if not re.match(r'[A-Za-z0-9@#$%^&+=()!_*{}:;/".,?~`<>| \-\'\[\]\\]{8,35}', password):
-        return {'reg-pass-error': 'Password contains invalid characters.'}
-    if not re.search(r'[A-Za-z]+', password):
-        return {'reg-pass-error': 'Password does not contain letters'}
-    if not re.search(r'[0-9]+', password):
-        return {'reg-pass-error': 'Password does not contain digits'}
-    if not re.search(r'[^A-Za-z0-9]+', password):
-        return {'reg-pass-error': 'Password does not contain symbols'}
-    if password == request.POST['email']:
-        return {'reg-pass-error': 'Password cannot match email address'}
-    if password == request.POST['username']:
-        return {'reg-pass-error': 'Password cannot match username'}
-    return None
-
-
-def validate_confirm_password(request):
-    if request.POST['confirm-password'] == '':
-        return {'reg-confirm-error': 'Please confirm password'}
-    confirm_password = request.POST['confirm-password']
-    if len(confirm_password) != len(request.POST['password']) or confirm_password != request.POST['password']:
-        return {'reg-confirm-error': 'Passwords do not match!'}
-    return None
-
-
-def reg_ajax(request):
-    err = False
-    errors = {}
-    empty_check = check_empty_fields(request)
-    if empty_check is not None:
-        return empty_check
-
-    username_check = validate_username(request)
-    if username_check is not None:
-        err = True
-        for key in username_check:
-            errors[key] = username_check[key]
-
-    email_check = validate_email(request)
-    if email_check is not None:
-        err = True
-        for key in email_check:
-            errors[key] = email_check[key]
-
-    password_check = validate_password(request)
-    if password_check is not None:
-        err = True
-        for key in password_check:
-            errors[key] = password_check[key]
-
-    confirm_check = validate_confirm_password(request)
-    if confirm_check is not None:
-        err = True
-        for key in confirm_check:
-            errors[key] = confirm_check[key]
-
-    if not err:
-        return JsonResponse({'': ''})
-    else:
-        return JsonResponse(errors)
-
-
-def auth(request):
-    if request.user.is_authenticated:
-        logout(request)
-    if 'username' in request.POST and 'password' in request.POST:
-        user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
-        if user is not None:
-            login(request, user)
-    return redirect('/')
-
-
-def log_out(request):
-    if request.user.is_authenticated:
-        logout(request)
-    return redirect('/')
-
-
 def jobs(request, job_page):
     job_page = int(job_page)
-    if aggressive_auth is True and not request.user.is_authenticated:
-        return redirect('/aggressive_login/')
     job_list = Job.objects.order_by('-id')
     challenge_list = Challenge.objects.order_by('-id')
     submission_list = Submission.objects.order_by('-id')
@@ -358,8 +190,6 @@ def jobs(request, job_page):
 
 
 def support(request):
-    if aggressive_auth is True and not request.user.is_authenticated:
-        return redirect('/aggressive_login/')
     if request.user.is_authenticated:
         content_template = loader.get_template(os.path.join('web', 'support.html'))
         content_context = {'form': TicketForm(), 'ticket_list': Ticket.objects.filter(user=request.user)}
@@ -373,8 +203,6 @@ def support(request):
 
 
 def ticket_submit(request):
-    if aggressive_auth is True and not request.user.is_authenticated:
-        return redirect('/aggressive_login/')
     if request.user.is_authenticated:
         t = Ticket()
         t.date = timezone.now()
@@ -384,6 +212,7 @@ def ticket_submit(request):
         t.description = request.POST['description']
         t.save()
     return redirect('/support/')
+
 
 def new_user(request):
     if 'username' in request.POST and 'password' in request.POST and 'email' in request.POST and 'confirm-password' in request.POST:
@@ -409,8 +238,6 @@ def aggressive_login(request):
 
 
 def about(request):
-    if aggressive_auth is True and not request.user.is_authenticated:
-        return redirect('/aggressive_login/')
     content_template = loader.get_template(os.path.join('web', 'about.html'))
     content_context = {}
     context = {}
@@ -421,8 +248,6 @@ def about(request):
 
 
 def index(request):
-    if aggressive_auth is True and not request.user.is_authenticated:
-        return redirect('/aggressive_login/')
     content_template = loader.get_template(os.path.join('web', 'index.html'))
     content_context = {}
     context = {}
