@@ -1,27 +1,36 @@
+/*light green logo 6dcd8c*/
+/*dark green logo 0e881f*/
+/*keyboard dark blue 262b2f*/
+/*keyboard light blue 8eccff*/
+
+
 #menu {
-    position: fixed;
-    width: 99%;
-    margin-top: 5px;
-    padding: 0px;
+    /*position: fixed;*/
+    top:0;
+    left:0;
+    width: 100vw;
+    height: 100px;
+    background-color: rgb(37, 37, 37);
     min-width: 1200px;
-    z-index: 99;
+    /*overflow: auto;*/
+    z-index: 1;
 }
 
 #menuhead {
 	width:99%;
-	padding:0px;
-	margin: 0px;
+	padding:0;
+	margin: 0;
 	margin: auto;
 	margin-left: 10px;
 	margin-top: 5px;
-	background-color:rgb(91,78,119);
+	background-color: rgb(62, 62, 62);
 	border:0px;
 	border-top:5px;
 	border-style:solid;
-	border-color:rgb(34,69,130);
-	-webkit-box-shadow: 0px 0px 20px 2px rgba(58,32,58,1);
-    -moz-box-shadow: 0px 0px 20px 2px rgba(58,32,58,1);
-    box-shadow: 0px 0px 20px 2px rgba(58,32,58,1);
+	border-color: rgb(13, 25, 50);
+	-webkit-box-shadow: 0px 0px 20px 2px rgb(75, 75, 75);
+    /*-moz-box-shadow: 0px 0px 20px 2px rgb(69, 44, 26);*/
+    /*box-shadow: 0px 0px 20px 2px rgb(81, 51, 31);*/
 }
 
 .blurred {
@@ -34,7 +43,8 @@
 }
 
 .logo-container{
-    background: rgb(83, 70, 108);
+    background: rgb(58, 58, 58);
+    /*background: rgb(83, 70, 108);*/
 	width:100%;
 	padding:0px;
 	margin:0px;
@@ -42,10 +52,11 @@
 	transition: 1s;
 }
 .logo-container:hover{
-	background: #53466c; /* Old browsers */
-    background: -moz-linear-gradient(-45deg, #53466c 0%, #403556 9%, #4a3f62 11%, #5b4e77 54%, #5b4e77 54%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(-45deg, #53466c 0%,#403556 9%,#4a3f62 11%,#5b4e77 54%,#5b4e77 54%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(135deg, #53466c 0%,#403556 9%,#4a3f62 11%,#5b4e77 54%,#5b4e77 54%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	background: #4f4f4f; /* Old browsers */
+    /*background: -moz-linear-gradient(-45deg, #53466c 0%, #403556 9%, #4a3f62 11%, #5b4e77 54%, #5b4e77 54%); !* FF3.6-15 *!*/
+    /*background: -webkit-linear-gradient(-45deg, #53466c 0%,#403556 9%,#4a3f62 11%,#5b4e77 54%,#5b4e77 54%); !* Chrome10-25,Safari5.1-6 *!*/
+    /*background: linear-gradient(135deg, #53466c 0%,#403556 9%,#4a3f62 11%,#5b4e77 54%,#5b4e77 54%); !* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ *!*/
+    -webkit-box-shadow: 0px 0px 20px 2px rgb(90, 90, 90);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#53466c', endColorstr='#5b4e77',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
     transition: 1s;
 }
@@ -75,6 +86,15 @@
 	background-size: 100%;
 	background-repeat:no-repeat;
 	background-position:0px 15px;
+
+    /*font-family: "Courier new", Courier, monospace;*/
+    /*font-size: 5.5em;*/
+    /*font-weight: bold;*/
+    /*color #507546;*/
+
+    /*color light #507546;*/
+    /*color dark #385330*/
+    padding: 0px 20px;
 }
 
 .user-face {
@@ -113,15 +133,18 @@
 	border:0px;
 	border-style:solid;
 	border-color:rgb(34,69,130);
-	-webkit-box-shadow: 0px 0px 20px 2px rgba(58,32,58,3);
-    -moz-box-shadow: 0px 0px 20px 2px rgba(58,32,58,3);
-    box-shadow: 0px 0px 20px 2px rgba(58,32,58,3);
+	/*-webkit-box-shadow: 0px 0px 20px 2px rgba(58,32,58,3);*/
+    /*-moz-box-shadow: 0px 0px 20px 2px rgba(58,32,58,3);*/
+    box-shadow: 0px 0px 10px 2px rgb(75, 69, 66);
     transition: 1s;
 }
 
 #menu-options {
     margin-left: 225px;
     margin-right: 10px;
+    font-family: "Courier new", Courier, monospace;
+    /*font-size: 1.2em;*/
+    font-weight: bold;
 }
 
 .menu ul {
@@ -131,15 +154,20 @@
     margin: 0;
 	padding:0px;
 	overflow: hidden;
-    background-color:rgb(65,54,87);
-	height:30px;
+    background-color: rgb(84, 78, 75);
+	/*height:30px;*/
 }
 #mixer {
 	display: block;
 	float: right;
-	position: absolute;
+	/*position: absolute;*/
 	pointer-events: none;
-    opacity: 1;
+    position: fixed;
+    left: 20px;
+    top: 0px;
+    z-index: 2;
+
+    transform: scale(1, 1);
 }
 .menu li .left-link{
     display: inline;
@@ -163,8 +191,8 @@
 }
 .menu li a:hover {
     /*background-color: rgb(46,35,64);*/
-    background-color: #20072B;
-	color: rgb(104,154,112);
+    background-color: #262b2f;
+	color: rgb(109, 205, 140);
 	transition: 1s;
 	cursor: pointer;
 	-webkit-box-shadow: 0px 0px 20px 2px rgba(222,222,222,1);
@@ -194,7 +222,7 @@
     left: 0;
     top: 0;
     background-color: rgb(0,0,0); /* Black fallback color */
-    background-color: rgba(46,35,64, 0.7); /* Black w/opacity */
+    background-color: rgba(62, 56, 53, 0.7); /* Black w/opacity */
     overflow-x: hidden; /* Disable horizontal scroll */
     transition: 0.5s; /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
 }
@@ -249,23 +277,27 @@
 }
 
 .overlay input {
-    background-color:rgb(79,45,120);
-    color:rgb(255,255,255);
+    background-color: rgb(38, 43, 47);
+    color: rgb(142, 204, 255);
 }
 
 .overlay input[type=submit] {
     width: 20%;
-    background-color: #20072B;
+    background-color: #1a1313;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+
+    font-family: "Courier new", Courier, monospace;
+    font-size: 2em;
+    font-weight: bold;
 }
 
 .inputfield {
-    border-color:rgb(104,154,112);
+    border-color: rgb(44, 49, 53);
 	height:32px;
 	width:400px;
 	font-size: 28px;
@@ -274,4 +306,8 @@
 #inputbutton {
     height:40px;
     width:150px;
+}
+
+.error {
+    color: red;
 }

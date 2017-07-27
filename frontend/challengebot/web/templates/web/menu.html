@@ -26,38 +26,41 @@
 		<ul>
             <div id="menu-options">
                 <li><a class="left-link" href="/">Home</a></li>
-                <li><a class="left-link" href="/games/">Games</a></li>
-                <li><a class="left-link" href="/jobs/">Jobs</a></li>
+                <li><a class="left-link" href="/games">Games</a></li>
+                <li><a class="left-link" href="/jobs">Jobs</a></li>
                 {% if not username %}
                 <li><a class="right-link" id="login-prompt">Log in</a></li>
                 <li><a class="right-link" id="register-prompt">Register</a></li>
                 {% else %}
-                <li><a class="left-link" href="/support/">Support</a></li>
+                <li><a class="left-link" href="/support">Support</a></li>
                 <li><a class="right-link" id="user-button" href="/">{{username}}</a></li>
-                <li><a class="right-link" id="logout-button" href="/logout/">Log out</a></li>
+                <li><a class="right-link" id="logout-button" href="/logout">Log out</a></li>
 
                 {% endif %}
-                <li><a class="left-link" href="/about/">About us</a></li>
+                <li><a class="left-link" href="/about">About us</a></li>
 
             </div>
         </ul>
 	</div>
 </div>
 {% if not username %}
+{% load static %}
+<script type="text/javascript" src="{% static 'web/script/account.js' %}"></script>
 <div id="login-page" class="overlay">
     <a href="javascript:void(0)" class="closebtn" id="close-login-prompt">&times;</a>
     <div class="overlay-content">
         {% load static %}
         <img src="{% static 'web/style/res/user.png' %}">
-        <form action='/auth/' method="POST">
+        <form id='authentication' action='/auth/' method="POST">
             {% csrf_token %}
             <label>Username</label>
             <input class="inputfield" type="text" placeholder="Username" name="username" required>
             <label>Password</label>
             <input class="inputfield" type="password" placeholder="Password" name="password" required>
             <br><br>
-            <input class="inputbutton" type="submit" value="Login">
+            <p class="error" id="auth-error">&nbsp;</p>
         </form>
+        <input class="inputbutton" type="submit" id="auth-button" value="Login">
     </div>
 </div>
 <div id="register-page" class="overlay">
@@ -65,19 +68,19 @@
     <div class="overlay-content">
         {% load static %}
         <img src="{% static 'web/style/res/user.png' %}">
-        <form action='/new_user/' method="POST">
+        <form id ='registration' action='/new_user/' method="POST">
             {% csrf_token %}
             <label>Username</label>
-            <input class="inputfield" type="text" placeholder="Username" name="username" required><
+            <input class="inputfield" type="text" placeholder="Username" name="username" required><br><p class="error" id="reg-user-error"><br></p>
             <label>E-mail</label>
-            <input class="inputfield" type="text" placeholder="E-mail" name="email" required>
+            <input class="inputfield" type="text" placeholder="E-mail" name="email" required><br><p class="error" id="reg-email-error"><br></p>
             <label>Password</label>
-            <input class="inputfield" type="password" placeholder="Password" name="password" required>
+            <input class="inputfield" type="password" placeholder="Password" name="password" required><br><p class="error" id="reg-pass-error"><br></p>
             <label>Confirm password</label>
-            <input class="inputfield" type="password" placeholder="Password" name="confirm-password" required>
-            <br><br>
-            <input class="inputbutton" type="submit" value="Register">
+            <input class="inputfield" type="password" placeholder="Password" name="confirm-password" required><br><p class="error" id="reg-confirm-error"><br></p>
+            <p class="error" id="reg-error"></p>
         </form>
+        <input class="inputbutton" type="submit" id="reg-button" value="Register">
     </div>
 </div>
 {% endif %}

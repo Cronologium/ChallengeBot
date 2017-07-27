@@ -43,7 +43,7 @@
     </table>
 </div>
 <div id="form-wrapper">
-    <form action="/ticketsubmit/" method="post">
+    <form action="/ticketsubmit" method="post">
         {% csrf_token %}
         {{ form }}
         <input type="submit" value="Submit" />

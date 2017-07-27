@@ -4,8 +4,6 @@ from __future__ import unicode_literals
 import os
 
 import re
-from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
 
 # Create your views here.
 from django.contrib.auth.models import User
@@ -15,12 +13,10 @@ from django.shortcuts import redirect, get_object_or_404
 from django.template import loader
 from django.utils import timezone
 
+from .code_submit import submit_submission, submit_challenge
 from .forms import SubmissionForm, ChallengeForm, TicketForm
 
-from . import backendWizard
 from .models import Game, Challenge, Job, Submission, Source, Ticket
-
-aggressive_auth = False
 
 
 def get_rendered_menu(request):
@@ -32,8 +28,6 @@ def get_rendered_menu(request):
 
 
 def games(request):
-    if aggressive_auth is True and not request.user.is_authenticated:
-        return redirect('/aggressive_login/')
     games_list = Game.objects.all()
     content_template = loader.get_template(os.path.join('web', 'games.html'))
     content_context = {'games_list': games_list}
@@ -45,8 +39,6 @@ def games(request):
 
 
 def challenges(request):
-    if aggressive_auth is True and not request.user.is_authenticated:
-        return redirect('/aggressive_login/')
     challenges_list = Challenge.objects.order_by('-id')
     content_template = loader.get_template(os.path.join('web', 'challenges.html'))
     content_context = {'challenges_list': challenges_list}
@@ -75,13 +67,7 @@ class Shot:
 
 
 def challenge(request, challenge_id):
-    if aggressive_auth is True and not request.user.is_authenticated:
-        return redirect('/aggressive_login/')
-    challenge_obj = None
-    try:
-        challenge_obj = Challenge.objects.get(pk=int(challenge_id))
-    except Challenge.DoesNotExist:
-        raise Http404('Challenge does not exist')
+    challenge_obj = get_object_or_404(Challenge, pk=int(challenge_id))
     content_template = loader.get_template(os.path.join('web', 'challenge.html'))
     log = None
     try:
@@ -89,6 +75,7 @@ def challenge(request, challenge_id):
     except IOError:
         pass
 
+    # What follows is bad code and *has* to changed
     participants = []
     ships = {}
     shots = {}
@@ -116,6 +103,7 @@ def challenge(request, challenge_id):
                 shots[player].append(Shot(x, y, player))
 
         line_index += 1
+    # Until here
 
     content_context = {'challenge': challenge_obj, 'participants': participants, 'ships': ships, 'shots': shots}
     context = {}
@@ -126,8 +114,6 @@ def challenge(request, challenge_id):
 
 
 def submit(request, game_id):
-    if aggressive_auth is True and not request.user.is_authenticated:
-        return redirect('/aggressive_login/')
     game_obj = None
     try:
         game_obj = Game.objects.get(pk=int(game_id))
@@ -136,13 +122,11 @@ def submit(request, game_id):
     form = SubmissionForm(request.POST)
     if request.POST['your_code'] == '':
         return redirect('/game/' + str(game_id) + '/')
-    backendWizard.send_submission(game_obj, request.user, request.POST['your_code'], request.POST['language'])
+    submit_submission(game_obj, request.user, request.POST['your_code'], request.POST['language'])
     return redirect('/jobs/')
 
 
 def challenge_source(request, source_id):
-    if aggressive_auth is True and not request.user.is_authenticated:
-        return redirect('/aggressive_login/')
     source_obj = get_object_or_404(Source, pk=int(source_id))
     game_obj = Game.objects.get(pk=source_obj.game_id)
     selected_opponents = request.POST.getlist('selected_opponents')
@@ -154,19 +138,13 @@ def challenge_source(request, source_id):
         user = get_object_or_404(User, pk=opponent_source.user_id)
         users.append(user)
     if game_obj.players_min <= len(users) <= game_obj.players_max:
-        challenge = backendWizard.send_challenge(game_obj, users, sources)
+        challenge = submit_challenge(game_obj, sources)
         return redirect('/jobs/')
     return redirect('/game/' + str(game_obj.id) + '/')
 
 
 def game(request, game_id):
-    if aggressive_auth is True and not request.user.is_authenticated:
-        return redirect('/aggressive_login/')
-    game_obj = None
-    try:
-        game_obj = Game.objects.get(pk=int(game_id))
-    except Game.DoesNotExist:
-        raise Http404("Game does not exist")
+    game_obj = get_object_or_404(Game, pk=int(game_id))
     content_template = loader.get_template(os.path.join('web', 'game.html'))
     content_context = {'game': game_obj}
     if request.user.is_authenticated:
@@ -184,26 +162,8 @@ def game(request, game_id):
     return HttpResponse(template.render(context, request))
 
 
-def auth(request):
-    if request.user.is_authenticated:
-        logout(request)
-    if 'username' in request.POST and 'password' in request.POST:
-        user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
-        if user is not None:
-            login(request, user)
-    return redirect('/')
-
-
-def log_out(request):
-    if request.user.is_authenticated:
-        logout(request)
-    return redirect('/')
-
-
 def jobs(request, job_page):
     job_page = int(job_page)
-    if aggressive_auth is True and not request.user.is_authenticated:
-        return redirect('/aggressive_login/')
     job_list = Job.objects.order_by('-id')
     challenge_list = Challenge.objects.order_by('-id')
     submission_list = Submission.objects.order_by('-id')
@@ -230,8 +190,6 @@ def jobs(request, job_page):
 
 
 def support(request):
-    if aggressive_auth is True and not request.user.is_authenticated:
-        return redirect('/aggressive_login/')
     if request.user.is_authenticated:
         content_template = loader.get_template(os.path.join('web', 'support.html'))
         content_context = {'form': TicketForm(), 'ticket_list': Ticket.objects.filter(user=request.user)}
@@ -245,8 +203,6 @@ def support(request):
 
 
 def ticket_submit(request):
-    if aggressive_auth is True and not request.user.is_authenticated:
-        return redirect('/aggressive_login/')
     if request.user.is_authenticated:
         t = Ticket()
         t.date = timezone.now()
@@ -256,6 +212,7 @@ def ticket_submit(request):
         t.description = request.POST['description']
         t.save()
     return redirect('/support/')
+
 
 def new_user(request):
     if 'username' in request.POST and 'password' in request.POST and 'email' in request.POST and 'confirm-password' in request.POST:
@@ -281,8 +238,6 @@ def aggressive_login(request):
 
 
 def about(request):
-    if aggressive_auth is True and not request.user.is_authenticated:
-        return redirect('/aggressive_login/')
     content_template = loader.get_template(os.path.join('web', 'about.html'))
     content_context = {}
     context = {}
@@ -293,8 +248,6 @@ def about(request):
 
 
 def index(request):
-    if aggressive_auth is True and not request.user.is_authenticated:
-        return redirect('/aggressive_login/')
     content_template = loader.get_template(os.path.join('web', 'index.html'))
     content_context = {}
     context = {}
