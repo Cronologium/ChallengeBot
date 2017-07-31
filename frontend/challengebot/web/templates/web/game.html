@@ -74,17 +74,19 @@
         <div id="wrapperForms">
         {% if request.user.is_authenticated %}
              <div class="form-wrapper">
-                 <form id="form1" action="/submit/{{game.id}}" method="post">
+                 <form id="submission-form" action="/submit/source/{{game.id}}" method="post">
                      {% csrf_token %}
                      <h3><b><i>Submit your code</i></b></h3>
+                     <input type="hidden" id="game_id" value="{{game.id}}"/>
                      <b>Language:{{form.language}}</b>
                      <textarea name="your_code" id="id_your_code" rows="10" cols="40"></textarea>
-                     <input type="submit" value="Submit" id="submission-submit"/>
                  </form>
+                 <p class="error" id="submit-error">Mihai: TODO</p>
+                 <input type="submit" value="Submit" id="submission-submit"/>
              </div>
              {% if p1_source %}
              <div class="form-wrapper">
-                 <form id="form2" action="/challenge_source/{{p1_source.id}}" method="post">
+                 <form id="challenge-form" action="/submit/challenge/{{p1_source.id}}" method="post">
                      {% csrf_token %}
                      <h3><b><i>
                      {% if game.players_min != game.players_max %}
@@ -97,6 +99,7 @@
                         {% endif %}
                      {% endif %}
                      </i></b></h3>
+                     <input type="hidden" id="player_source_id" value="{{p1_source.id}}"/>
                      <br>
                      <div class="challenge-options">
                          {{ opponents.eligible_opponents }}
@@ -106,10 +109,11 @@
                          <input type="button" value="<" id="removeButton" onclick="remove_opponent()"/>
                          {{ opponents.selected_opponents }}
                      </div>
-                     <input type="submit" value="Challenge" id="challenge-submit" onclick="validate_opponents()"/>
                      <input type="hidden" id="min_players" value="{{game.players_min}}"/>
                      <input type="hidden" id="max_players" value="{{game.players_max}}"/>
                  </form>
+                 <p class="error" id="challenge-error">MIHAI: TODO</p>
+                 <input type="submit" value="Challenge" id="challenge-submit"/>
              </div>
             {% endif %}
         {% endif %}

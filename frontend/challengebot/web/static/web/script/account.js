@@ -58,7 +58,6 @@ $(document).ready(function () {
                 data[$(this).attr('name')] = $(this).val();
             }
         });
-        console.log(data);
         $.ajax({
             dataType: 'json',
             type: 'POST',
