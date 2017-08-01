@@ -5,7 +5,7 @@ source_root = os.path.join(os.getcwd(), '..', '..', 'sources')
 log_root = os.path.join(os.getcwd(), '..', '..', 'logs')
 
 
-def save_source(data, extension, log=True):
+def save_source(data, extension, log=False):
     dictionary = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-'
     random_string = ''.join([dictionary[random.randint(0, len(dictionary) - 1)] for x in range(10)])
     root = source_root

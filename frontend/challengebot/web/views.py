@@ -114,11 +114,7 @@ def challenge(request, challenge_id):
 
 
 def submit(request, game_id):
-    game_obj = None
-    try:
-        game_obj = Game.objects.get(pk=int(game_id))
-    except Game.DoesNotExist:
-        raise Http404("Game does not exist")
+    game_obj = get_object_or_404(Game, pk=int(game_id))
     form = SubmissionForm(request.POST)
     if request.POST['your_code'] == '':
         return redirect('/game/' + str(game_id) + '/')
