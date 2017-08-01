@@ -2,10 +2,9 @@ from time import timezone
 
 import re
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404
 from django.utils import timezone
 
-from .forms import SubmissionForm
 from .models import Submission, Source, Job, Challenge, Game
 from .utils import save_source
 
@@ -70,11 +69,12 @@ def submit_challenge(game, sources):
     job.game = game
     job.status = 'R'
     job.date = timezone.now()
+    job.log_path = save_source('', '.txt', log=True)
     job.save()
 
     challenge = Challenge()
     challenge.job = job
-    challenge.log_path = save_source('', '.txt', log=True)
+
     challenge.save()
     for source in sources:
         challenge.challengers.add(source)
@@ -94,6 +94,7 @@ def submit_submission(game, user, data, extension):
     job.game = game
     job.status = 'R'
     job.date = timezone.now()
+    job.log_path = save_source('', '.txt', log=True)
     job.save()
 
     sub = Submission()

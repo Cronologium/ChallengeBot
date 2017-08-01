@@ -12,8 +12,6 @@ class Game(models.Model):
     memory_limit = models.FloatField()
     time_limit = models.IntegerField()
     name = models.CharField(max_length=50)
-    server_language = models.CharField(max_length=20)
-    server_path = models.CharField(max_length=260)
     players_min = models.IntegerField(default=2)
     players_max = models.IntegerField(default=2)
 
@@ -59,6 +57,8 @@ class Job(models.Model):
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Q')
     date = models.DateTimeField('Date of publication')
     game = models.ForeignKey(Game, on_delete=models.CASCADE, default=1)
+    log_path = models.CharField(max_length=260)
+    author = models.ForeignKey(User)
 
     def __str__(self):
         return "Job #" + str(self.id) + " for " + self.game.name + " from " + str(self.date)
@@ -66,14 +66,24 @@ class Job(models.Model):
 
 class Challenge(models.Model):
     job = models.ForeignKey(Job, on_delete=models.CASCADE, default=1)
-    log_path = models.CharField(max_length=260)
-    # changed foreign key from Challenger to Source
-    winner = models.ForeignKey(Source, on_delete=models.DO_NOTHING, null=True, related_name='winner')
-    # Many to many
-    challengers = models.ManyToManyField(Source)
+    challengers = models.ManyToManyField(Source, through='Challenger')
 
     def __str__(self):
         return "ChallengeJob #" + str(self.job.id) + " for Game " + self.job.game.name
+
+
+class Challenger(models.Model):
+    STATUS_CHOICES = (
+        ('W', 'Win'),
+        ('T', 'Tie'),
+        ('L', 'Lost'),
+        ('D', 'Disqualified'),
+        ('P', 'Pending')
+    )
+    challenge = models.ForeignKey(Challenge)
+    source = models.ForeignKey(Source)
+    status = models.CharField(max_length=15, choices=STATUS_CHOICES, default='P')
+    position = models.IntegerField()
 
 
 class Submission(models.Model):
@@ -86,26 +96,18 @@ class Submission(models.Model):
                self.job.game.name + " from " + str(self.job.date)
 
 
-class Ticket(models.Model):
+class LevelGame(models.Model):
+    game = models.ForeignKey(Game, on_delete=models.CASCADE)
+    level = models.IntegerField()
+    xp_reach = models.IntegerField()
+    xp_win = models.IntegerField()
+    xp_lost = models.IntegerField()
+    xp_draw = models.IntegerField()
+    xp_dsq = models.IntegerField()
+
+
+class LevelingUser(models.Model):
+    level = models.IntegerField()
+    xp = models.IntegerField()
+    game = models.ForeignKey(Game, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    THEME_CHOICES = (
-        ('F', 'Functionality'),
-        ('V', 'Visual'),
-        ('S', 'Submission'),
-        ('C', 'Challenge'),
-        ('G', 'Game'),
-        ('A', 'Account'),
-        ('B', 'Security'),
-        ('O', 'Other'),
-    )
-    STATUS_CHOICES = (
-        ('P', 'Pending'),
-        ('T', 'Taken'),
-        ('F', 'Finished'),
-        ('R', 'Rejected'),
-    )
-    title = models.CharField(max_length=50)
-    type = models.CharField(max_length=20, choices=THEME_CHOICES, default='O')
-    description = models.CharField(max_length=1000)
-    date = models.DateTimeField('Date of publication')
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='P')
