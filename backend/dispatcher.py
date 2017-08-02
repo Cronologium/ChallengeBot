@@ -15,7 +15,7 @@ from backend.utils.repository import Repository
 
 
 class Dispatcher:
-    def __init__(self, servers=4, start_port=1200):
+    def __init__(self, servers=4, start_port=1200, logger=ConsoleLogger()):
         self.servers = [Server(start_port+s) for s in xrange(servers)]
         self.games = {
             1: BattleshipGame,
@@ -29,6 +29,7 @@ class Dispatcher:
         self.q = Queue()
         self.env_manager = EnvironmentManager()
         self.ended = False
+        self.logger = logger
 
     def end(self):
         w = 5
@@ -55,13 +56,13 @@ class Dispatcher:
         if 'user_id' in source:
             username = self.repository.select('auth_user', ['username'], {'id': source['user_id']})[0]['username']
 
-        print source, memory_limit, port
+        #print source, memory_limit, port
         env_id = self.env_manager.make_environment(source['path'], port)
         self.env_manager.run(env_id, memory_limit, username)
         self.env_manager.delete_environment(env_id)
 
     def run_game(self, game, sources, memory_limit, ids):
-        print game, sources, memory_limit, ids
+        #print game, sources, memory_limit, ids
         for source in sources:
             t = threading.Thread(target=self.run_client, args=(source, memory_limit, game.server.port))
             t.start()
@@ -79,12 +80,15 @@ class Dispatcher:
                 self.repository.update('web_source', {'selected': 0}, {'user_id': player_id, 'selected': 1})
                 self.repository.update('web_source', {'result': 'A', 'selected': 1}, {'id': source_id})
         elif 'challenge' in ids:
+            pass
+            '''
             for player_name in game.players:
                 if game.players[player_name].status == Status.WINNER:
                     player_id = self.repository.select('auth_user', ['id'], {'username': player_name})[0]['id']
                     source_id = self.repository.select('web_source', ['id'], {'user_id': player_id, 'selected': 1})[0]['id']
                     self.repository.update('web_challenge', {'winner_id': source_id}, {'id': ids['challenge']})
                     break
+            '''
 
     def executer(self):
         while not self.ended:
@@ -101,7 +105,8 @@ class Dispatcher:
                     game_data['time_limit'] = game_data['time_limit'] / 1000.0
                     ids = {'job': run_data['job']['id']}
                     if 'submission' in run_data:
-                        logger = ConsoleLogger()
+                        logger = FileLogger(run_data['job']['log_path'])
+                        logger.open()
                         s = self.repository.select('web_source', ['id', 'user_id', 'path', 'language'], {'id': run_data['submission']['source_id']})[0]
                         players.append(self.repository.select('auth_user', ['username'], {'id': s['user_id']})[0]['username'])
                         players.append('eval')
@@ -109,7 +114,7 @@ class Dispatcher:
                         sources.append({'path': self.evals[run_data['job']['game_id']]})
                         ids['submission'] = run_data['submission']['id']
                     elif 'challenge' in run_data:
-                        logger = FileLogger(run_data['challenge']['log_path'])
+                        logger = FileLogger(run_data['job']['log_path'])
                         logger.open()
                         for challenger in run_data['challengers']:
                             s = self.repository.select('web_source', ['user_id', 'path', 'language'], {'id': challenger['source_id']})[0]
@@ -121,16 +126,17 @@ class Dispatcher:
                     t = threading.Thread(target=self.run_game, args=(game, sources, game_data['memory_limit'], ids,))
                     t.start()
             time.sleep(1)
+        self.logger.log('executor finished')
 
     def consumer(self):
         while not self.ended:
-            pending_jobs = self.repository.select('web_job', ['id', 'game_id'], {'status': 'R'})
+            pending_jobs = self.repository.select('web_job', ['id', 'game_id', 'log_path'], {'status': 'R'})
             for job in pending_jobs:
                 self.repository.update('web_job', {'status': 'P'}, {'id': job['id']})
-                challenge = self.repository.select('web_challenge', ['id', 'log_path'], {'job_id': job['id']})
+                challenge = self.repository.select('web_challenge', ['id'], {'job_id': job['id']})
                 if len(challenge) == 1:
                     challenge = challenge[0]
-                    challengers = self.repository.select('web_challenge_challengers', ['source_id'], {'challenge_id': challenge['id']})
+                    challengers = self.repository.select('web_challenger', ['source_id'], {'challenge_id': challenge['id']})
                     self.q.put({'job': job, 'challenge': challenge, 'challengers': challengers})
                     continue
                 submission = self.repository.select('web_submission', ['id', 'user_id', 'source_id'], {'job_id': job['id']})
@@ -138,6 +144,7 @@ class Dispatcher:
                     self.q.put({'job': job, 'submission': submission[0]})
                     continue
             time.sleep(1)
+        self.logger.log('consumer finished')
 
     def run(self):
         for server in self.servers:
@@ -148,7 +155,9 @@ class Dispatcher:
             self.consumer()
         except KeyboardInterrupt:
             self.ended = True
+        self.logger.log('ending run')
         self.end()
+        self.logger.log('end')
 
     def reval(self):
         self.repository.update('web_job', {'status': 'R'})

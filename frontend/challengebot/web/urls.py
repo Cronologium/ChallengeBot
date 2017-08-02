@@ -14,11 +14,12 @@ urlpatterns = [
     url(r'^jobs/(?P<job_page>[0-9]+)$', views.jobs, name='jobs'),
     url(r'^challenges$', views.challenges, name='challenges'),
     url(r'^challenge/(?P<challenge_id>[0-9]+)$', views.challenge, name='challenge'),
+    url(r'^submission/(?P<submission_id>[0-9]+)$', views.submission, name='submission'),
     url(r'^about$', views.about, name='about'),
     # AJAX
     url(r'^account/login$', auth_ajax, name='authenticate'),
     url(r'^account/register$', reg_ajax, name='register'),
-    url(r'^submit/source/(?P<game_id>[0-9]+)$', submit_ajax, name='submission'),
+    url(r'^submit/source/(?P<game_id>[0-9]+)$', submit_ajax, name='submit_source'),
     url(r'^submit/challenge/(?P<source_id>[0-9]+)$', challenge_ajax, name='challenge_source'),
     url(r'^', views.index, name='index'),
 ]

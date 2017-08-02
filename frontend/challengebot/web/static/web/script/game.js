@@ -27,7 +27,7 @@ $(document).ready(function () {
         $.ajax({
             dataType: 'json',
             type: 'POST',
-            url: '/submit/source/' + $('#player_source_id').val(),
+            url: '/submit/source/' + $('#game_id').val(),
             data: data,
             success: function(data) {
                 if (data['msg'] == 'success') {
@@ -58,7 +58,7 @@ $(document).ready(function () {
         $.ajax({
             dataType: 'json',
             type: 'POST',
-            url: '/submit/challenge/' + $('#game_id').val(),
+            url: '/submit/challenge/' + $('#player_source_id').val(),
             data: data,
             success: function(data) {
                 if (data['msg'] == 'success') {

@@ -32,7 +32,8 @@ class Source(models.Model):
     RESULT_CHOICES = (
         ('P', 'Pending'),
         ('A', 'Accepted'),
-        ('R', 'Rejected')
+        ('R', 'Rejected'),
+        ('D', 'Disqualified'),
     )
     result = models.CharField(max_length=20, choices=RESULT_CHOICES, default='P')
 
@@ -57,8 +58,8 @@ class Job(models.Model):
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Q')
     date = models.DateTimeField('Date of publication')
     game = models.ForeignKey(Game, on_delete=models.CASCADE, default=1)
-    log_path = models.CharField(max_length=260)
-    author = models.ForeignKey(User)
+    log_path = models.CharField(max_length=260, default='')
+    author = models.ForeignKey(User, default=0)
 
     def __str__(self):
         return "Job #" + str(self.id) + " for " + self.game.name + " from " + str(self.date)
@@ -83,7 +84,7 @@ class Challenger(models.Model):
     challenge = models.ForeignKey(Challenge)
     source = models.ForeignKey(Source)
     status = models.CharField(max_length=15, choices=STATUS_CHOICES, default='P')
-    position = models.IntegerField()
+    position = models.IntegerField(default=0)
 
 
 class Submission(models.Model):
