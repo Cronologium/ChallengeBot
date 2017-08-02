@@ -7,3 +7,4 @@ class Player(object):
         self.name = name
         self.timeout = timeout
         self.status = Status.PLAYS
+        self.position = 50

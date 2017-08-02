@@ -3,6 +3,7 @@ from Queue import Queue
 
 import time
 
+from backend.aftergame.experienceManager import ExperienceManager
 from backend.communication.server import Server
 from backend.game.g001_battleships.battleshipGame import BattleshipGame
 from backend.game.g002_xando.xandoGame import XandoGame
@@ -30,6 +31,7 @@ class Dispatcher:
         self.env_manager = EnvironmentManager()
         self.ended = False
         self.logger = logger
+        self.experienceManager = ExperienceManager(self.repository, logger)
 
     def end(self):
         w = 5
@@ -79,6 +81,7 @@ class Dispatcher:
             else:
                 self.repository.update('web_source', {'selected': 0}, {'user_id': player_id, 'selected': 1})
                 self.repository.update('web_source', {'result': 'A', 'selected': 1}, {'id': source_id})
+                self.experienceManager.do_submission(ids['submission']['id'])
         elif 'challenge' in ids:
             pass
             '''
