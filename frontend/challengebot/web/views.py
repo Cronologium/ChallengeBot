@@ -14,9 +14,9 @@ from django.template import loader
 from django.utils import timezone
 
 from .code_submit import submit_submission, submit_challenge
-from .forms import SubmissionForm, ChallengeForm, TicketForm
+from .forms import SubmissionForm, ChallengeForm
 
-from .models import Game, Challenge, Job, Submission, Source, Ticket
+from .models import Game, Challenge, Job, Submission, Source
 
 
 def get_rendered_menu(request):
@@ -71,7 +71,7 @@ def challenge(request, challenge_id):
     content_template = loader.get_template(os.path.join('web', 'challenge.html'))
     log = None
     try:
-        log = open(challenge_obj.log_path)
+        log = open(challenge_obj.job.log_path)
     except IOError:
         pass
 
@@ -113,30 +113,51 @@ def challenge(request, challenge_id):
     return HttpResponse(template.render(context, request))
 
 
-def submit(request, game_id):
-    game_obj = get_object_or_404(Game, pk=int(game_id))
-    form = SubmissionForm(request.POST)
-    if request.POST['your_code'] == '':
-        return redirect('/game/' + str(game_id) + '/')
-    submit_submission(game_obj, request.user, request.POST['your_code'], request.POST['language'])
-    return redirect('/jobs/')
+def submission(request, submission_id):
+    submission_obj = get_object_or_404(Submission, pk=int(submission_id))
+    content_template = loader.get_template(os.path.join('web', 'challenge.html'))
+    log = None
+    try:
+        log = open(submission_obj.job.log_path)
+    except IOError:
+        pass
 
+    # What follows is bad code and *has* to changed
+    participants = []
+    ships = {}
+    shots = {}
+    line_index = 0
+    for line in log:
+        if line_index < 2:  # read participants' names
+            participant = line.strip().split(' ')[1]
+            participants.append(participant)
+            ships[participant] = []
+            shots[participant] = []
+        else:
+            line = line.strip().split(' ')
+            if line[1] == 'puts':
+                x1 = int(line[2])
+                y1 = int(line[3])
+                x2 = int(line[4])
+                y2 = int(line[5])
+                ship_size = abs(x1 - x2) + abs(y1 - y2) + 1
+                player = line[0]
+                ships[player].append(Ship(x1, y1, x2, y2, ship_size, player))
+            if line[1] == 'shoots':
+                x = int(line[2])
+                y = int(line[3])
+                player = line[0]
+                shots[player].append(Shot(x, y, player))
 
-def challenge_source(request, source_id):
-    source_obj = get_object_or_404(Source, pk=int(source_id))
-    game_obj = Game.objects.get(pk=source_obj.game_id)
-    selected_opponents = request.POST.getlist('selected_opponents')
-    users = [get_object_or_404(User, pk=source_obj.user_id)]
-    sources = [source_obj]
-    for opponent in selected_opponents:
-        opponent_source = get_object_or_404(Source, pk=opponent)
-        sources.append(opponent_source)
-        user = get_object_or_404(User, pk=opponent_source.user_id)
-        users.append(user)
-    if game_obj.players_min <= len(users) <= game_obj.players_max:
-        challenge = submit_challenge(game_obj, sources)
-        return redirect('/jobs/')
-    return redirect('/game/' + str(game_obj.id) + '/')
+        line_index += 1
+    # Until here
+
+    content_context = {'submission': submission_obj, 'participants': participants, 'ships': ships, 'shots': shots}
+    context = {}
+    context['menu'] = get_rendered_menu(request)
+    context['content'] = [content_template.render(content_context, request)]
+    template = loader.get_template(os.path.join('web', 'template.html'))
+    return HttpResponse(template.render(context, request))
 
 
 def game(request, game_id):
@@ -183,54 +204,6 @@ def jobs(request, job_page):
     context['content'] = [content_template.render(content_context, request)]
     template = loader.get_template(os.path.join('web', 'template.html'))
     return HttpResponse(template.render(context, request))
-
-
-def support(request):
-    if request.user.is_authenticated:
-        content_template = loader.get_template(os.path.join('web', 'support.html'))
-        content_context = {'form': TicketForm(), 'ticket_list': Ticket.objects.filter(user=request.user)}
-        context = {}
-        context['menu'] = get_rendered_menu(request)
-        context['content'] = [content_template.render(content_context, request)]
-        template = loader.get_template(os.path.join('web', 'template.html'))
-        return HttpResponse(template.render(context, request))
-    else:
-        return redirect('/')
-
-
-def ticket_submit(request):
-    if request.user.is_authenticated:
-        t = Ticket()
-        t.date = timezone.now()
-        t.type = request.POST['type']
-        t.title = request.POST['title']
-        t.user = request.user
-        t.description = request.POST['description']
-        t.save()
-    return redirect('/support/')
-
-
-def new_user(request):
-    if 'username' in request.POST and 'password' in request.POST and 'email' in request.POST and 'confirm-password' in request.POST:
-        username = request.POST['username']
-        if re.search('^[a-zA-Z0-9]*$', username) is None:
-            return redirect('/register/')
-        email = request.POST['email']
-        if re.search(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", email) is None:
-            return redirect('/register/')
-        if len(User.objects.filter(username=username)) > 0:
-            return redirect('/register/')
-        if len(User.objects.filter(email=email)) > 0:
-            return redirect('/register/')
-        if request.POST['confirm-password'] != request.POST['password']:
-            return redirect('/register/')
-        user = User.objects.create_user(username, email, request.POST['password'])
-        user.save()
-    return redirect('/')
-
-def aggressive_login(request):
-    template = loader.get_template(os.path.join('web', 'aggressive_login.html'))
-    return HttpResponse(template.render({}, request))
 
 
 def about(request):

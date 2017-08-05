@@ -33,7 +33,7 @@ class BattleshipGame(PhasingGame):
                 msg = self.server.send_and_receive(player, 'ship size ' + str(self.ships_to_put[0][1]))
 
                 if msg is None:
-                    self.players[player].status = Status.TIMEOUT_EXCEEDED
+                    self.players_dsq([(player, Status.TIMEOUT_EXCEEDED)])
                 else:
                     try:
                         data = msg.split(' ')
@@ -45,7 +45,7 @@ class BattleshipGame(PhasingGame):
                         self.log_ship_putting(player, data)
 
                     except Exception:
-                        self.players[player].status = Status.INVALID_PUT
+                        self.players_dsq([(player, Status.INVALID_PUT)])
 
             if len(self.ships_to_put) > 1:
                 self.ships_to_put = self.ships_to_put[1:]
@@ -57,7 +57,7 @@ class BattleshipGame(PhasingGame):
         msg = self.server.send_and_receive(self.phase2_turn, '|'.join(self.players[self.phase2_turn].message_queue))
         self.players[self.phase2_turn].message_queue = []
         if msg is None:
-            self.players[self.phase2_turn].status = Status.TIMEOUT_EXCEEDED
+            self.players_dsq([(self.phase2_turn, Status.TIMEOUT_EXCEEDED)])
         else:
             try:
                 data = msg.split(' ')
@@ -74,14 +74,14 @@ class BattleshipGame(PhasingGame):
                 self.players[self.phase2_turn].message_queue.append(str(result) + ' ' + msg)
 
             except Exception:
-                self.players[self.phase2_not_turn].status = Status.INVALID_SHOOT
+                self.players_dsq([(self.phase2_not_turn, Status.INVALID_PUT)])
 
         self.phase2_turn, self.phase2_not_turn = self.phase2_not_turn, self.phase2_turn
 
     def check(self):
         for player_name in self.players:
             if self.players[player_name].has_no_ships():
-                self.players[player_name].status = Status.LOSER
+                self.players_lose([player_name])
         super(BattleshipGame, self).check()
 
 

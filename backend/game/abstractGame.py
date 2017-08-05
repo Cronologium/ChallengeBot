@@ -14,11 +14,12 @@ class Game(object):
         self.required_players = required_players
         self.players = {}
         self.accept_timeouts = accept_timeouts
+        self.win_pos = 1
+        self.lose_pos = len(players)
         for player in players:
             self.players[player.name] = player
 
     def join_player(self, player_name, connection):
-        print 'Player name', player_name
         self.players[player_name].joined = True
         self.server.bind_channel(player_name, Channel(connection, self.players[player_name].timeout))
         self.logger.log('Player ' + player_name + ' has joined the game!')
@@ -33,11 +34,31 @@ class Game(object):
         self.logger.log('Player ' + player_name + ' has left the game! [' + str(self.players[player_name].status) + ']')
         self.players[player_name].joined = False
 
+    def players_win(self, names):
+        for name in names:
+            self.players[name].position = self.win_pos
+            self.players[name].status = Status.WINNER
+        self.win_pos += len(names)
+
+    def players_lose(self, names):
+        for name in names:
+            self.players[name].position = self.lose_pos
+            self.players[name].status = Status.LOSER
+        self.lose_pos -= len(names)
+
+    def players_dsq(self, dsq):
+        for d in dsq:
+            self.players[d[0]].position = len(self.players)
+            self.players[d[0]].status = d[1]
+        self.lose_pos -= len(dsq)
+        for name in self.players:
+            if self.players[name].status == Status.LOSER:
+                self.players[name].position -= len(dsq)
+
     def start(self):
         self.logger.open()
         while len([p for p in self.players if self.players[p].joined is False]):
             conn, player_name = self.server.get_blind_message()
-            print player_name, 'tries to join'
             if player_name is not None and player_name in self.players and self.players[player_name].joined is False:
                 self.join_player(player_name, conn)
             else:
@@ -71,7 +92,7 @@ class Game(object):
         if players_left < self.required_players:
             for player_name in self.players:
                 if self.players[player_name].status == Status.PLAYS:
-                    self.players[player_name].status = Status.WINNER
+                    self.players_win([player_name])
                     self.exit_player(player_name)
             raise GameOver
 

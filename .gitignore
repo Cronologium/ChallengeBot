@@ -32,6 +32,7 @@ node_modules
 
 #ChallengeBot
 db.sqlite3
+db.sqlite3-journal
 logs/*.txt
 sources/*.py
 sources/*.pyc
