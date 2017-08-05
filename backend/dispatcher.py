@@ -81,17 +81,27 @@ class Dispatcher:
             else:
                 self.repository.update('web_source', {'selected': 0}, {'user_id': player_id, 'selected': 1})
                 self.repository.update('web_source', {'result': 'A', 'selected': 1}, {'id': source_id})
-                self.experienceManager.do_submission(ids['submission']['id'])
+                self.experienceManager.do_submission(ids['submission'])
         elif 'challenge' in ids:
-            pass
-            '''
-            for player_name in game.players:
-                if game.players[player_name].status == Status.WINNER:
-                    player_id = self.repository.select('auth_user', ['id'], {'username': player_name})[0]['id']
-                    source_id = self.repository.select('web_source', ['id'], {'user_id': player_id, 'selected': 1})[0]['id']
-                    self.repository.update('web_challenge', {'winner_id': source_id}, {'id': ids['challenge']})
-                    break
-            '''
+            challengers = self.repository.select('web_challenger', ['id', 'source_id'], {'challenge_id': ids['challenge']})
+            for challenger in challengers:
+                s = None
+                for source in sources:
+                    if source['id'] == challenger['source_id']:
+                        s = source
+                username = self.repository.select('auth_user', ['username'], {'id': s['user_id']})[0]['username']
+                user_data = {}
+                user_data['position'] = game.players[username].position
+                if game.players[username].status == Status.WINNER:
+                    user_data['status'] = 'W'
+                elif game.players[username].status == Status.LOSER:
+                    user_data['status'] = 'L'
+                elif game.players[username].status == Status.DRAW:
+                    user_data['status'] = 'T'
+                else:
+                    user_data['status'] = 'D'
+                self.repository.update('web_challenger', user_data, {'id': challenger['id']})
+            self.experienceManager.do_challenge(ids['challenge'])
 
     def executer(self):
         while not self.ended:
@@ -120,7 +130,7 @@ class Dispatcher:
                         logger = FileLogger(run_data['job']['log_path'])
                         logger.open()
                         for challenger in run_data['challengers']:
-                            s = self.repository.select('web_source', ['user_id', 'path', 'language'], {'id': challenger['source_id']})[0]
+                            s = self.repository.select('web_source', ['id', 'user_id', 'path', 'language'], {'id': challenger['source_id']})[0]
                             players.append(
                                 self.repository.select('auth_user', ['username'], {'id': s['user_id']})[0]['username'])
                             sources.append(s)

@@ -26,9 +26,9 @@ class ExperienceManager:
     def do_submission(self, submission_id):
         submission = self.repository.select('web_submission', ['user_id', 'source_id'], {'id': submission_id})
         if len(submission) > 0:
-            submissions = self.repository.select('web_submission', ['count(*)'], {'user_id': submission[0]['user_id'], 'source_id': submission[0]['source_id']})
-            source_obj = self.repository.select('web_source', ['user_id', 'game_id', 'result'], {'id': submission[0]['id']})
-            if self.repository.select('web_levelinguser', ['count(*)'], {'user_id': source_obj[0]['user_id'], 'game_id': source_obj[0]['game_id']})[0] != 0:
+            submissions = self.repository.select('web_submission', ['count(*)'], {'user_id': submission[0]['user_id'], 'source_id': submission[0]['source_id']})[0]['count(*)']
+            source_obj = self.repository.select('web_source', ['user_id', 'game_id', 'result'], {'id': submission_id})
+            if self.repository.select('web_levelinguser', ['count(*)'], {'user_id': source_obj[0]['user_id'], 'game_id': source_obj[0]['game_id']})[0]['count(*)'] != 0:
                 return
             if len(source_obj) > 0:
                 if submissions == 1 and source_obj[0]['result'] == 'A':
@@ -38,7 +38,7 @@ class ExperienceManager:
 
     def do_challenge(self, challenge_id):
         challengers = self.repository.select('web_challenger', ['source_id', 'status', 'position'], {'challenge_id': challenge_id})
-        sources = self.repository.select('web_source', ['id', 'game_id', 'user_id'], {'id': challengers[0]['source_id']})
+        sources = [self.repository.select('web_source', ['id', 'game_id', 'user_id'], {'id': challengers[x]['source_id']})[0] for x in xrange(len(challengers))]
         level_game = self.repository.select('web_levelgame', ['level', 'xp_win', 'xp_lost', 'xp_draw', 'xp_dsq'], {'game_id': sources[0]['game_id']})
         if len(level_game) > 0:
             level = {level_game[x]['level']: {k: v for k, v in level_game[x].items() if k != 'level'} for x in xrange(len(level_game))}
@@ -57,14 +57,17 @@ class ExperienceManager:
                 ranking[user_id] = position
 
             for p in ranking:
-                level_user_id = self.repository.select({'web_levelinguser', ['id'], {'game_id': sources[0]['game_id'], 'user_id':p}})[0]['id']
+                level_user_id = self.repository.select('web_levelinguser', ['id'], {'game_id': sources[0]['game_id'], 'user_id':p})[0]['id']
                 level_user = self.repository.select('web_levelinguser', ['id', 'level', 'xp', 'game_id'], {'id': level_user_id})[0]
                 if ranking[p][1] == 'D':
-                    self.award_xp(level_user_id, level[level_user['level']]['xp_dsq'])
+                    if author_id == p:
+                        self.award_xp(level_user_id, int(1.5 * level[level_user['level']]['xp_dsq']))
+                    else:
+                        self.award_xp(level_user_id, level[level_user['level']]['xp_dsq'])
                 else:
                     k = 0
                     for p2 in ranking:
-                        if ranking[p2][0] > ranking[p]:
+                        if ranking[p2][0] > ranking[p][0]:
                             k += 1
                     xp_gain = 1.0 * (k * level[level_user['level']]['xp_win'] + (len(ranking) - 1) * level[level_user['level']]['xp_lost']) / (len(ranking) - 1)
                     if author_id == p:

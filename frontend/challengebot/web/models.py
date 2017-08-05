@@ -86,6 +86,9 @@ class Challenger(models.Model):
     status = models.CharField(max_length=15, choices=STATUS_CHOICES, default='P')
     position = models.IntegerField(default=0)
 
+    def __str__(self):
+        return self.challenge.job.game.name + ' ' + self.source.user.username + ' placed ' + str(self.position) + ' (' + self.status + ')'
+
 
 class Submission(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -106,9 +109,15 @@ class LevelGame(models.Model):
     xp_draw = models.IntegerField()
     xp_dsq = models.IntegerField()
 
+    def __str__(self):
+        return 'Level ' + str(self.level) + ' of game ' + self.game.name
+
 
 class LevelingUser(models.Model):
     level = models.IntegerField()
     xp = models.IntegerField()
     game = models.ForeignKey(Game, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.username + ' (' + self.game.name + ' level ' + str(self.level) + ' | xp: ' + str(self.xp) + ')'
