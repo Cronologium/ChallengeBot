@@ -76,17 +76,18 @@ Log relevant data which can be used later by a the front-end to show all the dat
 
 ## Declaring winners or losers
 
-Each AbstractPlayer comes with its status. If the status of the player is changed anytime during the game from *Status.PLAYING* to anything else, the player will leave the game and that will be logged. *Status.WINNER, Status.DRAW, Status.LOSER* will ask the player to leave nicely, while all other will result in a *kick*. It is recommended you only change the status of a player in the check function (see implementation for super class used to see what already exists, usually only turns, phases, checks, starts and finished should be implemented). 
-When receiving None as a command, the player **must be kicked** with Status.TIMEOUT_EXCEEDED
+Each AbstractPlayer comes with its status. If the status of the player is changed anytime during the game from *Status.PLAYING* to anything else, the player will leave the game and that will be logged. *Status.WINNER, Status.LOSER* will ask the player to leave nicely, while all other will result in a *kick*. It is recommended you only change the status of a player in the check function (see implementation for super class used to see what already exists, usually only turns, phases, checks, starts and finished should be implemented). 
+As of new updates, changing the status should occur **only through special functions in the AbstractGame class**
+When receiving None as a command, the player **must be kicked** with Status.TIMEOUT_EXCEEDED. 
 
 ## How to test a game?
 
 **Do not use the dispatcher.** Create an executable, conveniently placed .py file which loads the game with a port and test list of players. Create a separate client which directly connects to the server using sockets. See (sources-test folder as a reference)
 
-## The ranking system(WIP)
+## The ranking system
 Everytime you set a status of a player to WINNER, they will automatically get the best position possible in the ranking. Everytime you set a status of a player to LOSER, they will automatically get the worst position possible in the ranking. There is another tier of *worseness*: disqualification. A player's source can be disqualified, which means it will get the disqualified status and cannot be used again. In this case, all players with loser status will be above the players with disqualified.
 
-### Experience(WIP)
+### Experience
 After the ranking has been determined, each player will be awarded accordingly to their rank in the ranking. If a player is disqualified, they will not enter the ranking, but others will benefit from their loss. The formula for computing xp gain is
 
 ```
@@ -111,27 +112,45 @@ Also, if your game accepts draws (such as X and O) figure out a value which is c
 
 Example:
 Level 1 (Win-rate 0%):
+
 xp_reach = 60xp
+
 xp_gain = 20xp
+
 xp_lost = 0xp
+
 xp_draw = 10xp
+
 xp_dsq = -10xp
 
+
 Level 2(Win-rate 25%):
+
 xp_reach = 100xp
+
 xp_gain = 25xp
+
 xp_lost = -7xp
+
 xp_draw = 8xp
+
 xp_dsq = -20xp
+
 
 ...
 
 Level X(Win-rate: 66%):
+
 xp_reach = 1000xp
+
 xp_gain = 40xp
+
 xp_lost = -27xp
+
 xp_draw = 0xp
+
 xp_dsq = -1000xp
+
 
 This way, for a player to advance a level, they will either have to: 
 - have a good enough win-rate the whole level to beat the established one
