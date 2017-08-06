@@ -6,7 +6,7 @@ class ExperienceManager:
         self.repository = repository
         self.logger = logger
 
-    def award_xp(self, level_user, xp):
+    def award_xp(self, level_user, xp, challenger_id=None):
         level_user['xp'] += xp
         if level_user['xp'] < 0:
             level_user['xp'] = 0
@@ -18,6 +18,8 @@ class ExperienceManager:
                     level_user['xp'] -= level_game[0]['xp_reach']
         del level_user['game_id']
         self.repository.update('web_levelinguser', level_user, {'id': level_user['id']})
+        if challenger_id is not None:
+            self.repository.update('web_challenger', {'xp_diff': xp}, {'id': challenger_id})
 
     def initiate_player(self, source_obj, level_start):
         self.logger.log('initiated a player: ' + str(source_obj) + ' at level ' + str(level_start))
@@ -37,7 +39,7 @@ class ExperienceManager:
                     self.initiate_player(source_obj[0], 1)
 
     def do_challenge(self, challenge_id):
-        challengers = self.repository.select('web_challenger', ['source_id', 'status', 'position'], {'challenge_id': challenge_id})
+        challengers = self.repository.select('web_challenger', ['id', 'source_id', 'status', 'position'], {'challenge_id': challenge_id})
         sources = [self.repository.select('web_source', ['id', 'game_id', 'user_id'], {'id': challengers[x]['source_id']})[0] for x in xrange(len(challengers))]
         level_game = self.repository.select('web_levelgame', ['level', 'xp_win', 'xp_lost', 'xp_draw', 'xp_dsq'], {'game_id': sources[0]['game_id']})
         if len(level_game) > 0:
@@ -47,7 +49,7 @@ class ExperienceManager:
 
             ranking = {}
             for ch in challengers:
-                position = (ch['position'], ch['status'])
+                position = (ch['position'], ch['status'], ch['id'])
                 source_id = ch['source_id']
                 user_id = 0
                 for s in sources:
@@ -72,7 +74,7 @@ class ExperienceManager:
                     xp_gain = 1.0 * (k * level[level_user['level']]['xp_win'] + (len(ranking) - 1) * level[level_user['level']]['xp_lost']) / (len(ranking) - 1)
                     if author_id == p:
                         xp_gain *= 1.5
-                    self.award_xp(level_user, int(xp_gain))
+                    self.award_xp(level_user, int(xp_gain), ranking[p][2])
 
 
 

@@ -62,7 +62,7 @@ class Job(models.Model):
     author = models.ForeignKey(User, default=0)
 
     def __str__(self):
-        return "Job #" + str(self.id) + " for " + self.game.name + " from " + str(self.date)
+        return "Job #" + str(self.id) + " for " + self.game.name + " from " + str(self.date) + ' (' + self.author.username + ')'
 
 
 class Challenge(models.Model):
@@ -85,6 +85,7 @@ class Challenger(models.Model):
     source = models.ForeignKey(Source)
     status = models.CharField(max_length=15, choices=STATUS_CHOICES, default='P')
     position = models.IntegerField(default=0)
+    xp_diff = models.IntegerField(default=0)
 
     def __str__(self):
         return self.challenge.job.game.name + ' ' + self.source.user.username + ' placed ' + str(self.position) + ' (' + self.status + ')'
