@@ -43,23 +43,23 @@ html, body {
     font-family: "Courier new", Courier, monospace;
     font-size: 1em;
     font-weight: bold;
-    /*color: #17f52a;*/
-    color: #507546;
+    color: #1755aa;
+    /*color: #507546;*/
 }
 
 .content {
     border-radius: 10px;
-    width: 1100px;
+    min-width: 900px;
+    width: 95%;
     margin: auto;
-    margin-top: 50px;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top: 15px;
-    padding-bottom: 15px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     background-color: rgb(38, 43, 47);
-    -webkit-box-shadow: 0px 0px 20px 2px rgb(79, 79, 79);
-    -moz-box-shadow: 0px 0px 20px 2px rgb(79, 79, 79);
-    box-shadow: 0px 0px 20px 2px rgb(79, 79, 79);
+    -webkit-box-shadow: 0px 0px 20px 2px rgb(20, 20, 30);
+    -moz-box-shadow: 0px 0px 20px 2px rgb(20, 20, 30);
+    box-shadow: 0px 0px 20px 2px rgb(20, 20, 30);
 
     /*font-size: 14px;*/
     /*color: rgb(222,222,255);*/
@@ -67,6 +67,6 @@ html, body {
     font-family: "Courier new", Courier, monospace;
     font-size: 1em;
     font-weight: bold;
-    /*color: #17f52a;*/
-    color: #507546;
+    color: rgb(142,164,255);
+    /*color: #507546;*/
 }

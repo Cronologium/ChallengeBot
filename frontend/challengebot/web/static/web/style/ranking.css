@@ -1,0 +1,78 @@
+/* mouse over link */
+.rank-button:hover {
+    color: rgb(104,154,112);
+    background-color: rgb(46,35,64);
+}
+
+a:active {
+    color: ForestGreen;
+}
+
+#rank-options {
+    height: 35px;
+}
+
+.rank-button {
+    display: inline-block;
+    height: 20px;
+    width: 60px;
+    text-align: center;
+    color: #8eccff;
+    background-color: rgb(95,84,117);
+    /*background-color:*/
+    padding: 2px;
+    margin: 2px;
+    border: solid 1px black;
+}
+
+.rank-button-left {
+    float: left;
+}
+
+.rank-button-right {
+    float: right;
+}
+
+.ranking-tab {
+    background-color: rgba(138, 135, 151, 0.3);
+    padding: 0px;
+    margin: 5px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.ranking-tab-content {
+    padding: 5px;
+}
+
+.ranking-tab h3 {
+    margin-top: 0px;
+    padding: 5px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: rgb(142,164,255);
+    text-align: center;
+}
+
+#ranking-choose {
+    width: 24%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+#ranking-data {
+    width: 75%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+#game-select {
+    width: 100%;
+    margin: 0px;
+    margin-bottom: 10px;
+    height: 50px;
+    padding: 12px 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: black;
+}

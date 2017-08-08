@@ -1,38 +1,5 @@
-#info{
-    background-color:#8A8797;
-    padding: 25px;
-    margin: 25px;
-    border-radius: 10px;
-    color:black;
-}
 p{
    text-align: justify;
-
-}
-#shipTable {
-    border-collapse: collapse;
-    width: 50%;
-}
-#shipTable th, td {
-    text-align: left;
-    padding: 8px;
-    border: 1px solid black;
-
-}
-#shipTable tr:nth-child(even){
-    background-color: white;
-    color: black;
-}
-
-#shipTable tr{
-    background-color: white;
-    color: black;
-    border: 1px solid black;
-}
-
-#shipTable th {
-    background-color: #C1C4D3;
-    color: black;
 
 }
 

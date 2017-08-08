@@ -1,7 +1,7 @@
     {% load static %}
     <link rel="stylesheet" type='text/css' href="{% static 'web/style/battleship.css' %}">
     <div id="info">
-        <h3><b><i>Description</i></b></h3>
+        <h4>Description</h4>
         <p>
             Battleship is a board game for two players who try to guess the location of the ships each player hides on a
             10 × 10 grid that can't be seen by his opponent. Players take turns calling out a row and column on the other
@@ -19,9 +19,9 @@
             announces whether or not the square is occupied by a ship. When all of the squares of a ship have been hit,
             the ship is sunk. If all of a player's ships have been sunk, the game is over and their opponent wins.
         </p>
-        <h3><b><i>Type of ships allowed</i></b></h3>
+        <h4>Type of ships allowed</h4>
         <br>
-        <table id="shipTable">
+        <table id="game-table">
           <tr>
             <th>Type of ship</th>
             <th>Size</th>
@@ -48,7 +48,7 @@
             <td>4</td>
           </tr>
         </table>
-        <h3><b><i>Code description</i></b></h3>
+        <h4>Code description</h4>
         <p>
             Your solution will not be run from a main function. Instead, each of the required functions will be called
             when needed. You will face off against an opponent while a server acts as the coach of the game. If you give
@@ -70,15 +70,15 @@
         <p>
             The game will automatically end when a player has no ships left. You do not need to be aware of this case.
         </p>
-        <h3><b><i>Specifications</i></b></h3>
+        <h4>Specifications</h4>
         <ul>
             <li>The time limit is applied to each individual function</li>
             <li>The memory limit is applied to the whole program</li>
             <li>Before challenging others, you program has to be validated</li>
         </ul>
-        <h3><b><i>Examples</i></b></h3>
-        <h4>Example of ship putting phase</h4>
-            <table class="example-table">
+        <h4>Examples</h4>
+        <h5>Example of ship putting phase</h5>
+            <table class="game-table">
                 <tr>
                     <th>
                         &lt;function&gt;(input string)
@@ -125,11 +125,11 @@
                 </tr>
             </table>
 
-        <h4>Examples of shooting phase</h4>
+        <h5>Examples of shooting phase</h5>
         <p>
             If going first:
         </p>
-        <table class="example-table">
+        <table class="game-table">
             <tr>
                 <th>
                     &lt;function&gt;(input string)
@@ -179,7 +179,7 @@
         <p>
             If going second:
         </p>
-        <table class="example-table">
+        <table class="game-table">
             <tr>
                 <th>
                     &lt;function&gt;(input string)
