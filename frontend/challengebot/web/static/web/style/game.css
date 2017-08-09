@@ -10,6 +10,8 @@
     border-radius: 10px;
     color: black;
     margin-bottom: 20px;
+    border: solid 1px black;
+    box-shadow: 0px 0px 20px 2px rgb(20, 20, 30);
 }
 
 .game-tab-content {
@@ -80,7 +82,7 @@ p {
 
 input[type=submit] {
     width: 20%;
-    background-color: #20072B;
+    background-color: #1a1333;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
@@ -147,16 +149,18 @@ input[type=button]{
 
 .challenge-options {
     width: 50%;
-    margin: auto;
+    margin: 0 auto;
     display: inline;
     text-align: center;
     vertical-align: middle;
 }
 
 #addButton {
+    background-color: #1a1333;
 }
 
 #removeButton {
+    background-color: #1a1333;
 }
 
 #challenge-submit {
@@ -173,7 +177,7 @@ input[type=button]{
     text-align: center;
     vertical-align: top;
     color: rgb(142,164,255);
-    background-color: rgb(0,0,45);
+    background-color: #1a1333;
     font-size: 20px;
 }
 
@@ -181,13 +185,13 @@ input[type=button]{
     display: inline-block;
     height: 30px;
     width: 92%;
-    background-color: rgb(90, 40, 90);
+    background-color: #0a0323;
     border: solid 1px black;
 }
 
 #xp-gain {
     height: 100%;
-    background-color: rgb(100, 80, 130);
+    background-color: #1a1373;
     width: 0%;
     transition: 5s;
 }

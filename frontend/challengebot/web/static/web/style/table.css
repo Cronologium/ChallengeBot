@@ -13,6 +13,10 @@ td a {
     color: white;
 }
 
+td a:hover {
+    color: white;
+}
+
 tr {
     width: 300px;
     outline: 1px solid black;

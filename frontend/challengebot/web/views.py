@@ -6,6 +6,7 @@ import os
 import re
 
 # Create your views here.
+import sys
 from django.contrib.auth.models import User
 
 from django.http import HttpResponse, Http404
@@ -239,10 +240,18 @@ def jobs(request, job_page):
         min_job = max(len(job_list) - 20 * job_page, 0)
         max_job = min(len(job_list) - 20 * (job_page - 1), len(job_list))
         job_list = job_list[len(job_list) - max_job: len(job_list) - min_job]
+    filtered_challenge_list = []
+    filtered_submission_list = []
+    for ch in challenge_list:
+        if ch.job in job_list:
+            filtered_challenge_list.append(ch)
+    for sub in submission_list:
+        if sub.job in job_list:
+            filtered_submission_list.append(sub)
     content_context = {
         'job_list': job_list,
-        'challenge_list': challenge_list,
-        'submission_list': submission_list,
+        'challenge_list': filtered_challenge_list,
+        'submission_list': filtered_submission_list,
         'max_page': max_page,
         'job_page': job_page,
     }

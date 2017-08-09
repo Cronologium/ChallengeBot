@@ -4,10 +4,6 @@
     background-color: rgb(46,35,64);
 }
 
-a:active {
-    color: ForestGreen;
-}
-
 #rank-options {
     height: 35px;
 }

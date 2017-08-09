@@ -32,16 +32,16 @@
         <table id="ranking-table">
                 <tr>
                     <th>#</th>
-                    <th>Game</th>
                     <th>User</th>
+                    <th>Game</th>
                     <th>Level</th>
                     <th>Xp</th>
                 </tr>
                 {% for rank in rankings_list %}
                     <tr>
                         <td class="pos"></td>
+                        <td style="color: white;">{{rank.user}}</td>
                         <td><a href="/game/{{rank.game.id}}">{{rank.game.name}}</a></td>
-                        <td>{{rank.user}}</td>
                         <td>{{rank.level}}</td>
                         <td>{{rank.xp}}</td>
                     </tr>

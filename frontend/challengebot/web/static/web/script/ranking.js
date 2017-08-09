@@ -15,12 +15,12 @@ $(document).ready(function() {
         }
         if (pos_start == 2)
         {
-            ranking_row.css('font-size', 22);
+            ranking_row.css('font-size', 25);
             ranking_row.css("background-color", "rgba(192,192,192,0.5)");
         }
         if (pos_start == 3)
         {
-            ranking_row.css('font-size', 15);
+            ranking_row.css('font-size', 20);
             ranking_row.css("background-color", "rgba(205,127,50,0.5)");
         }
         pos_start += 1;

@@ -13,6 +13,8 @@
     vertical-align: top;
     height: 100%;
     transition: 0.5s;
+    border: solid 1px black;
+    box-shadow: 0px 0px 20px 2px rgb(20, 20, 30);
 }
 
 #question-div-5 {
