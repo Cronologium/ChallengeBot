@@ -13,7 +13,8 @@
     background-color: rgb(37, 37, 37);
     min-width: 1200px;
     /*overflow: auto;*/
-    z-index: 1;
+    z-index: 10;
+    transition: 0.5s;
 }
 
 #menuhead {
@@ -24,11 +25,11 @@
 	margin-left: 10px;
 	margin-top: 5px;
 	background-color: rgb(62, 62, 62);
-	border:0px;
-	border-top:5px;
-	border-style:solid;
-	border-color: rgb(13, 25, 50);
-	-webkit-box-shadow: 0px 0px 20px 2px rgb(75, 75, 75);
+	border: 0px;
+	border-top: solid 5px rgb(80,90,120);
+	-webkit-box-shadow: 0px 0px 20px 2px rgb(20, 20, 30);
+    -moz-box-shadow: 0px 0px 20px 2px rgb(20, 20, 30);
+    box-shadow: 0px 0px 20px 2px rgb(20, 20, 30);
     /*-moz-box-shadow: 0px 0px 20px 2px rgb(69, 44, 26);*/
     /*box-shadow: 0px 0px 20px 2px rgb(81, 51, 31);*/
 }
@@ -56,7 +57,7 @@
     /*background: -moz-linear-gradient(-45deg, #53466c 0%, #403556 9%, #4a3f62 11%, #5b4e77 54%, #5b4e77 54%); !* FF3.6-15 *!*/
     /*background: -webkit-linear-gradient(-45deg, #53466c 0%,#403556 9%,#4a3f62 11%,#5b4e77 54%,#5b4e77 54%); !* Chrome10-25,Safari5.1-6 *!*/
     /*background: linear-gradient(135deg, #53466c 0%,#403556 9%,#4a3f62 11%,#5b4e77 54%,#5b4e77 54%); !* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ *!*/
-    -webkit-box-shadow: 0px 0px 20px 2px rgb(90, 90, 90);
+    -webkit-box-shadow: 0px 0px 20px 5px rgb(20, 20, 40);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#53466c', endColorstr='#5b4e77',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
     transition: 1s;
 }
@@ -132,10 +133,11 @@
 	width: 99%;
 	border:0px;
 	border-style:solid;
-	border-color:rgb(34,69,130);
+	-webkit-box-shadow: 0px 0px 20px 2px rgb(20, 20, 30);
+    -moz-box-shadow: 0px 0px 20px 2px rgb(20, 20, 30);
+    box-shadow: 0px 0px 20px 2px rgb(20, 20, 30);
 	/*-webkit-box-shadow: 0px 0px 20px 2px rgba(58,32,58,3);*/
     /*-moz-box-shadow: 0px 0px 20px 2px rgba(58,32,58,3);*/
-    box-shadow: 0px 0px 10px 2px rgb(75, 69, 66);
     transition: 1s;
 }
 
@@ -154,20 +156,20 @@
     margin: 0;
 	padding:0px;
 	overflow: hidden;
-    background-color: rgb(84, 78, 75);
+    background-color: rgb(50,50,50);
 	/*height:30px;*/
 }
 #mixer {
 	display: block;
 	float: right;
 	/*position: absolute;*/
-	pointer-events: none;
+	/*pointer-events: none;*/
     position: fixed;
     left: 20px;
     top: 0px;
     z-index: 2;
-
     transform: scale(1, 1);
+    transition: 0.1s;
 }
 .menu li .left-link{
     display: inline;
@@ -192,7 +194,7 @@
 .menu li a:hover {
     /*background-color: rgb(46,35,64);*/
     background-color: #262b2f;
-	color: rgb(109, 205, 140);
+	color: white; /*rgb(109, 205, 140);*/
 	transition: 1s;
 	cursor: pointer;
 	-webkit-box-shadow: 0px 0px 20px 2px rgba(222,222,222,1);
@@ -222,7 +224,7 @@
     left: 0;
     top: 0;
     background-color: rgb(0,0,0); /* Black fallback color */
-    background-color: rgba(62, 56, 53, 0.7); /* Black w/opacity */
+    background-color: rgba(52, 46, 69, 0.7); /* Black w/opacity */
     overflow-x: hidden; /* Disable horizontal scroll */
     transition: 0.5s; /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
 }
@@ -263,7 +265,7 @@
     position: absolute;
     top: 20px;
     right: 45px;
-    font-size: 60px;
+    font-size: 40px;
 }
 
 /* When the height of the screen is less than 450 pixels, change the font-size of the links and position the close button again, so they don't overlap */
@@ -283,7 +285,7 @@
 
 .overlay input[type=submit] {
     width: 20%;
-    background-color: #1a1313;
+    background-color: #1a1333;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;

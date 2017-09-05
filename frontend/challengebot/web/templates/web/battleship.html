@@ -1,27 +1,27 @@
     {% load static %}
     <link rel="stylesheet" type='text/css' href="{% static 'web/style/battleship.css' %}">
     <div id="info">
-        <h3><b><i>Description</i></b></h3>
-        <p>
+        <h4>Description</h4>
+        <p class="description-text">
             Battleship is a board game for two players who try to guess the location of the ships each player hides on a
             10 × 10 grid that can't be seen by his opponent. Players take turns calling out a row and column on the other
             player's grid in an attempt to name a square that contains an opponent's ship.
         </p>
-        <p>
+        <p class="description-text">
             Before the game begins, each player secretly arranges their ships on their grid. Each ship occupies a number
             of consecutive squares on the grid, arranged either horizontally or vertically. The number of squares for each
             ship is determined by the type of the ship. The ships cannot overlap (i.e. only one ship can occupy any given
             square in the grid) or exit the grid. The types and numbers of ships allowed are the same for each player.
         </p>
-        <p>
+        <p class="description-text">
             After the ships have been positioned, the game proceeds in a series of rounds. In each round, each player
             takes a turn to announce a target square in the opponent's grid which is to be shot at. The opponent
             announces whether or not the square is occupied by a ship. When all of the squares of a ship have been hit,
             the ship is sunk. If all of a player's ships have been sunk, the game is over and their opponent wins.
         </p>
-        <h3><b><i>Type of ships allowed</i></b></h3>
+        <h4>Type of ships allowed</h4>
         <br>
-        <table id="shipTable">
+        <table id="game-table">
           <tr>
             <th>Type of ship</th>
             <th>Size</th>
@@ -48,37 +48,37 @@
             <td>4</td>
           </tr>
         </table>
-        <h3><b><i>Code description</i></b></h3>
-        <p>
+        <h4>Code description</h4>
+        <p class="description-text">
             Your solution will not be run from a main function. Instead, each of the required functions will be called
             when needed. You will face off against an opponent while a server acts as the coach of the game. If you give
             the server a bad command or you exceed your time limit, the game is over for you.
         </p>
-        <p>
+        <p class="description-text">
             You will implement a Solution class which deals with the above described rules. The server first will ask for
             position of all 10 ships, which will be through a string parameter in the function <b>put_ship</b> as
             follows: "<i>ship size x</i>", where x is the size of the ship, a number between 1 and 4. You will need to
             answer back in the function with 4 integers between 0 and 9 denoting crammed into a string.
         </p>
-        <p>
+        <p class="description-text">
             After all 10 ships are positioned, the server will send to the <b>shoot</b> function as the string argument
             the answer of the last command as well as what did the opponent do the last turn. During your turn, you can
             mark what happened to your previous shot and try to shoot another. The actions are separated by the string
             " | ". The first action, if it is not the first turn, will always be "hit x y" "miss x y" which means you
             either missed or hit the shot on x y which occured during your last turn.
         </p>
-        <p>
+        <p class="description-text">
             The game will automatically end when a player has no ships left. You do not need to be aware of this case.
         </p>
-        <h3><b><i>Specifications</i></b></h3>
+        <h4>Specifications</h4>
         <ul>
             <li>The time limit is applied to each individual function</li>
             <li>The memory limit is applied to the whole program</li>
             <li>Before challenging others, you program has to be validated</li>
         </ul>
-        <h3><b><i>Examples</i></b></h3>
-        <h4>Example of ship putting phase</h4>
-            <table class="example-table">
+        <h4>Examples</h4>
+        <h5>Example of ship putting phase</h5>
+            <table class="game-table">
                 <tr>
                     <th>
                         &lt;function&gt;(input string)
@@ -125,11 +125,11 @@
                 </tr>
             </table>
 
-        <h4>Examples of shooting phase</h4>
-        <p>
+        <h5>Examples of shooting phase</h5>
+        <p class="description-text">
             If going first:
         </p>
-        <table class="example-table">
+        <table class="game-table">
             <tr>
                 <th>
                     &lt;function&gt;(input string)
@@ -176,10 +176,10 @@
                 </td>
             </tr>
         </table>
-        <p>
+        <p class="description-text">
             If going second:
         </p>
-        <table class="example-table">
+        <table class="game-table">
             <tr>
                 <th>
                     &lt;function&gt;(input string)
@@ -203,8 +203,8 @@
                 </td>
             </tr>
         </table>
-        <b>Observation: you will return a variable as string, you do <i>not</i> need to return the "" at the begining
-        and the end of the string</b>
+        <p class="description-text"><b>Observation: you will return a variable as string, you do <i>not</i> need to return the "" at the begining
+            and the end of the string</b></p>
     </div>
     {% if request.user.is_authenticated %}
     <textarea class="hidden-help-code" id="python-code">

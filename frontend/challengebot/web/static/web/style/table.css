@@ -13,11 +13,13 @@ td a {
     color: white;
 }
 
+td a:hover {
+    color: white;
+}
+
 tr {
     width: 300px;
     outline: 1px solid black;
-    -webkit-animation: mymove 5s infinite; /* Chrome, Safari, Opera */
-    animation: mymove 5s infinite;
 }
 
 th {
@@ -29,29 +31,12 @@ th {
 }
 
 tr:nth-child(even){
-    background-color: rgb(80,120,180);
+    background-color: rgb(50,50,50);
 }
 tr:nth-child(odd){
-    background-color: rgb(91,78,119);
-}
-tr:hover{background-color: 	#708090}
-
-/* Chrome, Safari, Opera */
-@-webkit-keyframes mymove {
-    50% {text-shadow: 10px 20px 30px blue;}
+    background-color: rgb(50,60,75);
 }
 
-/* Standard syntax */
-@keyframes mymove {
-    50% {text-shadow: 10px 20px 30px blue;}
-}
-
-/* Chrome, Safari, Opera */
-@-webkit-keyframes mymove {
-    25% {outline: 1px solid #999999;}
-}
-
-/* Standard syntax */
-@keyframes mymove {
-    25% {outline: 1px solid #999999;}
+tr:hover {
+    background-color: rgb(75, 80, 90);
 }

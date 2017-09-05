@@ -16,6 +16,10 @@ urlpatterns = [
     url(r'^challenge/(?P<challenge_id>[0-9]+)$', views.challenge, name='challenge'),
     url(r'^submission/(?P<submission_id>[0-9]+)$', views.submission, name='submission'),
     url(r'^about$', views.about, name='about'),
+
+    url(r'^ranking$', views.ranking, name='ranking'),
+    url(r'^ranking/(?P<game_id>[0-9]+)$', views.ranking, name='ranking_redirect'),
+    url(r'^ranking/(?P<game_id>[0-9]+)/(?P<rank_page>[0-9]+)$', views.ranking, name='ranking'),
     # AJAX
     url(r'^account/login$', auth_ajax, name='authenticate'),
     url(r'^account/register$', reg_ajax, name='register'),
