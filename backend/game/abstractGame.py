@@ -30,9 +30,20 @@ class Game(object):
         self.players[player_name].joined = False
 
     def exit_player(self, player_name):
-        self.server.exit_channel(player_name)
+        self.queue_command(player_name, 'meta', 'exit')
+        self.announce(player_name)
+        self.server.close_channel(player_name)
         self.logger.log('Player ' + player_name + ' has left the game! [' + str(self.players[player_name].status) + ']')
         self.players[player_name].joined = False
+
+    def interact(self, player_name):
+        return self.server.send_and_receive(player_name, self.players[player_name].get_cmds())
+
+    def announce(self, player_name):
+        self.server.send_message(player_name, self.players[player_name].get_cmds())
+
+    def queue_command(self, player_name, cmd_type, cmd):
+        self.players[player_name].add_cmd(cmd_type, cmd)
 
     def players_win(self, names):
         for name in names:

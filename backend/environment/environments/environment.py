@@ -26,7 +26,7 @@ class Environment(object):
             time.sleep(0.1)  # limit checks to be executed 10 times per second
         return
 
-    def run(self, memory_limit, user):
+    def run(self, memory_limit, user, id):
         pass
 
     def tear_down(self):

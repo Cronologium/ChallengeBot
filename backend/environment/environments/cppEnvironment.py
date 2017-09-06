@@ -41,7 +41,7 @@ class CppEnvironment(Environment):
             proc = subprocess.Popen(buildCmd, cwd=self.solution, stdout=DEVNULL)  # hide errors (we want this?)
         proc.wait()
 
-    def run(self, memory_limit, user):
+    def run(self, memory_limit, user, id):
 
         DEVNULL = open(os.devnull, 'wb')
         if "win" in sys.platform.lower():

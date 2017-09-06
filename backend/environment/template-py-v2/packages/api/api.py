@@ -1,5 +1,7 @@
 from copy import deepcopy
 
+import sys
+
 
 class ApiObject:
     def __init__(self):
@@ -13,5 +15,6 @@ class Api(object):
     def get_data(self):
         return deepcopy(self.api)
 
-    def feed(self, server_command):
-        pass
+    def feed(self, cmd):
+        if 'exit' in cmd['meta']:
+            sys.exit(0)

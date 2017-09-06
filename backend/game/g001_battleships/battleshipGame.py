@@ -30,7 +30,8 @@ class BattleshipGame(PhasingGame):
     def put_ship_turn(self):
         if len(self.ships_to_put):
             for player in self.players:
-                msg = self.server.send_and_receive(player, 'ship size ' + str(self.ships_to_put[0][1]))
+                self.queue_command(player, 'request', 'put ' + str(self.ships_to_put[0][1]))
+                msg = self.interact(player)
 
                 if msg is None:
                     self.players_dsq([(player, Status.TIMEOUT_EXCEEDED)])
@@ -42,6 +43,7 @@ class BattleshipGame(PhasingGame):
                         data = [int(x) for x in data]
                         if self.players[player].put_ship(self.ships_to_put[0][0], data, self.ships_to_put[0][1]) is None:
                             raise Exception
+                        self.queue_command(player, 'update', 'put ' + msg)
                         self.log_ship_putting(player, data)
 
                     except Exception:
@@ -51,11 +53,9 @@ class BattleshipGame(PhasingGame):
                 self.ships_to_put = self.ships_to_put[1:]
             else:
                 self.phase = 2
-                self.players[self.phase2_turn].message_queue.append('start')
 
     def shoot_ships_turn(self):
-        msg = self.server.send_and_receive(self.phase2_turn, '|'.join(self.players[self.phase2_turn].message_queue))
-        self.players[self.phase2_turn].message_queue = []
+        msg = self.interact(self.phase2_turn)
         if msg is None:
             self.players_dsq([(self.phase2_turn, Status.TIMEOUT_EXCEEDED)])
         else:
@@ -70,11 +70,11 @@ class BattleshipGame(PhasingGame):
                 self.log_ship_shooting(self.phase2_turn, data, result)
                 if result is None:
                     raise Exception
-                self.players[self.phase2_not_turn].message_queue.append('shoots ' + msg)
-                self.players[self.phase2_turn].message_queue.append(str(result) + ' ' + msg)
+                self.queue_command(self.phase2_not_turn, 'update', 'this ' + str(result) + ' ' + msg)
+                self.queue_command(self.phase2_turn, 'update', 'opponent ' + str(result) + ' ' + msg)
 
             except Exception:
-                self.players_dsq([(self.phase2_not_turn, Status.INVALID_PUT)])
+                self.players_dsq([(self.phase2_turn, Status.INVALID_PUT)])
 
         self.phase2_turn, self.phase2_not_turn = self.phase2_not_turn, self.phase2_turn
 
