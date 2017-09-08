@@ -27,6 +27,11 @@ The website can run independently, without any dispatcher supporting it. The dis
 ```
 python manage.py runserver
 ```
+If you are running this for the first time, you will need to run this in order to set it up. Otherwise, ignore this line and move on.
+
+```
+python manage.py migrate
+```
 
 Ocasionally, models in the front-end may change, and the database needs to reflect those changes, or sql errors in django may occur. To fix that:
 
