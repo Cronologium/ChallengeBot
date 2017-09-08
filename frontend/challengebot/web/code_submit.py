@@ -2,11 +2,10 @@ from time import timezone
 
 import re
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404
 from django.utils import timezone
 
-from .forms import SubmissionForm
-from .models import Submission, Source, Job, Challenge, Game
+from .models import Submission, Source, Job, Challenge, Game, Challenger
 from .utils import save_source
 
 
@@ -65,20 +64,23 @@ def validate_sources(request, sources, source_reference):
     return {'sources': s}
 
 
-def submit_challenge(game, sources):
+def submit_challenge(game, user, sources):
     job = Job()
     job.game = game
     job.status = 'R'
     job.date = timezone.now()
+    job.author = user
+    job.log_path = save_source('', '.txt', log=True)
     job.save()
 
     challenge = Challenge()
     challenge.job = job
-    challenge.log_path = save_source('', '.txt', log=True)
     challenge.save()
     for source in sources:
-        challenge.challengers.add(source)
-    challenge.save()
+        challenger = Challenger()
+        challenger.source = source
+        challenger.challenge = challenge
+        challenger.save()
     return challenge
 
 
@@ -94,6 +96,8 @@ def submit_submission(game, user, data, extension):
     job.game = game
     job.status = 'R'
     job.date = timezone.now()
+    job.author = user
+    job.log_path = save_source('', '.txt', log=True)
     job.save()
 
     sub = Submission()
@@ -118,12 +122,11 @@ def submit_ajax(request, game_id):
 
 def challenge_ajax(request, source_id):
     source_obj = get_object_or_404(Source, pk=int(source_id))
-    print str(request.POST)
     if 'selected_opponents[]' not in request.POST:
         return JsonResponse({'msg': 'Missing players'})
     sources = request.POST.getlist('selected_opponents[]')
     data = validate_sources(request, sources, source_obj)
     if 'sources' not in data:
         return JsonResponse(data)
-    submit_challenge(source_obj.game, [source_obj] + data['sources'])
+    submit_challenge(source_obj.game, request.user, [source_obj] + data['sources'])
     return JsonResponse({'msg': 'success'})

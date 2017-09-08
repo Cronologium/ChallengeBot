@@ -1,16 +1,16 @@
 {% load mathfilters %}
-<table>
+<table id="jobs-table">
     {% load static %}
     <link rel="stylesheet" type='text/css' href="{% static 'web/style/jobs.css' %}" />
     {% load static %}
     <link rel="stylesheet" type='text/css' href="{% static 'web/style/table.css' %}" />
-
-            <tr style="font-size:120%;">
+            <tr>
                 <th>#</th>
                 <th>Status</th>
+                <th>User</th>
                 <th>Game</th>
                 <th>Date</th>
-                <th>User(s)</th>
+                <th>Participants</th>
                 <th>Source(s)</th>
                 <th>Result</th>
             </tr>
@@ -18,7 +18,8 @@
                 <tr>
                     <td>#{{job.id}}</td>
                     <td>{{job.get_status_display}}</td>
-                    <td>{{job.game.name}}</td>
+                    <td>{{job.author.username}}</td>
+                    <td><a href="/game/{{ job.game.id }}">{{job.game.name}}</a></td>
                     <td>{{job.date}}</td>
                     {% for challenge in challenge_list%}
                         {% if challenge.job == job %}
@@ -34,11 +35,7 @@
                             </td>
                             <td id ="status">
                                 {% if challenge.job.status == 'F' %}
-                                    {% if challenge.winner.user.username %}
-                                        <a href="/challenge/{{ challenge.id }}">{{challenge.winner.user.username}} won!</a>
-                                    {% else %}
-                                        <a href="/challenge/{{ challenge.id }}">No winner</a>
-                                    {% endif %}
+                                    <a href="/challenge/{{ challenge.id }}">Results</a>
                                 {% else %}
                                     <p id="pending">Pending</p>
                                 {% endif %}
@@ -54,7 +51,13 @@
                                 {{sub.source.id}}
                             </td>
                             <td>
-                                {{sub.source.get_result_display}}
+                                {% if sub.job.status == 'F' %}
+                                <a href="/submission/{{ sub.id }}">
+                                    {{sub.source.get_result_display}}
+                                </a>
+                                {% else %}
+                                    {{sub.source.get_result_display}}
+                                {% endif %}
                             </td >
                         {% endif %}
                     {% endfor %}

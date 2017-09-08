@@ -1,5 +1,6 @@
 $(document).ready(function () {
-
+    var keyboard_clicked = false;
+    $('#mixer').css('cursor', 'pointer');
     $("#login-prompt").click(function () {
         $("#login-page").css("width", "100%");
         $("#menu").addClass("blurred");
@@ -27,6 +28,8 @@ $(document).ready(function () {
     $(window).on('scroll', change_size);
 
     function change_size() {
+        if (keyboard_clicked == true)
+            return;
         var doc = document.documentElement;
         var top = Math.round((window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0));
         var menu_size = $("#menu").css("height");
@@ -53,13 +56,42 @@ $(document).ready(function () {
         $("#mixer").css("top", String(top_position) + "px");
     }
 
-    function show_menu() {
-        console.log("CALLED");
-    }
+    $('#mixer').click(function() {
+        var doc = document.documentElement;
+        var top = Math.round((window.pageYOffset || doc.scrollTop)  - (doc.clientTop || 0));
+        var menu_size = $("#menu").css("height");
+        menu_size = parseInt(menu_size.substring(0, menu_size.length - 2));
+        var ratio = (menu_size - top) / menu_size;
+        if (keyboard_clicked == false)
+        {
+            if (ratio > 0.4)
+            {
+                return;
+            }
+            $('#menu').css('position', 'fixed');
+            $('#mixer').css("transform", "scale(" + String(1.0) + "," + String(1.0) + ")");
 
-    function hide_menu() {
+            var top_position = menu_size;
+            $("#mixer").css("top", String(top_position) + "px");
+            var padding_top_size = menu_size + 100;
+            var content_margin = String(padding_top_size) + "px";
+            $('#content-wrapper').css("padding-top", content_margin);
+            keyboard_clicked = true;
+        }
+        else
+        {
+            if (ratio > 0.4)
+            {
+                return;
+            }
+            $('#menu').css('position', '');
+            $('#content-wrapper').css("padding-top", '100px');
+            keyboard_clicked = false;
+            change_size();
+        }
+    });
 
-    }
+
 
     $("#user-button").mouseenter(function () {
         $(".user-face").attr("id", "user-face-showing");

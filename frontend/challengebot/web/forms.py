@@ -1,7 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
 from .models import Source
-from .models import Ticket
 
 
 class SubmissionForm(forms.Form):
@@ -26,8 +25,3 @@ class ChallengeForm(forms.Form):
     eligible_opponents = forms.MultipleChoiceField(required=True, widget=forms.SelectMultiple, choices=[])
     selected_opponents = forms.MultipleChoiceField(required=True, widget=forms.SelectMultiple, choices=[])
 
-
-class TicketForm(forms.Form):
-    title = forms.CharField(required=True, widget=forms.TextInput(attrs={'id': 'text-title',}), max_length=40)
-    type = forms.ChoiceField(required=True, widget=forms.Select(attrs={'id': 'select-type',}), choices=Ticket.THEME_CHOICES)
-    description = forms.CharField(required=True, widget=forms.Textarea(attrs={'id': 'text-description',}), max_length=1000)

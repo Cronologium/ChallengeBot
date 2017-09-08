@@ -38,7 +38,7 @@ class XandoGame(Game):
                 raise Exception
 
         except Exception:
-            self.players[self.player_turn].status = Status.INVALID_POSITION
+            self.players_dsq([(self.player_turn, Status.INVALID_POSITION)])
 
         self.logger.log(self.board.stringify(sep=' | '))
         self.player_turn, self.not_player_turn = self.not_player_turn, self.player_turn
@@ -50,8 +50,7 @@ class XandoGame(Game):
         super(XandoGame, self).check()
 
     def end(self):
-        for player_name in self.players:
-            self.players[player_name].status = Status.DRAW
+        self.players_win(self.players.keys())
         super(XandoGame, self).end()
 
     def negative_sign(self, sign):
@@ -61,6 +60,5 @@ class XandoGame(Game):
             return 'X'
 
     def declare_winner(self, sign):
-        print sign
-        self.players[self.marks_played[sign]].status = Status.WINNER
-        self.players[self.marks_played[self.negative_sign(sign)]].status = Status.LOSER
+        self.players_win(self.marks_played[sign])
+        self.players_lose(self.marks_played[self.negative_sign(sign)])
