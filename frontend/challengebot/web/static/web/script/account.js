@@ -30,17 +30,14 @@ $(document).ready(function () {
             success: function(data) {
                 if (data['msg'] == 'success') {
                     location.reload();
-                    // $('#auth-error').text('\n');
-                    Flash.clear();
+                    $('#auth-error').text('\n');
                 }
                 else {
-                    // $('#auth-error').text(data['msg']);
-                    Flash.error(data['msg']);
+                    $('#auth-error').text(data['msg']);
                 }
             },
             error: function() {
-                // $('#auth-error').text('A problem occured on the server.');
-                Flash.error('A problem occurred on the server.');
+                $('#auth-error').text('A problem occured on the server.');
             }
         });
     });
@@ -79,8 +76,7 @@ $(document).ready(function () {
                 }
             },
             error: function() {
-                // $('#reg-confirm-error').text('A problem occured on the server.');
-                Flash.error('A problem occurred on the server.');
+                $('#reg-confirm-error').text('A problem occured on the server.');
             }
         });
     });

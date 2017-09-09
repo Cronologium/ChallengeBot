@@ -1,53 +1,47 @@
 <div id="menu">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
     {% load static %}
-    <link rel="stylesheet" type='text/css' href="{% static 'web/style/menu.css' %}"/>
-    {% load static %}
-    <link rel="stylesheet" type='text/css' href="{% static 'web/style/flash-service.css' %}"/>
+    <link rel="stylesheet" type='text/css' href="{% static 'web/style/menu.css' %}" />
     {% load static %}
     <script type="text/javascript" src="{% static 'web/script/menu.js' %}"></script>
-    {% load static %}
-    <script type="text/javascript" src="{% static 'web/script/flash-service.js' %}"></script>
-    <div id="menuhead">
-        <div class="logo-container">
+	<div id="menuhead">
+		<div class="logo-container">
             <a href="/">
-                <div id="logo"></div>
-                <div id="logo-text"></div>
+			    <div id="logo"></div>
+			    <div id="logo-text"></div>
             </a>
             {%if username %}
             <div class="user-face"></div>
             {% else %}
             <div class="user-face" id="user-face-hiding"></div>
             {% endif %}
-        </div>
+		</div>
 
         <div id="mixer">
             {% load static %}
             <img src="{% static 'web/style/res/sa.png' %}"/>
         </div>
-    </div>
-    <div class="menu">
-        <ul>
+	</div>
+	<div class="menu">
+		<ul>
             <div id="menu-options">
                 <li><a class="left-link" href="/">Home</a></li>
                 <li><a class="left-link" href="/games">Games</a></li>
                 <li><a class="left-link" href="/jobs">Jobs</a></li>
                 <li><a class="left-link" href="/ranking">Ranking</a></li>
                 {% if not username %}
-                    <li><a class="right-link" id="login-prompt">Log in</a></li>
-                    <li><a class="right-link" id="register-prompt">Register</a></li>
+                <li><a class="right-link" id="login-prompt">Log in</a></li>
+                <li><a class="right-link" id="register-prompt">Register</a></li>
                 {% else %}
-                    <li><a class="right-link" id="user-button" href="/">{{username}}</a></li>
-                    <li><a class="right-link" id="logout-button" href="/logout">Log out</a></li>
-                    {% if admin %}
-                        <li><a class="left-link" href="/admin/">Admin</a></li>
-                    {% endif %}
+                <li><a class="right-link" id="user-button" href="/">{{username}}</a></li>
+                <li><a class="right-link" id="logout-button" href="/logout">Log out</a></li>
+
                 {% endif %}
-                <li><a class="left-link" href="/about">About</a></li>
+                <li><a class="left-link" href="/about">About us</a></li>
 
             </div>
         </ul>
-    </div>
+	</div>
 </div>
 {% if not username %}
 {% load static %}
@@ -63,10 +57,8 @@
             <input class="inputfield" type="text" placeholder="Username" name="username" required>
             <label>Password</label>
             <input class="inputfield" type="password" placeholder="Password" name="password" required>
-            <br>
-            <!--<br>-->
-            <div id='flash-container' class='flash-container'></div>
-            <!--<p class="error" id="auth-error">MIHAI: TODO&nbsp;</p>-->
+            <br><br>
+            <p class="error" id="auth-error">MIHAI: TODO&nbsp;</p>
         </form>
         <input class="inputbutton" type="submit" id="auth-button" value="Login">
     </div>
@@ -76,22 +68,17 @@
     <div class="overlay-content">
         {% load static %}
         <img src="{% static 'web/style/res/user.png' %}">
-        <form id='registration' action='/new_user/' method="POST">
+        <form id ='registration' action='/new_user/' method="POST">
             {% csrf_token %}
             <label>Username</label>
-            <input class="inputfield" type="text" placeholder="Username" name="username" required><br>
-            <p class="error" id="reg-user-error"><br></p>
+            <input class="inputfield" type="text" placeholder="Username" name="username" required><br><p class="error" id="reg-user-error"><br></p>
             <label>E-mail</label>
-            <input class="inputfield" type="text" placeholder="E-mail" name="email" required><br>
-            <p class="error" id="reg-email-error"><br></p>
+            <input class="inputfield" type="text" placeholder="E-mail" name="email" required><br><p class="error" id="reg-email-error"><br></p>
             <label>Password</label>
-            <input class="inputfield" type="password" placeholder="Password" name="password" required><br>
-            <p class="error" id="reg-pass-error"><br></p>
+            <input class="inputfield" type="password" placeholder="Password" name="password" required><br><p class="error" id="reg-pass-error"><br></p>
             <label>Confirm password</label>
-            <input class="inputfield" type="password" placeholder="Password" name="confirm-password" required><br>
-            <p class="error" id="reg-confirm-error"><br></p>
-            <!--<p class="error" id="reg-error">MIHAI: TODO</p>-->
-            <div id='flash-container' class='flash-container'></div>
+            <input class="inputfield" type="password" placeholder="Password" name="confirm-password" required><br><p class="error" id="reg-confirm-error"><br></p>
+            <p class="error" id="reg-error">MIHAI: TODO</p>
         </form>
         <input class="inputbutton" type="submit" id="reg-button" value="Register">
     </div>
