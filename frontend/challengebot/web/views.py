@@ -49,24 +49,6 @@ def challenges(request):
     template = loader.get_template(os.path.join('web', 'template.html'))
     return HttpResponse(template.render(context, request))
 
-
-class Ship:
-    def __init__(self, x1, y1, x2, y2, size, player):
-        self.x1 = x1
-        self.x2 = x2
-        self.y1 = y1
-        self.y2 = y2
-        self.size = size
-        self.player = player
-
-
-class Shot:
-    def __init__(self, x, y, player):
-        self.x = x
-        self.y = y
-        self.player = player
-
-
 def job(request, job_id):
     #challenge_obj = get_object_or_404(Challenge, pk=int(challenge_id))
     log =None
@@ -80,37 +62,6 @@ def job(request, job_id):
     rows = []
     for line in log:
         rows.append(line)
-    # What follows is bad code and *has* to changed
-    '''
-    participants = []
-    ships = {}
-    shots = {}
-    line_index = 0
-    for line in log:
-        if line_index < 2:  # read participants' names
-            participant = line.strip().split(' ')[1]
-            participants.append(participant)
-            ships[participant] = []
-            shots[participant] = []
-        else:
-            line = line.strip().split(' ')
-            if line[1] == 'puts':
-                x1 = int(line[2])
-                y1 = int(line[3])
-                x2 = int(line[4])
-                y2 = int(line[5])
-                ship_size = abs(x1-x2) + abs(y1-y2) + 1
-                player = line[0]
-                ships[player].append(Ship(x1, y1, x2, y2, ship_size, player))
-            if line[1] == 'shoots':
-                x = int(line[2])
-                y = int(line[3])
-                player = line[0]
-                shots[player].append(Shot(x, y, player))
-
-        line_index += 1
-    '''
-    # Until here
 
     content_context = {'rows': rows}
     context = {}
