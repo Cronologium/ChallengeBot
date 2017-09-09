@@ -30,16 +30,14 @@
                 <li><a class="left-link" href="/jobs">Jobs</a></li>
                 <li><a class="left-link" href="/ranking">Ranking</a></li>
                 {% if not username %}
-                    <li><a class="right-link" id="login-prompt">Log in</a></li>
-                    <li><a class="right-link" id="register-prompt">Register</a></li>
+                <li><a class="right-link" id="login-prompt">Log in</a></li>
+                <li><a class="right-link" id="register-prompt">Register</a></li>
                 {% else %}
-                    <li><a class="right-link" id="user-button" href="/">{{username}}</a></li>
-                    <li><a class="right-link" id="logout-button" href="/logout">Log out</a></li>
-                    {% if admin %}
-                        <li><a class="left-link" href="/admin/">Admin</a></li>
-                    {% endif %}
+                <li><a class="right-link" id="user-button" href="/">{{username}}</a></li>
+                <li><a class="right-link" id="logout-button" href="/logout">Log out</a></li>
+
                 {% endif %}
-                <li><a class="left-link" href="/about">About</a></li>
+                <li><a class="left-link" href="/about">About us</a></li>
 
             </div>
         </ul>

@@ -13,8 +13,7 @@ urlpatterns = [
     url(r'^jobs$', RedirectView.as_view(url='/jobs/1', permanent=False)),
     url(r'^jobs/(?P<job_page>[0-9]+)$', views.jobs, name='jobs'),
     url(r'^challenges$', views.challenges, name='challenges'),
-    url(r'^challenge/(?P<challenge_id>[0-9]+)$', views.challenge, name='challenge'),
-    url(r'^submission/(?P<submission_id>[0-9]+)$', views.submission, name='submission'),
+    url(r'^job/(?P<job_id>[0-9]+)$', views.job, name='job'),
     url(r'^about$', views.about, name='about'),
 
     url(r'^ranking$', views.ranking, name='ranking'),

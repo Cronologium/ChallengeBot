@@ -8,7 +8,6 @@ class Server:
         self.port = port
         self.socket = None
         self.channels = {}
-        self.magic_commands = {'exit': '$exit'}
         self.in_use = False
 
     def start(self):
@@ -56,8 +55,4 @@ class Server:
     def close_channel(self, player_name):
         self.channels[player_name].close()
         del self.channels[player_name]
-
-    def exit_channel(self, player_name):
-        self.channels[player_name].send_message(self.magic_commands['exit'])
-        self.close_channel(player_name)
 
