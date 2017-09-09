@@ -77,12 +77,13 @@ $( document ).ready(function() {
         }
         $('#nextButton').prop("disabled", false);
     }
+
+    var isStopCommand = false;
+
     function autoplay(){
         isStopCommand = false;
         playLoop();
     }
-
-    var isStopCommand = false;
 
     function isNumber(n) {
         return !isNaN(parseFloat(n)) && isFinite(n);
@@ -122,7 +123,7 @@ $( document ).ready(function() {
     $('#firstButton').click(first);
     $('#lastButton').click(last);
     $('#stopButton').click(stop);
-    $('#autoButton').click(playLoop);
+    $('#autoButton').click(autoplay);
     create_table();
 
 });
