@@ -8,7 +8,7 @@ class Ship:
         if start.x > finish.x or start.y > finish.y:
             self.start = finish
             self.finish = start
-        if not (self.start.x == self.finish.x or self.start.y or self.finish.y):
+        if not (self.start.x == self.finish.x or self.start.y == self.finish.y):
             raise InvalidStateException
 
     def is_hit(self, candidate):

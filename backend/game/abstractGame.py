@@ -6,8 +6,8 @@ from backend.game.status import Status
 
 
 class Game(object):
-    def __init__(self, debug_logger, logger, server, players, turns=99999999, required_players=2, accept_timeouts=False):
-        self.logger = logger
+    def __init__(self, debug_logger, screen, server, players, turns=99999999, required_players=2, accept_timeouts=False):
+        self.screen = screen
         self.debug_logger = debug_logger
         self.server = server
         self.turns = turns
@@ -22,18 +22,15 @@ class Game(object):
     def join_player(self, player_name, connection):
         self.players[player_name].joined = True
         self.server.bind_channel(player_name, Channel(connection, self.players[player_name].timeout))
-        self.logger.log('Player ' + player_name + ' has joined the game!')
 
     def kick_player(self, player_name):
         self.server.close_channel(player_name)
-        self.logger.log('Player ' + player_name + ' has been kicked from the game [' + str(self.players[player_name].status) + ']')
         self.players[player_name].joined = False
 
     def exit_player(self, player_name):
         self.queue_command(player_name, 'meta', 'exit')
         self.announce(player_name)
         self.server.close_channel(player_name)
-        self.logger.log('Player ' + player_name + ' has left the game! [' + str(self.players[player_name].status) + ']')
         self.players[player_name].joined = False
 
     def interact(self, player_name):
@@ -67,7 +64,6 @@ class Game(object):
                 self.players[name].position -= len(dsq)
 
     def start(self):
-        self.logger.open()
         while len([p for p in self.players if self.players[p].joined is False]):
             conn, player_name = self.server.get_blind_message()
             if player_name is not None and player_name in self.players and self.players[player_name].joined is False:
@@ -80,7 +76,7 @@ class Game(object):
         raise NotImplementedError
 
     def end(self):
-        self.logger.close()
+        self.screen.close()
 
     def early_game_over(self):
         pass

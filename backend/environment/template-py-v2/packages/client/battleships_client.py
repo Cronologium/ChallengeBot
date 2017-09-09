@@ -21,7 +21,6 @@ class BattleshipsClient(Client):
         while True:
             data = self.sock.recv(1024).decode("utf-8")
             self.api.feed(json.loads(data))
-            print json.dumps(self.api.api.their_board)
             result = None
             timed_function = timeout(time_limit=1)(self.shoot)
             try:
