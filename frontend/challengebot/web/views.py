@@ -24,8 +24,6 @@ def get_rendered_menu(request):
     context = {}
     if request.user.is_authenticated:
         context['username'] = request.user.username
-        if request.user.is_superuser:
-            context['admin'] = True
     template = loader.get_template(os.path.join('web', 'menu.html'))
     return template.render(context, request)
 
