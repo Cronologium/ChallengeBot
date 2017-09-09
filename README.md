@@ -64,6 +64,16 @@ python run.py
 
 Yes. It looks in the database for registered, un-evaluated jobs and completes them. It has a registry of known games which it can execute.
 
+## How to debug?
+
+If working with the interface, the chrome console and manage.py terminal might be the only things you need. However, working with the backend can be quite troubling some times. Since games are using sockets to communicate with the clients, i suggest downloading [Wireshark](https://www.wireshark.org/), and capturing network packets by applying the following filter: 
+
+```
+ip.src == ip.dst
+```
+
+In order to determine to communication, follow the packages. Port 1200 will always be the server, the other ports are the clients. In order to determine which is which, look at the first packets, they will send the server the username of the player.
+
 # Writing your game in the back-end
 
 Most of the complicated stuff for basic games are already implemented (how a turn works, adding players, communicating with them etc.)
