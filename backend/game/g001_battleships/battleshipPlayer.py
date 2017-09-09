@@ -7,7 +7,8 @@ class BattleshipPlayer(Player):
     def __init__(self, name, timeout):
         super(BattleshipPlayer, self).__init__(name, timeout)
         self.board = BattleshipsBoard()
-        self.message_queue = []
+        self.my_message = ''
+        self.their_message = ''
 
     def put_ship(self, name, coords, size):
         start = Coordinate(coords[0], coords[1])

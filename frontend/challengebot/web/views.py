@@ -24,8 +24,6 @@ def get_rendered_menu(request):
     context = {}
     if request.user.is_authenticated:
         context['username'] = request.user.username
-        if request.user.is_superuser:
-            context['admin'] = True
     template = loader.get_template(os.path.join('web', 'menu.html'))
     return template.render(context, request)
 
@@ -69,16 +67,21 @@ class Shot:
         self.player = player
 
 
-def challenge(request, challenge_id):
-    challenge_obj = get_object_or_404(Challenge, pk=int(challenge_id))
-    content_template = loader.get_template(os.path.join('web', 'challenge.html'))
-    log = None
-    try:
-        log = open(challenge_obj.job.log_path)
-    except IOError:
+def job(request, job_id):
+    #challenge_obj = get_object_or_404(Challenge, pk=int(challenge_id))
+    log =None
+    challenge_objs = Challenge.objects.filter(job_id=job_id)
+    if len(challenge_objs) > 0:
         pass
-
+    else:
+        submission_obj = Submission.objects.filter(job_id=job_id)[0]
+        log = open(submission_obj.job.log_path)
+    content_template = loader.get_template(os.path.join('web', 'job.html'))
+    rows = []
+    for line in log:
+        rows.append(line)
     # What follows is bad code and *has* to changed
+    '''
     participants = []
     ships = {}
     shots = {}
@@ -106,62 +109,15 @@ def challenge(request, challenge_id):
                 shots[player].append(Shot(x, y, player))
 
         line_index += 1
+    '''
     # Until here
 
-    content_context = {'challenge': challenge_obj, 'participants': participants, 'ships': ships, 'shots': shots}
+    content_context = {'rows': rows}
     context = {}
     context['menu'] = get_rendered_menu(request)
     context['content'] = [content_template.render(content_context, request)]
     template = loader.get_template(os.path.join('web', 'template.html'))
     return HttpResponse(template.render(context, request))
-
-
-def submission(request, submission_id):
-    submission_obj = get_object_or_404(Submission, pk=int(submission_id))
-    content_template = loader.get_template(os.path.join('web', 'challenge.html'))
-    log = None
-    try:
-        log = open(submission_obj.job.log_path)
-    except IOError:
-        pass
-
-    # What follows is bad code and *has* to changed
-    participants = []
-    ships = {}
-    shots = {}
-    line_index = 0
-    for line in log:
-        if line_index < 2:  # read participants' names
-            participant = line.strip().split(' ')[1]
-            participants.append(participant)
-            ships[participant] = []
-            shots[participant] = []
-        else:
-            line = line.strip().split(' ')
-            if line[1] == 'puts':
-                x1 = int(line[2])
-                y1 = int(line[3])
-                x2 = int(line[4])
-                y2 = int(line[5])
-                ship_size = abs(x1 - x2) + abs(y1 - y2) + 1
-                player = line[0]
-                ships[player].append(Ship(x1, y1, x2, y2, ship_size, player))
-            if line[1] == 'shoots':
-                x = int(line[2])
-                y = int(line[3])
-                player = line[0]
-                shots[player].append(Shot(x, y, player))
-
-        line_index += 1
-    # Until here
-
-    content_context = {'submission': submission_obj, 'participants': participants, 'ships': ships, 'shots': shots}
-    context = {}
-    context['menu'] = get_rendered_menu(request)
-    context['content'] = [content_template.render(content_context, request)]
-    template = loader.get_template(os.path.join('web', 'template.html'))
-    return HttpResponse(template.render(context, request))
-
 
 def game(request, game_id):
     game_obj = get_object_or_404(Game, pk=int(game_id))

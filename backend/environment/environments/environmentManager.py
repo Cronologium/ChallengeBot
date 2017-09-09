@@ -37,10 +37,10 @@ class EnvironmentManager:
             return env.solution
         return None
 
-    def run(self, solution, memory_limit, user):
+    def run(self, solution, memory_limit, user, id):
         for environment in self.environments:
             if environment.solution == solution:
-                environment.run(memory_limit, user)
+                environment.run(memory_limit, user, id)
 
     def delete_environment(self, solution):
         for environment in self.environments:
