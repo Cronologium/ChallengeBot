@@ -25,7 +25,7 @@ class Screen(object):
         line += self.generate_line(cells)
         self.logger.log(line)
 
-    def change_cells(self, cells, write_init=False):
+    def change_cells(self, cells):
         line = ''
         line += self.generate_line(cells)
         for cell in cells:

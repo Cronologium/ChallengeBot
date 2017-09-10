@@ -26,9 +26,9 @@
 <div id="game-content">
     <div id="game-data">
         <div class="game-tab">
-            <h3>
+            <h2>
                 Restrictions
-            </h3>
+            </h2>
             <table class="game-table">
                 <tr>
                     <th>
@@ -77,9 +77,9 @@
             </table>
         </div>
         <div class="game-tab">
-            <h3>
+            <h2>
                 Requirements
-            </h3>
+            </h2>
             <div class="game-tab-content">
                 {{ game_description }}
             </div>
@@ -88,9 +88,9 @@
         <div id="wrapper-forms">
         {% if request.user.is_authenticated %}
              <div class="game-tab">
-                 <h3>
+                 <h2>
                      Submit your bot
-                 </h3>
+                 </h2>
                  <div class="game-tab-content">
                      <form id="submission-form" action="/submit/source/{{game.id}}" method="post">
                          {% csrf_token %}
@@ -104,9 +104,9 @@
              </div>
              {% if levels %}
                  <div class = "game-tab">
-                     <h3>
+                     <h2>
                          Experience distribution
-                     </h3>
+                     </h2>
                          <div class="game-table">
                              <table>
                                  <tr>
@@ -156,9 +156,9 @@
              {% endif %}
              {% if p1_source %}
              <div class="game-tab">
-                 <h3>
+                 <h2>
                      Challenge other bots
-                 </h3>
+                 </h2>
                  <div class="game-tab-content">
                      <form id="challenge-form" action="/submit/challenge/{{p1_source.id}}" method="post">
                          {% csrf_token %}

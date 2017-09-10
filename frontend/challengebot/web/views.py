@@ -90,7 +90,7 @@ def game(request, game_id):
             content_context['p1_source'] = Source.objects.get(user_id=request.user.id, game_id=game_id, selected=1)
             content_context['opponents'] = ChallengeForm(game_id=game_id, user_id=request.user.id,
                                                  max_players=game_obj.players_max - 1, min_players=game_obj.players_min - 1)
-    template = loader.get_template(os.path.join('web', game_obj.url))
+    template = loader.get_template(os.path.join('web', 'games', game_obj.name + '.html'))
     content_context['game_description'] = template.render({}, request)
     context = {}
     context['menu'] = get_rendered_menu(request)
