@@ -45,4 +45,5 @@ class PythonEnvironment(Environment):
             proc = subprocess.Popen(cmd.split(), cwd=self.solution, stdout=subprocess.PIPE)  # hide errors (we want this?)
         threading.Thread(target=self.monitor, args=(proc.pid, memory_limit,)).start()  # monitor memory consumption
         out, err = proc.communicate()
-        print out, err
+        #print '[Output]', out
+        #print '[Error]', err

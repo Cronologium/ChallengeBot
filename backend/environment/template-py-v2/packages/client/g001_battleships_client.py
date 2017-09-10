@@ -1,5 +1,4 @@
 import json
-import sys
 from client import Client, timeout
 
 class BattleshipsClient(Client):

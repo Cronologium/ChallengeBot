@@ -1,0 +1,111 @@
+    <div id="info">
+        <h3>Description</h3>
+        <p class="description-text">
+            X and O is a game which is played out of boredom on a piece of paper with a 3 X 3 grid. Each player has its
+            own marker, X or O. The player with X gets to start. Players take turns in placing their marker in one of the
+            grid's squares. The goal of the game is for one player to obtain a full line, a full column or a full diagonal
+            with their marker.
+        </p>
+        <h3>Code description</h3>
+        <p class="description-text">
+            Your program must implement a single function, named 'put', inside the class 'Solution' which will return
+            a square to put your mark on.
+        </p>
+        <h4>Return type</h4>
+        <p class="description-text">
+            Your function will as a string, the coordinates of the square, as such: "x y".
+        </p>
+        <h4>Api description</h4>
+        <p class="description-text">
+            You are provided with an API object as parameter. The object has two fields available.
+        </p>
+        <table class="game-table">
+            <tr>
+                <th>Name</th>
+                <th>Role</th>
+                <th>Type</th>
+            </tr>
+            <tr>
+                <td>api.board</td>
+                <td>Stores the status of the board</td>
+                <td>char[][]</td>
+            </tr>
+            <tr>
+                <td>api.playing</td>
+                <td>The mark ('X' or 'O') you are playing with</td>
+                <td>char</td>
+            </tr>
+        </table>
+        <p class="description-text">
+            Each square of api.board can take the values 'X', ' ', 'O' (This is a big letter o, not a zero!)
+        </p>
+        <h3>Specifications</h3>
+        <ul>
+            <li>The memory limit is applied to the whole program</li>
+            <li>Before challenging others, you program must be validated</li>
+        </ul>
+        <h3>Examples</h3>
+        <h4>Example of ship putting phase</h4>
+        <table class="game-table">
+            <tr>
+                <th>
+                    &lt;function&gt;(input string)
+                </th>
+                <th>
+                    user example output
+                </th>
+                <th>
+                    explanation
+                </th>
+            </tr>
+            <tr>
+                <td class="input">
+                    put(api)
+                </td>
+                <td class="output">
+                    "0 0"
+                </td>
+                <td class="description">
+                    write your mark on (0, 0)
+                </td>
+            </tr>
+        </table>
+    </div>
+    {% if request.user.is_authenticated %}
+    <textarea class="hidden-help-code" id="python-code">
+class Solution:
+    # api.board - a matrix containing the board
+    # api.playing - the mark we are playing this match
+
+    def put(self, api):
+        # Tip: use all apis here
+        # Example:
+        # if api.playing == 'X' and api.board[1][1] == ' ':# if we play with X and the middle is free
+        #   return "1 1"                                   # put X in the middle
+
+        """ Insert code here for mark placement """
+
+
+        return "0 0"
+    </textarea>
+    <textarea class="hidden-help-code" id="cpp-code">
+Language unavailable
+    </textarea>
+    <!--
+    #include "ClientSolution.h"
+
+std::vector&lt;unsigned char&gt; ClientSolution::putShip(std::vector&lt;unsigned char&gt;& inBuffer)
+{
+	/*Insert code here for ship placement*/
+    std::vector&lt;unsigned char&gt; outBuffer;
+    return outBuffer;
+}
+
+std::vector&lt;unsigned char&gt; ClientSolution::shoot(std::vector&lt;unsigned char&gt;& inBuffer)
+{
+	/*Insert code here for shooting*/
+    std::vector&lt;unsigned char&gt; outBuffer;
+	return outBuffer;
+}
+    -->
+    {% endif %}

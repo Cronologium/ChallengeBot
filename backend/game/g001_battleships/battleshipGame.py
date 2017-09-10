@@ -17,7 +17,8 @@ class BattleshipGame(PhasingGame):
         ]
         super(BattleshipGame, self).__init__(debug_logger,
                                              BattleshipsScreen(logger, players[0][0], players[1][0]),
-                                             server, [BattleshipPlayer(player[0], player[1]) for player in players],
+                                             server,
+                                             [BattleshipPlayer(player[0], player[1]) for player in players],
                                              phases={1: self.put_ship_turn, 2: self.shoot_ships_turn},
                                              turns=220,
                                              required_players=2)
