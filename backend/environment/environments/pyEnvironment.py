@@ -12,7 +12,7 @@ import threading
 class PythonEnvironment(Environment):
     def __init__(self, source, solution, port):
         super(PythonEnvironment, self).__init__(source, solution, port)
-        self.dir_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'client-template-py', '.')
+        self.dir_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'template-py-v2', '.')
 
     def build(self):
         DEVNULL = open(os.devnull, 'wb')
@@ -34,14 +34,16 @@ class PythonEnvironment(Environment):
             p = subprocess.Popen(cmd, stdout=DEVNULL)
         p.wait()
 
-    def run(self, memory_limit, user):
+    def run(self, memory_limit, user, id):
         DEVNULL = open(os.devnull, 'wb')
         if "win" in sys.platform.lower():
             cmd = ['py', '-2', 'main.py', str(self.port), user]
             proc = subprocess.Popen(cmd, cwd=self.solution, shell=True)  # hide errors (we want this?)
         else:
-            cmd = 'python main.py ' + str(self.port) + ' ' + user
+            cmd = 'python main.py ' + str(self.port) + ' ' + user + ' ' + str(id)
             #print cmd, self.source
             proc = subprocess.Popen(cmd.split(), cwd=self.solution, stdout=subprocess.PIPE)  # hide errors (we want this?)
         threading.Thread(target=self.monitor, args=(proc.pid, memory_limit,)).start()  # monitor memory consumption
         out, err = proc.communicate()
+        #print '[Output]', out
+        #print '[Error]', err

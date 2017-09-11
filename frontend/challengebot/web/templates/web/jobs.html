@@ -1,11 +1,10 @@
 {% load mathfilters %}
-<table>
+<table id="jobs-table">
     {% load static %}
     <link rel="stylesheet" type='text/css' href="{% static 'web/style/jobs.css' %}" />
     {% load static %}
     <link rel="stylesheet" type='text/css' href="{% static 'web/style/table.css' %}" />
-
-            <tr style="font-size:120%;">
+            <tr>
                 <th>#</th>
                 <th>Status</th>
                 <th>User</th>
@@ -20,7 +19,7 @@
                     <td>#{{job.id}}</td>
                     <td>{{job.get_status_display}}</td>
                     <td>{{job.author.username}}</td>
-                    <td>{{job.game.name}}</td>
+                    <td><a href="/game/{{ job.game.id }}">{{job.game.name}}</a></td>
                     <td>{{job.date}}</td>
                     {% for challenge in challenge_list%}
                         {% if challenge.job == job %}
@@ -36,7 +35,7 @@
                             </td>
                             <td id ="status">
                                 {% if challenge.job.status == 'F' %}
-                                    <a href="/challenge/{{ challenge.id }}">Results</a>
+                                    <a href="/job/{{ challenge.job.id }}">Results</a>
                                 {% else %}
                                     <p id="pending">Pending</p>
                                 {% endif %}
@@ -53,7 +52,7 @@
                             </td>
                             <td>
                                 {% if sub.job.status == 'F' %}
-                                <a href="/submission/{{ sub.id }}">
+                                <a href="/job/{{ sub.job.id }}">
                                     {{sub.source.get_result_display}}
                                 </a>
                                 {% else %}

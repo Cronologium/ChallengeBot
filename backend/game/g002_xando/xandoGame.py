@@ -1,4 +1,7 @@
+import traceback
+
 from backend.game.abstractGame import Game
+from backend.game.g002_xando.xando_screen import XandoScreen
 from backend.game.playbox.boards.xandoBoard import XandoBoard
 from backend.game.player import Player
 from backend.game.status import Status
@@ -6,7 +9,9 @@ from backend.game.status import Status
 
 class XandoGame(Game):
     def __init__(self, debug_logger, logger, server, players):
-        super(XandoGame, self).__init__(debug_logger, logger, server,
+        super(XandoGame, self).__init__(debug_logger,
+                                        XandoScreen(logger, players[0][0], players[1][0]),
+                                        server,
                                         [Player(player[0], player[1]) for player in players],
                                         required_players=2,
                                         turns=9)
@@ -18,13 +23,10 @@ class XandoGame(Game):
 
     def start(self):
         super(XandoGame, self).start()
-        self.server.send_message(self.player_turn, 'X')
-        self.server.send_message(self.not_player_turn, 'O')
-        for k, v in self.playing_marks.items():
-            self.logger.log(k + ' plays ' + v)
 
     def turn(self):
-        msg = self.server.send_and_receive(self.player_turn, self.board.stringify())
+        self.queue_command(self.player_turn, 'request', 'play ' + self.playing_marks[self.player_turn])
+        msg = self.interact(self.player_turn)
         try:
             if msg is None:
                 raise Exception
@@ -36,11 +38,14 @@ class XandoGame(Game):
             x, y = int(data[0]), int(data[1])
             if self.board.put_square(x, y, self.playing_marks[self.player_turn]) is False:
                 raise Exception
+            self.screen.put(x, y, self.playing_marks[self.player_turn])
+            self.players[self.player_turn].add_cmd('update', str(x) + ' ' + str(y) + ' ' + self.playing_marks[self.player_turn])
+            self.players[self.not_player_turn].add_cmd('update', str(x) + ' ' + str(y) + ' ' + self.playing_marks[self.player_turn])
 
         except Exception:
+            print traceback.format_exc()
             self.players_dsq([(self.player_turn, Status.INVALID_POSITION)])
 
-        self.logger.log(self.board.stringify(sep=' | '))
         self.player_turn, self.not_player_turn = self.not_player_turn, self.player_turn
 
     def check(self):
@@ -60,5 +65,5 @@ class XandoGame(Game):
             return 'X'
 
     def declare_winner(self, sign):
-        self.players_win(self.marks_played[sign])
-        self.players_lose(self.marks_played[self.negative_sign(sign)])
+        self.players_win([self.marks_played[sign]])
+        self.players_lose([self.marks_played[self.negative_sign(sign)]])
