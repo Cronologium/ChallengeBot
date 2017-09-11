@@ -11,15 +11,15 @@ $(document).ready(function () {
             }
         });
         if (data['username'] == '') {
-            $('#auth-error').text('Please enter your username');
+            FlashService.error('auth-error', 'Please enter your username');
             return;
         }
         if (data['password'] == '') {
-            $('#auth-error').text('Please enter your password');
+            FlashService.error('auth-error', 'Please enter your password');
             return;
         }
         if (data['csrfmiddlewaretoken'] == '') {
-            $('#auth-error').text('No login token!');
+            FlashService.error('auth-error', 'No login token!');
             return;
         }
         $.ajax({
@@ -30,17 +30,14 @@ $(document).ready(function () {
             success: function(data) {
                 if (data['msg'] == 'success') {
                     location.reload();
-                    // $('#auth-error').text('\n');
-                    Flash.clear();
+                    FlashService.clear('flash-container');
                 }
                 else {
-                    // $('#auth-error').text(data['msg']);
-                    Flash.error(data['msg']);
+                    FlashService.error('auth-error', data['msg']);
                 }
             },
             error: function() {
-                // $('#auth-error').text('A problem occured on the server.');
-                Flash.error('A problem occurred on the server.');
+                FlashService.error('auth-error', 'A problem occurred on the server.');
             }
         });
     });
@@ -74,13 +71,13 @@ $(document).ready(function () {
                 else {
                     for (key in data)
                     {
-                        $('#' + key).text(data[key]);
+                        console.log(key);
+                        FlashService.error(key, data[key]);
                     }
                 }
             },
             error: function() {
-                // $('#reg-confirm-error').text('A problem occured on the server.');
-                Flash.error('A problem occurred on the server.');
+                FlashService.error('reg-confirm-error', 'A problem occurred on the server');
             }
         });
     });

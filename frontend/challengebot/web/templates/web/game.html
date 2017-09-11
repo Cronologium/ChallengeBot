@@ -98,9 +98,9 @@
                     <b>Language:{{form.language}}</b>
                     <textarea name="your_code" id="id_your_code" rows="20" cols="80"></textarea>
                 </form>
-                <p class="error" id="submit-error">Mihai: TODO</p>
-                <input type="submit" value="Submit" id="submission-submit"/>
+                 <div id='submit-error' class='flash-container'></div>
             </div>
+            <input type="submit" value="Submit" id="submission-submit"/>
         </div>
         {% if levels %}
         <div class="game-tab">
@@ -201,6 +201,7 @@
                 <input type="hidden" id="min_players" value="{{game.players_min}}"/>
                 <input type="hidden" id="max_players" value="{{game.players_max}}"/>
             </form>
+            <div id='challenge-error' class='flash-container'></div>
             <input type="submit" value="Challenge" id="challenge-submit"/>
 
         </div>

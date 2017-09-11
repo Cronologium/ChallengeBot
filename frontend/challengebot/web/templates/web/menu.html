@@ -61,10 +61,7 @@
             <input class="inputfield" type="text" placeholder="Username" name="username" required>
             <label>Password</label>
             <input class="inputfield" type="password" placeholder="Password" name="password" required>
-            <br>
-            <!--<br>-->
-            <div id='flash-container' class='flash-container'></div>
-            <!--<p class="error" id="auth-error">MIHAI: TODO&nbsp;</p>-->
+            <div id='auth-error' class='flash-container'></div>
         </form>
         <input class="inputbutton" type="submit" id="auth-button" value="Login">
     </div>
@@ -78,18 +75,16 @@
             {% csrf_token %}
             <label>Username</label>
             <input class="inputfield" type="text" placeholder="Username" name="username" required><br>
-            <p class="error" id="reg-user-error"><br></p>
+            <div id='reg-user-error' class='flash-container'></div>
             <label>E-mail</label>
             <input class="inputfield" type="text" placeholder="E-mail" name="email" required><br>
-            <p class="error" id="reg-email-error"><br></p>
+            <div id='reg-email-error' class='flash-container'></div>
             <label>Password</label>
             <input class="inputfield" type="password" placeholder="Password" name="password" required><br>
-            <p class="error" id="reg-pass-error"><br></p>
+            <div id='reg-pass-error' class='flash-container'></div>
             <label>Confirm password</label>
             <input class="inputfield" type="password" placeholder="Password" name="confirm-password" required><br>
-            <p class="error" id="reg-confirm-error"><br></p>
-            <!--<p class="error" id="reg-error">MIHAI: TODO</p>-->
-            <div id='flash-container' class='flash-container'></div>
+            <div id='reg-confirm-error' class='flash-container'></div>
         </form>
         <input class="inputbutton" type="submit" id="reg-button" value="Register">
     </div>

@@ -1,30 +1,37 @@
-(function ($) {
-    var defaultTime = 5000;
-    Flash = {};
-    Flash.success = function (msg, time) {
-        time = time || defaultTime;
-        $('#flash-container')[0].innerHTML = "<div class='flash-success flash-message'>" + '&#10004  ' + msg + "</div>";
-        setTimeout(function () {
-            $('#flash-container')[0].innerHTML = "";
-        }, time);
-    };
+var FlashService = {};
+FlashService.defaultTime = 5000;
 
-    Flash.error = function (msg, time) {
-        time = time || defaultTime;
-        $('#flash-container')[0].innerHTML = "<div class='flash-error flash-message'>" + '&#10008  ' + msg + "</div>";
+FlashService.success = function (className, message, time) {
+    if (typeof className == 'undefined') {
+        throw "Class name to apply the service is mandatory";
+    }
+    if (typeof message == 'undefined') {
+        throw "Message content must not be null";
+    }
+    time = time || FlashService.defaultTime;
+    $(className)[0].innerHTML = "<div class='flash-success flash-message'>" + '&#10004  ' + message + "</div>";
+    setTimeout(function () {
+        $(className)[0].innerHTML = "";
+    }, time);
+};
 
-        setTimeout(function () {
-            $('#flash-container')[0].innerHTML = "";
-        }, time);
-    };
+FlashService.error = function (className, message, time) {
+    if (typeof className == 'undefined') {
+        throw "Class name to apply the service is mandatory";
+    }
+    if (typeof message == 'undefined') {
+        throw "Message content must not be null";
+    }
+    className = '#' + className;
+    console.log(className)
+    time = time || FlashService.defaultTime;
+    $(className)[0].innerHTML = "<div class='flash-error flash-message'>" + '&#10008  ' + message + "</div>";
 
-    Flash.clear = function () {
-        $('#flash-container')[0].innerHTML = "";
-    };
+    setTimeout(function () {
+        $(className)[0].innerHTML = "";
+    }, time);
+};
 
-})(jQuery);
-
-$(function () {
-    Flash.clear();
-
-});
+FlashService.clear = function (className) {
+    $('#flash-container')[0].innerHTML = "";
+};
