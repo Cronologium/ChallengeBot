@@ -1,7 +1,7 @@
 import time
 
 from backend.communication.channel import Channel
-from backend.game.gameOver import GameOver
+from backend.game.playbox.exceptions.game_over_exception import GameOver
 from backend.game.status import Status
 
 
@@ -84,7 +84,7 @@ class Game(object):
     def check(self):
         players_left = 0
         for player_name in self.players:
-            if self.players[player_name].status != Status.PLAYS:
+            if self.players[player_name].status != Status.PLAYS and self.players[player_name].joined:
                 if self.accept_timeouts and self.players[player_name].status == Status.TIMEOUT_EXCEEDED:
                     self.players[player_name].status = Status.PLAYS
                 if self.players[player_name].status == Status.WINNER or \

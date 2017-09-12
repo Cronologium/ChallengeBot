@@ -5,13 +5,13 @@ $(document).ready(function () {
         var editor = CodeMirror.fromTextArea(elem, {mode: "text/x-python", lineNumbers: true, theme: 'liquibyte', tabSize: 4, indentUnit: 4, matchBrackets: true});
         editor.setSize("100%", "1200px");
         function setLanguage() {
-            if ($("#id_language option:selected").val() == "PY2" || $("#id_language option:selected").val() == "PY3") {
+            if ($("#id_language option:selected").val() == "PY") {
                 editor.setOption("mode", "text/x-python");
                 editor.getDoc().setValue($("#python-code").text());
             }
-            if ($("#id_language option:selected").val() == "Cpp") {
+            if ($("#id_language option:selected").val() == "C") {
                 editor.setOption("mode", "text/x-c++src");
-                editor.getDoc().setValue($("#cpp-code").text());
+                editor.getDoc().setValue($("#c-code").text());
             }
         }
         $("#id_language").change(setLanguage);

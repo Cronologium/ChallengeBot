@@ -1,4 +1,4 @@
-from backend.game.playbox.entities.abstractDice import Dice
+from backend.game.playbox.entities.abstract_dice import Dice
 
 
 class RegularDice(Dice):

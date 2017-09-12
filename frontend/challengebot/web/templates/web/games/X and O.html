@@ -88,24 +88,23 @@ class Solution:
 
         return "0 0"
     </textarea>
-    <textarea class="hidden-help-code" id="cpp-code">
-Language unavailable
+    <textarea class="hidden-help-code" id="c-code">
+#include &lt;stdlib.h&gt;
+
+typedef struct {
+    char board[3][3];
+    char playing;
+} Api;
+
+__attribute__((visibility("default"))) char* put(Api api, char** buffer)
+{
+    char* result = malloc(4); // "x y"
+    result[0] = result[2] = '0';
+    result[1] = ' ';
+    result[3] = '\0';
+
+
+    *buffer = result; // "0 0"
+}
     </textarea>
-    <!--
-    #include "ClientSolution.h"
-
-std::vector&lt;unsigned char&gt; ClientSolution::putShip(std::vector&lt;unsigned char&gt;& inBuffer)
-{
-	/*Insert code here for ship placement*/
-    std::vector&lt;unsigned char&gt; outBuffer;
-    return outBuffer;
-}
-
-std::vector&lt;unsigned char&gt; ClientSolution::shoot(std::vector&lt;unsigned char&gt;& inBuffer)
-{
-	/*Insert code here for shooting*/
-    std::vector&lt;unsigned char&gt; outBuffer;
-	return outBuffer;
-}
-    -->
     {% endif %}

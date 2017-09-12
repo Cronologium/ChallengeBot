@@ -1,8 +1,8 @@
 import traceback
 
-from backend.game.g001_battleships.battleshipPlayer import BattleshipPlayer
-from backend.game.g001_battleships.battleships_screen import BattleshipsScreen
-from backend.game.phasingGame import PhasingGame
+from backend.game.g001_battleships.g001_battleships_player import BattleshipPlayer
+from backend.game.g001_battleships.g001_battleships_screen import BattleshipsScreen
+from backend.game.phasing_game import PhasingGame
 from backend.game.status import Status
 
 
