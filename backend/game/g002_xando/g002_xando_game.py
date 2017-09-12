@@ -1,8 +1,8 @@
 import traceback
 
-from backend.game.abstractGame import Game
-from backend.game.g002_xando.xando_screen import XandoScreen
-from backend.game.playbox.boards.xandoBoard import XandoBoard
+from backend.game.abstract_game import Game
+from backend.game.g002_xando.g002_xando_screen import XandoScreen
+from backend.game.playbox.boards.g002_xando_board import XandoBoard
 from backend.game.player import Player
 from backend.game.status import Status
 

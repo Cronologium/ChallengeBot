@@ -19,10 +19,10 @@ def validate_missing_fields(request):
 
 def validate_code(data, language):
     extension = ''
-    if language == 'PY2' or language == 'PY3' or language == 'Python2' or language == 'Python3':
+    if language == 'PY': # or language == 'PY' or language == 'Python2' or language == 'Python3':
         extension = '.py'
-    elif language == 'Cpp' or language == 'C++':
-        extension = '.cpp'
+    elif language == 'C': # or language == 'C':
+        extension = '.c'
     else:
         return {'msg': 'Unrecognized language'}
     if data == '':
@@ -31,8 +31,6 @@ def validate_code(data, language):
         return {'msg': 'Cannot submit source with this less characters'}
     if len(data) > 536870912:
         return {'msg': 'Source size must not exceed 64MB'}
-    if not re.search(r'(class[ ]*Solution)', data):
-        return {'msg': 'No Solution class in source'}
     if not re.match(r'^[\x20-\x7E\r\n\0\t]+$', language):
         return {'msg': 'Code contains restricted characters'}
     return {'extension': extension}

@@ -24,20 +24,20 @@ class CppEnvironment(Environment):
         proc.wait()
 
         if "win" in sys.platform.lower():
-            cmd = ['xcopy', self.source, os.path.join(self.solution, 'ClientSolution.cpp')]
+            cmd = ['xcopy', self.source, os.path.join(self.solution, '_g001_battleships.cpp')]
             proc = subprocess.Popen(cmd, stdout=DEVNULL, shell=True)
         else:
-            cmd = ['cp', self.source, os.path.join(self.solution, 'ClientSolution.cpp')]
+            cmd = ['cp', self.source, os.path.join(self.solution, '_g001_battleships.cpp')]
             proc = subprocess.Popen(cmd, stdout=DEVNULL)
         proc.wait()
 
         if "win" in sys.platform.lower():
             buildCmd = ['g++', '-std=gnu++11', 'Utils.h', 'Utils.cpp', 'Solution.h', 'ClientSolution.h',
-                        'ClientSolution.cpp', 'Client.h', 'Client.cpp', 'Source.cpp', '-lws2_32', '-o', 'Client.exe']
+                        '_g001_battleships.cpp', 'Client.h', 'Client.cpp', 'Source.cpp', '-lws2_32', '-o', 'Client.exe']
             proc = subprocess.Popen(buildCmd, cwd=self.solution, stdout=DEVNULL, shell=True)  # hide errors (we want this?)
         else:
             buildCmd = ['g++', '-std=gnu++11', 'Utils.h', 'Utils.cpp', 'Solution.h', 'ClientSolution.h',
-                        'ClientSolution.cpp', 'Client.h', 'Client.cpp', 'Source.cpp', '-o', 'Client.out']
+                        '_g001_battleships.cpp', 'Client.h', 'Client.cpp', 'Source.cpp', '-o', 'Client.out']
             proc = subprocess.Popen(buildCmd, cwd=self.solution, stdout=DEVNULL)  # hide errors (we want this?)
         proc.wait()
 

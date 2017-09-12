@@ -8,7 +8,6 @@ from django.db import models
 
 
 class Game(models.Model):
-    url = models.CharField(max_length=50)
     memory_limit = models.FloatField()
     time_limit = models.IntegerField()
     name = models.CharField(max_length=50)
@@ -25,10 +24,10 @@ class Source(models.Model):
     path = models.CharField(max_length=260)
     selected = models.BooleanField(default=0)
     LANGUAGE_CHOICES = (
-        ('PY2', 'Python2'),
-        ('Cpp', 'C++')
+        ('PY', 'Python'),
+        ('C', 'C')
     )
-    language = models.CharField(choices=LANGUAGE_CHOICES, default='PY2', max_length=20)
+    language = models.CharField(choices=LANGUAGE_CHOICES, default='PY', max_length=20)
     RESULT_CHOICES = (
         ('P', 'Pending'),
         ('A', 'Accepted'),

@@ -1,4 +1,4 @@
-from backend.utils.consoleLogger import ConsoleLogger
+from backend.utils.console_logger import ConsoleLogger
 
 
 class ExperienceManager:

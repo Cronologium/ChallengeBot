@@ -12,7 +12,7 @@ import threading
 class PythonEnvironment(Environment):
     def __init__(self, source, solution, port):
         super(PythonEnvironment, self).__init__(source, solution, port)
-        self.dir_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'template-py-v2', '.')
+        self.dir_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'template-py', '.')
 
     def build(self):
         DEVNULL = open(os.devnull, 'wb')
@@ -45,5 +45,8 @@ class PythonEnvironment(Environment):
             proc = subprocess.Popen(cmd.split(), cwd=self.solution, stdout=subprocess.PIPE)  # hide errors (we want this?)
         threading.Thread(target=self.monitor, args=(proc.pid, memory_limit,)).start()  # monitor memory consumption
         out, err = proc.communicate()
-        #print '[Output]', out
-        #print '[Error]', err
+        rc = proc.returncode
+        print '[Output]', out
+        if err:
+            print '[Error]', err
+        print '[Return code]', rc

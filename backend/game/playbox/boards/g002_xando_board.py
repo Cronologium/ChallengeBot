@@ -1,4 +1,4 @@
-from backend.game.playbox.boards.abstractBoard import Board
+from backend.game.playbox.boards.abstract_board import Board
 from backend.game.playbox.boards.squares.xandoSquare import XandoSquare
 
 

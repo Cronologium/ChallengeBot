@@ -1,10 +1,10 @@
-from backend.game.abstractGame import Game
-from backend.game.g003_poker.exceptions.turnOver import TurnOver
-from backend.game.g003_poker.playerCircle import PlayerCircle
-from backend.game.g003_poker.pokerPlayer import PokerPlayer
-from backend.game.g003_poker.pot import Pot
-from backend.game.playbox.decks.playingCardsBasicDeck import PlayingCardsBasicDeck
-from backend.game.playbox.enums.cardSuits import CardSuits
+from backend.game.abstract_game import Game
+from backend.game._shelved_g003_poker.exceptions.turnOver import TurnOver
+from backend.game._shelved_g003_poker.playerCircle import PlayerCircle
+from backend.game._shelved_g003_poker.pokerPlayer import PokerPlayer
+from backend.game._shelved_g003_poker.pot import Pot
+from backend.game.playbox.decks.playing_cards_basic_deck import PlayingCardsBasicDeck
+from backend.game.playbox.enums.card_suits import CardSuits
 from backend.game.status import Status
 
 

@@ -1,6 +1,6 @@
-from backend.game.playbox.decks.abstractDeck import Deck
-from backend.game.playbox.entities.playingCard import PlayingCard
-from backend.game.playbox.enums.cardSuits import CardSuits
+from backend.game.playbox.decks.abstract_deck import Deck
+from backend.game.playbox.entities.playing_card import PlayingCard
+from backend.game.playbox.enums.card_suits import CardSuits
 
 
 class PlayingCardsBasicDeck(Deck):

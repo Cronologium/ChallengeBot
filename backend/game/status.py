@@ -1,4 +1,4 @@
-from backend.game.playbox.enums.abstractEnum import AbstractEnum
+from backend.game.playbox.enums.abstract_enum import AbstractEnum
 
 
 class Status(AbstractEnum):

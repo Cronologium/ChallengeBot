@@ -1,5 +1,5 @@
-from backend.game.abstractGame import Game
-from backend.game.gameOver import GameOver
+from backend.game.abstract_game import Game
+from backend.game.playbox.exceptions.game_over_exception import GameOver
 
 
 class PhasingGame(Game):

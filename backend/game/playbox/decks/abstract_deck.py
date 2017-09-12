@@ -1,6 +1,6 @@
 import random
 
-from backend.game.playbox.exceptions.deckEmpty import DeckEmpty
+from backend.game.playbox.exceptions.deck_empty import DeckEmpty
 
 
 class Deck(object):

@@ -1,5 +1,5 @@
 from backend.game.playbox.abstract.coordinate import Coordinate
-from backend.game.playbox.boards.battleshipsBoard import BattleshipsBoard
+from backend.game.playbox.boards.g001_battleshipsBoard import BattleshipsBoard
 from backend.game.player import Player
 
 

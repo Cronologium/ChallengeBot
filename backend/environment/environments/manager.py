@@ -1,8 +1,9 @@
 import os
 import random
 
-from cppEnvironment import CppEnvironment
-from pyEnvironment import PythonEnvironment
+from _environment_cpp import CppEnvironment
+from environment_python import PythonEnvironment
+from environment_c import CEnvironment
 
 
 class EnvironmentManager:
@@ -28,8 +29,10 @@ class EnvironmentManager:
             os.mkdir(self.env_root)
         if source.endswith('.py'):
             env = PythonEnvironment(source=source, solution=self.env_root + random_string, port=port)
-        elif source.endswith('.cpp') or source.endswith('.cpp"'):
-            env = CppEnvironment(source=source, solution=self.env_root + random_string, port=port)
+        #elif source.endswith('.cpp') or source.endswith('.cpp"'):
+        #    env = CppEnvironment(source=source, solution=self.env_root + random_string, port=port)
+        elif source.endswith('.c') or source.endswith('.c"'):
+            env = CEnvironment(source=source, solution=self.env_root + random_string, port=port)
 
         if env is not None:
             self.environments.append(env)
