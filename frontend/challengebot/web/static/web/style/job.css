@@ -1,0 +1,45 @@
+.controls {
+    text-align: center;
+    vertical-align: middle;
+    margin: auto;
+    height: 70px;
+}
+
+.job-controls {
+    background-color: #40274B;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    text-align: center;
+    -webkit-box-shadow: 0px 0px 20px 2px rgba(58,32,58,1);
+	-moz-box-shadow: 0px 0px 20px 2px rgba(58,32,58,1);
+	box-shadow: 0px 0px 20px 2px rgba(58,32,58,1);
+	transition: 0.5s
+}
+
+.job-controls:hover {
+    transition: 1s;
+    border-radius: 30px;
+}
+
+.job-field {
+    background-color:rgb(79,45,120);
+    color:rgb(255,255,255);
+    text-align: center;
+    height: 42px;
+    padding: 5px;
+    transition: 1s;
+}
+
+.job-field:hover {
+    border-radius: 30px;
+    transition: 1s;
+}
+
+.cell-data {
+    border: solid 1px black;
+    margin: 2px;
+}

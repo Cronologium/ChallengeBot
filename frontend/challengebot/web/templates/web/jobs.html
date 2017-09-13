@@ -35,7 +35,7 @@
                             </td>
                             <td id ="status">
                                 {% if challenge.job.status == 'F' %}
-                                    <a href="/challenge/{{ challenge.id }}">Results</a>
+                                    <a href="/job/{{ challenge.job.id }}">Results</a>
                                 {% else %}
                                     <p id="pending">Pending</p>
                                 {% endif %}
@@ -52,7 +52,7 @@
                             </td>
                             <td>
                                 {% if sub.job.status == 'F' %}
-                                <a href="/submission/{{ sub.id }}">
+                                <a href="/job/{{ sub.job.id }}">
                                     {{sub.source.get_result_display}}
                                 </a>
                                 {% else %}

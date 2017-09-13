@@ -1,17 +1,18 @@
 import threading
+import traceback
 from Queue import Queue
 
 import time
 
-from backend.aftergame.experienceManager import ExperienceManager
+from backend.aftergame.experience_manager import ExperienceManager
 from backend.communication.server import Server
-from backend.game.g001_battleships.battleshipGame import BattleshipGame
-from backend.game.g002_xando.xandoGame import XandoGame
+from backend.game.g001_battleships.g001_battleships_game import BattleshipGame
+from backend.game.g002_xando.g002_xando_game import XandoGame
 from backend.game.status import Status
-from backend.environment.environments.environmentManager import EnvironmentManager
-from backend.utils.consoleLogger import ConsoleLogger
-from backend.utils.emptyLogger import EmptyLogger
-from backend.utils.fileLogger import FileLogger
+from backend.environment.environments.manager import EnvironmentManager
+from backend.utils.console_logger import ConsoleLogger
+from backend.utils.empty_logger import EmptyLogger
+from backend.utils.file_logger import FileLogger
 from backend.utils.repository import Repository
 
 
@@ -53,20 +54,23 @@ class Dispatcher:
             for server in self.servers:
                 server.end()
 
-    def run_client(self, source, memory_limit, port):
+    def run_client(self, source, memory_limit, port, id):
         username = 'eval'
         if 'user_id' in source:
             username = self.repository.select('auth_user', ['username'], {'id': source['user_id']})[0]['username']
 
         #print source, memory_limit, port
-        env_id = self.env_manager.make_environment(source['path'], port)
-        self.env_manager.run(env_id, memory_limit, username)
-        self.env_manager.delete_environment(env_id)
+        try:
+            env_id = self.env_manager.make_environment(source['path'], port)
+            self.env_manager.run(env_id, memory_limit, username, id)
+            self.env_manager.delete_environment(env_id)
+        except Exception:
+            print traceback.format_exc()
 
-    def run_game(self, game, sources, memory_limit, ids):
+    def run_game(self, game, sources, memory_limit, ids, id):
         #print game, sources, memory_limit, ids
         for source in sources:
-            t = threading.Thread(target=self.run_client, args=(source, memory_limit, game.server.port))
+            t = threading.Thread(target=self.run_client, args=(source, memory_limit, game.server.port, id))
             t.start()
         game.play()
         self.repository.update('web_job', {'status': 'F'}, {'id': ids['job']})
@@ -114,7 +118,7 @@ class Dispatcher:
                     logger = None
                     players = []
                     sources = []
-                    game_data = self.repository.select('web_game', ['time_limit', 'memory_limit'], {'id': run_data['job']['game_id']})[0]
+                    game_data = self.repository.select('web_game', ['id', 'time_limit', 'memory_limit'], {'id': run_data['job']['game_id']})[0]
                     game_data['time_limit'] = game_data['time_limit'] / 1000.0
                     ids = {'job': run_data['job']['id']}
                     if 'submission' in run_data:
@@ -136,7 +140,7 @@ class Dispatcher:
                             sources.append(s)
                         ids['challenge'] = run_data['challenge']['id']
                     game = self.games[run_data['job']['game_id']](EmptyLogger(), logger, server, [(player, game_data['time_limit']) for player in players])
-                    t = threading.Thread(target=self.run_game, args=(game, sources, game_data['memory_limit'], ids,))
+                    t = threading.Thread(target=self.run_game, args=(game, sources, game_data['memory_limit'], ids, game_data['id'],))
                     t.start()
             time.sleep(1)
         self.logger.log('executor finished')

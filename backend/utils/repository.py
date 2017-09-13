@@ -16,14 +16,14 @@ class Repository(object):
             query += ' WHERE ' + ' AND '.join([str(k) + '=(?)' for k in conditions])
 
         t = tuple([conditions[k] for k in conditions])
-        print query, t
+        #print query, t
         cursor.execute(query, t)
         result = []
         for r in cursor.fetchall():
             result.append({})
             for x in xrange(len(columns)):
                 result[-1][columns[x]] = r[x]
-        print str(result)
+        #print str(result)
         cursor.close()
         conn.close()
         return result
@@ -36,7 +36,7 @@ class Repository(object):
         non_query = 'INSERT INTO ' + table + ' (' + ', '.join(str(key) for key in values.keys()) + ') VALUES (' + ', '.join(['(?)' for x in xrange(len(values))]) + ')'
 
         t = tuple([values[key] for key in values])
-        print non_query, t
+        #print non_query, t
         cursor.execute(non_query, t)
         cursor.close()
         conn.commit()
@@ -53,7 +53,7 @@ class Repository(object):
             non_query += ' WHERE ' + ' AND '.join([str(k) + '=(?)' for k in conditions])
 
         t = tuple([values[k] for k in values]) + tuple([conditions[k] for k in conditions])
-        print non_query, t
+        #print non_query, t
         cursor.execute(non_query, t)
         cursor.close()
         conn.commit()
