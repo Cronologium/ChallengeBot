@@ -195,24 +195,35 @@ class Solution:
 
         return "shoot 0 0"
     </textarea>
-    <textarea class="hidden-help-code" id="cpp-code">
-Language unavailable
+    <textarea class="hidden-help-code" id="c-code">
+#include &lt;stdlib.h&gt;
 
-    </textarea>
-    <!--/*
-#include "ClientSolution.h"
+typedef struct {
+    char* my_board[10][10];
+    char* their_board[10][10];
+    int next_ship_size;
+} Api;
 
-std::vector&lt;unsigned char&gt; ClientSolution::putShip(std::vector&lt;unsigned char&gt;& inBuffer)
+__attribute__((visibility("default"))) char* put(Api api, char** buffer)
 {
-	/*Insert code here for ship placement*/
-    std::vector&lt;unsigned char&gt; outBuffer;
-    return outBuffer;
+    char* result = malloc(8); // "x y z t";
+    result[0] = result[2] = result[4] = result[6] = '0';
+    result[1] = result[3] = result[5] = ' ';
+    result[7] = '\0\'
+
+
+    *buffer = result; // "0 0 0 0"
 }
 
-std::vector&lt;unsigned char&gt; ClientSolution::shoot(std::vector&lt;unsigned char&gt;& inBuffer)
+__attribute__((visibility("default"))) char* shoot(Api api, char** buffer)
 {
-	/*Insert code here for shooting*/
-    std::vector&lt;unsigned char&gt; outBuffer;
-	return outBuffer;
-}*/-->
+    char* result = malloc(4);//"x y";
+    result[0] = result[2] = '0';
+    result[1] = ' ';
+    result[3] = '\0';
+
+
+    *buffer = result; // "0 0"
+}
+    </textarea>
     {% endif %}
