@@ -4,7 +4,7 @@
 }
 
 .game-tab {
-    background-color: rgba(138, 135, 151, 0.3);
+    background-color: rgba(200, 200, 200, 0.7);
     padding: 0px;
     border-radius: 10px;
     color: black;
@@ -17,7 +17,7 @@
     padding: 5px;
 }
 
-.game-tab h3 {
+.game-tab h2 {
     margin-top: 0px;
     padding: 5px;
     background-color: rgba(0, 0, 0, 0.8);
@@ -213,11 +213,18 @@ input[type=button] {
     transition: 5s;
 }
 
+<<<<<<< HEAD
 .game-bot-table table {
     /*border-collapse: collapse;*/
     /*border: none;*/
     width: 100%;
 }
+=======
+.hidden-help-code {
+    display: none;
+}
+
+>>>>>>> master
 
 .game-bot-table td {
     width: 33%;

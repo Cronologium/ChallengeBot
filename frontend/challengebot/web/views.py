@@ -49,117 +49,26 @@ def challenges(request):
     template = loader.get_template(os.path.join('web', 'template.html'))
     return HttpResponse(template.render(context, request))
 
-
-class Ship:
-    def __init__(self, x1, y1, x2, y2, size, player):
-        self.x1 = x1
-        self.x2 = x2
-        self.y1 = y1
-        self.y2 = y2
-        self.size = size
-        self.player = player
-
-
-class Shot:
-    def __init__(self, x, y, player):
-        self.x = x
-        self.y = y
-        self.player = player
-
-
-def challenge(request, challenge_id):
-    challenge_obj = get_object_or_404(Challenge, pk=int(challenge_id))
-    content_template = loader.get_template(os.path.join('web', 'challenge.html'))
-    log = None
-    try:
-        log = open(challenge_obj.job.log_path)
-    except IOError:
+def job(request, job_id):
+    #challenge_obj = get_object_or_404(Challenge, pk=int(challenge_id))
+    log =None
+    challenge_objs = Challenge.objects.filter(job_id=job_id)
+    if len(challenge_objs) > 0:
         pass
-
-    # What follows is bad code and *has* to changed
-    participants = []
-    ships = {}
-    shots = {}
-    line_index = 0
-    for line in log:
-        if line_index < 2:  # read participants' names
-            participant = line.strip().split(' ')[1]
-            participants.append(participant)
-            ships[participant] = []
-            shots[participant] = []
-        else:
-            line = line.strip().split(' ')
-            if line[1] == 'puts':
-                x1 = int(line[2])
-                y1 = int(line[3])
-                x2 = int(line[4])
-                y2 = int(line[5])
-                ship_size = abs(x1-x2) + abs(y1-y2) + 1
-                player = line[0]
-                ships[player].append(Ship(x1, y1, x2, y2, ship_size, player))
-            if line[1] == 'shoots':
-                x = int(line[2])
-                y = int(line[3])
-                player = line[0]
-                shots[player].append(Shot(x, y, player))
-
-        line_index += 1
-    # Until here
-
-    content_context = {'challenge': challenge_obj, 'participants': participants, 'ships': ships, 'shots': shots}
-    context = {}
-    context['menu'] = get_rendered_menu(request)
-    context['content'] = [content_template.render(content_context, request)]
-    template = loader.get_template(os.path.join('web', 'template.html'))
-    return HttpResponse(template.render(context, request))
-
-
-def submission(request, submission_id):
-    submission_obj = get_object_or_404(Submission, pk=int(submission_id))
-    content_template = loader.get_template(os.path.join('web', 'challenge.html'))
-    log = None
-    try:
+    else:
+        submission_obj = Submission.objects.filter(job_id=job_id)[0]
         log = open(submission_obj.job.log_path)
-    except IOError:
-        pass
-
-    # What follows is bad code and *has* to changed
-    participants = []
-    ships = {}
-    shots = {}
-    line_index = 0
+    content_template = loader.get_template(os.path.join('web', 'job.html'))
+    rows = []
     for line in log:
-        if line_index < 2:  # read participants' names
-            participant = line.strip().split(' ')[1]
-            participants.append(participant)
-            ships[participant] = []
-            shots[participant] = []
-        else:
-            line = line.strip().split(' ')
-            if line[1] == 'puts':
-                x1 = int(line[2])
-                y1 = int(line[3])
-                x2 = int(line[4])
-                y2 = int(line[5])
-                ship_size = abs(x1 - x2) + abs(y1 - y2) + 1
-                player = line[0]
-                ships[player].append(Ship(x1, y1, x2, y2, ship_size, player))
-            if line[1] == 'shoots':
-                x = int(line[2])
-                y = int(line[3])
-                player = line[0]
-                shots[player].append(Shot(x, y, player))
+        rows.append(line)
 
-        line_index += 1
-    # Until here
-
-    content_context = {'submission': submission_obj, 'participants': participants, 'ships': ships, 'shots': shots}
+    content_context = {'rows': rows}
     context = {}
     context['menu'] = get_rendered_menu(request)
     context['content'] = [content_template.render(content_context, request)]
     template = loader.get_template(os.path.join('web', 'template.html'))
     return HttpResponse(template.render(context, request))
-
 
 def game(request, game_id):
     game_obj = get_object_or_404(Game, pk=int(game_id))
@@ -181,7 +90,7 @@ def game(request, game_id):
             content_context['p1_source'] = Source.objects.get(user_id=request.user.id, game_id=game_id, selected=1)
             content_context['opponents'] = ChallengeForm(game_id=game_id, user_id=request.user.id,
                                                  max_players=game_obj.players_max - 1, min_players=game_obj.players_min - 1)
-    template = loader.get_template(os.path.join('web', game_obj.url))
+    template = loader.get_template(os.path.join('web', 'games', game_obj.name + '.html'))
     content_context['game_description'] = template.render({}, request)
     context = {}
     context['menu'] = get_rendered_menu(request)

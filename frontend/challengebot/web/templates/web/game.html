@@ -26,9 +26,9 @@
 <div id="game-content">
     <div id="game-data">
         <div class="game-tab">
-            <h3>
+            <h2>
                 Restrictions
-            </h3>
+            </h2>
             <table class="game-table">
                 <tr>
                     <th>
@@ -77,9 +77,9 @@
             </table>
         </div>
         <div class="game-tab">
-            <h3>
+            <h2>
                 Requirements
-            </h3>
+            </h2>
             <div class="game-tab-content">
                 {{ game_description }}
             </div>
@@ -87,6 +87,7 @@
     </div>
     <div id="wrapper-forms">
         {% if request.user.is_authenticated %}
+<<<<<<< HEAD
         <div class="game-tab">
             <h3>
                 Submit your bot
@@ -123,6 +124,88 @@
                         <td>
                             {% if level.xp_reach == -1 %}
                             --
+=======
+             <div class="game-tab">
+                 <h2>
+                     Submit your bot
+                 </h2>
+                 <div class="game-tab-content">
+                     <form id="submission-form" action="/submit/source/{{game.id}}" method="post">
+                         {% csrf_token %}
+                         <input type="hidden" id="game_id" value="{{game.id}}"/>
+                         <b>Language:{{form.language}}</b>
+                         <textarea name="your_code" id="id_your_code" rows="20" cols="80"></textarea>
+                     </form>
+                     <p class="error" id="submit-error">Mihai: TODO</p>
+                     <input type="submit" value="Submit" id="submission-submit"/>
+                 </div>
+             </div>
+             {% if levels %}
+                 <div class = "game-tab">
+                     <h2>
+                         Experience distribution
+                     </h2>
+                         <div class="game-table">
+                             <table>
+                                 <tr>
+                                     <th>Level</th>
+                                     <th>XP needed</th>
+                                     <th>Win</th>
+                                     <th>Draw</th>
+                                     <th>Lose</th>
+                                     <th>Disqualify</th>
+                                 </tr>
+                                 {% for level in levels %}
+                                 <tr>
+                                     <td>{{level.level}}</td>
+                                     <td>
+                                         {% if level.xp_reach == -1 %}
+                                            --
+                                         {% else %}
+                                            {{level.xp_reach}} xp
+                                         {% endif %}
+                                     </td>
+                                     <td>{{level.xp_win}} xp</td>
+                                     <td>{{level.xp_draw}} xp</td>
+                                     <td>{{level.xp_lost}} xp</td>
+                                     <td>{{level.xp_dsq}} xp</td>
+                                 </tr>
+                                 {% endfor %}
+                             </table>
+                     </div>
+                 </div>
+                {% if leveluser and xp_reach %}
+                     <div class="game-tab">
+                         <h3>
+                             Current standings
+                         </h3>
+                         <div class="game-tab-content">
+                             <div id="player-level"><b>{{leveluser.level}}</b></div>
+                             <input id="player-xp" type="hidden" value="{{leveluser.xp}}">
+                             <input id="reach-xp" type="hidden" value="{{xp_reach}}">
+                             <div id="xp-meter">
+                                <div id="xp-gain">
+
+                                </div>
+                            </div>
+                         </div>
+                     </div>
+                {% endif %}
+             {% endif %}
+             {% if p1_source %}
+             <div class="game-tab">
+                 <h2>
+                     Challenge other bots
+                 </h2>
+                 <div class="game-tab-content">
+                     <form id="challenge-form" action="/submit/challenge/{{p1_source.id}}" method="post">
+                         {% csrf_token %}
+                         {% if game.players_min != game.players_max %}
+                            Choose between {{game.players_min|sub:1}} and {{game.players_max|sub:1}} bots
+                         {% else %}
+                            {% if game.players_min == 2 %}
+                                Choose exactly 1 bot
+>>>>>>> master
                             {% else %}
                             {{level.xp_reach}} xp
                             {% endif %}
