@@ -57,8 +57,12 @@
             <input class="inputfield" type="text" placeholder="Username" name="username" required>
             <label>Password</label>
             <input class="inputfield" type="password" placeholder="Password" name="password" required>
+<<<<<<< HEAD
+            <div id='auth-error' class='flash-container'></div>
+=======
             <br><br>
             <p class="error" id="auth-error">MIHAI: TODO&nbsp;</p>
+>>>>>>> master
         </form>
         <input class="inputbutton" type="submit" id="auth-button" value="Login">
     </div>
@@ -71,6 +75,19 @@
         <form id ='registration' action='/new_user/' method="POST">
             {% csrf_token %}
             <label>Username</label>
+<<<<<<< HEAD
+            <input class="inputfield" type="text" placeholder="Username" name="username" required><br>
+            <div id='reg-user-error' class='flash-container'></div>
+            <label>E-mail</label>
+            <input class="inputfield" type="text" placeholder="E-mail" name="email" required><br>
+            <div id='reg-email-error' class='flash-container'></div>
+            <label>Password</label>
+            <input class="inputfield" type="password" placeholder="Password" name="password" required><br>
+            <div id='reg-pass-error' class='flash-container'></div>
+            <label>Confirm password</label>
+            <input class="inputfield" type="password" placeholder="Password" name="confirm-password" required><br>
+            <div id='reg-confirm-error' class='flash-container'></div>
+=======
             <input class="inputfield" type="text" placeholder="Username" name="username" required><br><p class="error" id="reg-user-error"><br></p>
             <label>E-mail</label>
             <input class="inputfield" type="text" placeholder="E-mail" name="email" required><br><p class="error" id="reg-email-error"><br></p>
@@ -79,6 +96,7 @@
             <label>Confirm password</label>
             <input class="inputfield" type="password" placeholder="Password" name="confirm-password" required><br><p class="error" id="reg-confirm-error"><br></p>
             <p class="error" id="reg-error">MIHAI: TODO</p>
+>>>>>>> master
         </form>
         <input class="inputbutton" type="submit" id="reg-button" value="Register">
     </div>
