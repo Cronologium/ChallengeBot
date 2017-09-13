@@ -6,10 +6,9 @@
 .game-tab {
     background-color: rgba(200, 200, 200, 0.7);
     padding: 0px;
-    margin: 5px;
     border-radius: 10px;
     color: black;
-    margin-bottom: 20px;
+    margin: 5px 5px 20px;
     border: solid 1px black;
     box-shadow: 0px 0px 20px 2px rgb(20, 20, 30);
 }
@@ -22,7 +21,7 @@
     margin-top: 0px;
     padding: 5px;
     background-color: rgba(0, 0, 0, 0.8);
-    color: rgb(142,164,255);
+    color: rgb(142, 164, 255);
     text-align: center;
 }
 
@@ -32,8 +31,14 @@
     vertical-align: top;
 }
 
+table {
+    width: 100%;
+    height: 100%;
+}
+
 .game-table {
     width: 100%;
+    display: table;
     border-collapse: collapse;
     margin: 0 auto;
 }
@@ -42,14 +47,14 @@
     text-align: left;
     padding: 8px;
     border: 1px solid black;
-
 }
-.game-table tr:nth-child(even){
+
+.game-table tr:nth-child(even) {
     background-color: white;
     color: black;
 }
 
-.game-table tr{
+.game-table tr {
     background-color: white;
     color: black;
     border: 1px solid black;
@@ -60,7 +65,7 @@
     color: black;
 }
 
-#wrapper-forms{
+#wrapper-forms {
     display: inline-block;
     width: 54%;
     vertical-align: top;
@@ -77,11 +82,11 @@
 }
 
 p {
-   color:black;
+    color: black;
 }
 
 input[type=submit] {
-    width: 20%;
+    width: 100%;
     background-color: #1a1333;
     color: white;
     padding: 14px 20px;
@@ -92,29 +97,29 @@ input[type=submit] {
 }
 
 #id_eligible_opponents {
-    width: 20%;
+    width: 100%;
     height: 100px;
-    margin: 8px 20px;
+    /*margin: 8px 20px;*/
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
 }
 
 #id_eligible_opponents option {
-    padding: 12px 20px;
+    /*padding: 12px 20px;*/
 }
 
 #id_selected_opponents {
-    width: 20%;
+    width: 100%;
     height: 100px;
-    margin: 8px 20px;
+    /*margin: 8px 20px;*/
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
 }
 
-#id_selected_opponents option{
-    padding: 12px 20px;
+#id_selected_opponents option {
+    /*padding: 12px 20px;*/
 }
 
 #id_language {
@@ -128,11 +133,11 @@ input[type=submit] {
     box-sizing: border-box;
 }
 
-input[type=button]{
+input[type=button] {
     background-color: #20072B;
     border: none;
     color: white;
-    padding: 15px 32px;
+    /*padding: 15px 32px;*/
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -143,12 +148,17 @@ input[type=button]{
 }
 
 #submission-submit {
-    margin: 8px auto;
+    /*margin: 8px auto;*/
+    /*width: 100%;*/
+    margin: auto;
+    display: block;
     width: 100%;
+    font-size: 1.5em;
+    font-weight: bold;
 }
 
 .challenge-options {
-    width: 50%;
+    width: 100%;
     margin: 0 auto;
     display: inline;
     text-align: center;
@@ -157,16 +167,22 @@ input[type=button]{
 
 #addButton {
     background-color: #1a1333;
+    width: 100%;
+    height: 100%;
 }
 
 #removeButton {
     background-color: #1a1333;
+    width: 100%;
+    height: 100%;
 }
 
 #challenge-submit {
     margin: auto;
     display: block;
     width: 100%;
+    font-size: 1.5em;
+    font-weight: bold;
 }
 
 #player-level {
@@ -176,7 +192,7 @@ input[type=button]{
     border: solid 1px black;
     text-align: center;
     vertical-align: top;
-    color: rgb(142,164,255);
+    color: rgb(142, 164, 255);
     background-color: #1a1333;
     font-size: 20px;
 }
@@ -196,10 +212,25 @@ input[type=button]{
     transition: 5s;
 }
 
+.game-bot-table table {
+    /*border-collapse: collapse;*/
+    /*border: none;*/
+    width: 100%;
+}
+
 .hidden-help-code {
     display: none;
 }
 
+.game-bot-table td {
+    width: 33%;
+}
 
+.game-bot-table tr td {
+    border: 0;
+}
 
-
+.game-bot-number {
+    text-align: center;
+    height: 0px;
+}

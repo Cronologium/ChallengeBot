@@ -48,15 +48,15 @@ $(document).ready(function () {
             data: data,
             success: function(data) {
                 if (data['msg'] == 'success') {
-                    $('#submit-error').text('huh?');
+                    FlashService.success('submit-error', "Success");
                     window.location.replace('/jobs');
                 }
                 else {
-                    $('#submit-error').text(data['msg']);
+                    FlashService.error('submit-error',  data['msg']);
                 }
             },
             error: function() {
-                $('#submit-error').text('A problem occured on the server.');
+                FlashService.error('submit-error', 'A problem occurred on the server.');
             }
         });
     });
@@ -79,15 +79,15 @@ $(document).ready(function () {
             data: data,
             success: function(data) {
                 if (data['msg'] == 'success') {
-                    $('#challenge-error').text('huh');
+                    FlashService.success('challenge-error', 'Success');
                     window.location.replace('/jobs');
                 }
                 else {
-                    $('#challenge-error').text(data['msg']);
+                    FlashService.error('challenge-error', data['msg']);
                 }
             },
             error: function() {
-                $('#challenge-error').text('A problem occured on the server.');
+                 FlashService.error('challenge-error', 'A problem occurred on the server.');
             }
         });
     });

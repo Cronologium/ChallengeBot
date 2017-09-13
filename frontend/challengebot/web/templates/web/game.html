@@ -85,62 +85,62 @@
             </div>
         </div>
     </div>
-        <div id="wrapper-forms">
+    <div id="wrapper-forms">
         {% if request.user.is_authenticated %}
-             <div class="game-tab">
-                 <h2>
-                     Submit your bot
-                 </h2>
-                 <div class="game-tab-content">
-                     <form id="submission-form" action="/submit/source/{{game.id}}" method="post">
-                         {% csrf_token %}
-                         <input type="hidden" id="game_id" value="{{game.id}}"/>
-                         <b>Language:{{form.language}}</b>
-                         <textarea name="your_code" id="id_your_code" rows="20" cols="80"></textarea>
-                     </form>
-                     <p class="error" id="submit-error">Mihai: TODO</p>
-                     <input type="submit" value="Submit" id="submission-submit"/>
-                 </div>
-             </div>
-             {% if levels %}
-                 <div class = "game-tab">
-                     <h2>
-                         Experience distribution
-                     </h2>
-                         <div class="game-table">
-                             <table>
-                                 <tr>
-                                     <th>Level</th>
-                                     <th>XP needed</th>
-                                     <th>Win</th>
-                                     <th>Draw</th>
-                                     <th>Lose</th>
-                                     <th>Disqualify</th>
-                                 </tr>
-                                 {% for level in levels %}
-                                 <tr>
-                                     <td>{{level.level}}</td>
-                                     <td>
-                                         {% if level.xp_reach == -1 %}
+            <div class="game-tab">
+                <h2>
+                    Submit your bot
+                </h2>
+                <div class="game-tab-content">
+                    <form id="submission-form" action="/submit/source/{{game.id}}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" id="game_id" value="{{game.id}}"/>
+                        <b>Language:{{form.language}}</b>
+                        <textarea name="your_code" id="id_your_code" rows="20" cols="80"></textarea>
+                    </form>
+                    <div id='submit-error' class='flash-container'></div>
+                </div>
+                <input type="submit" value="Submit" id="submission-submit"/>
+            </div>
+            {% if levels %}
+                <div class = "game-tab">
+                    <h2>
+                        Experience distribution
+                    </h2>
+                    <div class="game-table">
+                        <table>
+                            <tr>
+                                <th>Level</th>
+                                <th>XP needed</th>
+                                <th>Win</th>
+                                <th>Draw</th>
+                                <th>Lose</th>
+                                <th>Disqualify</th>
+                            </tr>
+                            {% for level in levels %}
+                                <tr>
+                                    <td>{{level.level}}</td>
+                                    <td>
+                                        {% if level.xp_reach == -1 %}
                                             --
-                                         {% else %}
+                                        {% else %}
                                             {{level.xp_reach}} xp
-                                         {% endif %}
-                                     </td>
-                                     <td>{{level.xp_win}} xp</td>
-                                     <td>{{level.xp_draw}} xp</td>
-                                     <td>{{level.xp_lost}} xp</td>
-                                     <td>{{level.xp_dsq}} xp</td>
-                                 </tr>
-                                 {% endfor %}
-                             </table>
-                     </div>
-                 </div>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{level.xp_win}} xp</td>
+                                    <td>{{level.xp_draw}} xp</td>
+                                    <td>{{level.xp_lost}} xp</td>
+                                    <td>{{level.xp_dsq}} xp</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
                 {% if leveluser and xp_reach %}
                      <div class="game-tab">
-                         <h3>
+                         <h2>
                              Current standings
-                         </h3>
+                         </h2>
                          <div class="game-tab-content">
                              <div id="player-level"><b>{{leveluser.level}}</b></div>
                              <input id="player-xp" type="hidden" value="{{leveluser.xp}}">
@@ -153,42 +153,58 @@
                          </div>
                      </div>
                 {% endif %}
-             {% endif %}
-             {% if p1_source %}
-             <div class="game-tab">
-                 <h2>
-                     Challenge other bots
-                 </h2>
-                 <div class="game-tab-content">
-                     <form id="challenge-form" action="/submit/challenge/{{p1_source.id}}" method="post">
-                         {% csrf_token %}
-                         {% if game.players_min != game.players_max %}
+            {% endif %}
+            {% if p1_source %}
+                <div class="game-tab">
+                    <h2>
+                        Challenge other bots
+                    </h2>
+                    <form id="challenge-form" action="/submit/challenge/{{p1_source.id}}" method="post">
+                        <div class="game-bot-number">
+                            {% csrf_token %}
+                            {% if game.players_min != game.players_max %}
                             Choose between {{game.players_min|sub:1}} and {{game.players_max|sub:1}} bots
-                         {% else %}
-                            {% if game.players_min == 2 %}
-                                Choose exactly 1 bot
                             {% else %}
-                                Choose exactly {{game.players_min|sub:1}} bots
+                            {% if game.players_min == 2 %}
+                            Choose exactly 1 bot
+                            {% else %}
+                            Choose exactly {{game.players_min|sub:1}} bots
                             {% endif %}
-                         {% endif %}
-                         <input type="hidden" id="player_source_id" value="{{p1_source.id}}"/>
-                         <br>
-                         <div class="challenge-options">
-                             {{ opponents.eligible_opponents }}
-                             <input type="button" value=">" id="addButton" onclick="add_opponent()"/>
-                         </div>
-                         <div class="challenge-options">
-                             <input type="button" value="<" id="removeButton" onclick="remove_opponent()"/>
-                             {{ opponents.selected_opponents }}
-                         </div>
-                         <input type="hidden" id="min_players" value="{{game.players_min}}"/>
-                         <input type="hidden" id="max_players" value="{{game.players_max}}"/>
-                     </form>
-                     <p class="error" id="challenge-error">MIHAI: TODO</p>
-                     <input type="submit" value="Challenge" id="challenge-submit"/>
-                 </div>
-             </div>
+                            {% endif %}
+                        </div>
+                        <input type="hidden" id="player_source_id" value="{{p1_source.id}}"/>
+                        <br>
+                        <table class="game-bot-table">
+                            <tr>
+                                <td rowspan="2">
+
+                                    <div class="challenge-options">
+                                        {{ opponents.eligible_opponents }}
+                                    </div>
+
+                                </td>
+                                <td>
+                                    <input type="button" value=">" id="addButton" onclick="add_opponent()"/>
+                                </td>
+                                <td rowspan="2">
+                                    <div class="challenge-options">
+                                        {{ opponents.selected_opponents }}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="button" value="<" id="removeButton" onclick="remove_opponent()"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <input type="hidden" id="min_players" value="{{game.players_min}}"/>
+                        <input type="hidden" id="max_players" value="{{game.players_max}}"/>
+                    </form>
+                    <div id='challenge-error' class='flash-container'></div>
+                    <input type="submit" value="Challenge" id="challenge-submit"/>
+                </div>
             {% endif %}
         {% endif %}
-        </div>
+    </div>
 </div>

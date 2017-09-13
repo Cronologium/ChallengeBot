@@ -18,6 +18,6 @@ class Solution:
 
     def shoot(self, api):
         x, y = random.randint(0, 9), random.randint(0, 9)
-        while api.their[x][y] != '':
+        while api.their_board[x][y] != '':
             x, y = random.randint(0, 9), random.randint(0, 9)
         return str(x) + " " + str(y)
