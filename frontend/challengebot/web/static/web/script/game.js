@@ -5,13 +5,13 @@ $(document).ready(function () {
         var editor = CodeMirror.fromTextArea(elem, {mode: "text/x-python", lineNumbers: true, theme: 'liquibyte', tabSize: 4, indentUnit: 4, matchBrackets: true});
         editor.setSize("100%", "1200px");
         function setLanguage() {
-            if ($("#id_language option:selected").val() == "PY2" || $("#id_language option:selected").val() == "PY3") {
+            if ($("#id_language option:selected").val() == "PY") {
                 editor.setOption("mode", "text/x-python");
                 editor.getDoc().setValue($("#python-code").text());
             }
-            if ($("#id_language option:selected").val() == "Cpp") {
+            if ($("#id_language option:selected").val() == "C") {
                 editor.setOption("mode", "text/x-c++src");
-                editor.getDoc().setValue($("#cpp-code").text());
+                editor.getDoc().setValue($("#c-code").text());
             }
         }
         $("#id_language").change(setLanguage);
@@ -48,15 +48,15 @@ $(document).ready(function () {
             data: data,
             success: function(data) {
                 if (data['msg'] == 'success') {
-                    $('#submit-error').text('huh?');
+                    FlashService.success('submit-error', "Success");
                     window.location.replace('/jobs');
                 }
                 else {
-                    $('#submit-error').text(data['msg']);
+                    FlashService.error('submit-error',  data['msg']);
                 }
             },
             error: function() {
-                $('#submit-error').text('A problem occured on the server.');
+                FlashService.error('submit-error', 'A problem occurred on the server.');
             }
         });
     });
@@ -79,15 +79,15 @@ $(document).ready(function () {
             data: data,
             success: function(data) {
                 if (data['msg'] == 'success') {
-                    $('#challenge-error').text('huh');
+                    FlashService.success('challenge-error', 'Success');
                     window.location.replace('/jobs');
                 }
                 else {
-                    $('#challenge-error').text(data['msg']);
+                    FlashService.error('challenge-error', data['msg']);
                 }
             },
             error: function() {
-                $('#challenge-error').text('A problem occured on the server.');
+                 FlashService.error('challenge-error', 'A problem occurred on the server.');
             }
         });
     });
