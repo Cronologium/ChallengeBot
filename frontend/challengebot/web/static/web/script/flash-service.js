@@ -8,6 +8,7 @@ FlashService.success = function (className, message, time) {
     if (typeof message == 'undefined') {
         throw "Message content must not be null";
     }
+    className = '#' + className;
     time = time || FlashService.defaultTime;
     $(className)[0].innerHTML = "<div class='flash-success flash-message'>" + '&#10004  ' + message + "</div>";
     setTimeout(function () {
@@ -23,7 +24,6 @@ FlashService.error = function (className, message, time) {
         throw "Message content must not be null";
     }
     className = '#' + className;
-    console.log(className)
     time = time || FlashService.defaultTime;
     $(className)[0].innerHTML = "<div class='flash-error flash-message'>" + '&#10008  ' + message + "</div>";
 
