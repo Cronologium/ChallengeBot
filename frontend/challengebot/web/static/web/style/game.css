@@ -47,7 +47,6 @@ table {
     text-align: left;
     padding: 8px;
     border: 1px solid black;
-    text-align: center;
 }
 
 .game-table tr:nth-child(even) {
@@ -213,18 +212,15 @@ input[type=button] {
     transition: 5s;
 }
 
-<<<<<<< HEAD
 .game-bot-table table {
     /*border-collapse: collapse;*/
     /*border: none;*/
     width: 100%;
 }
-=======
+
 .hidden-help-code {
     display: none;
 }
-
->>>>>>> master
 
 .game-bot-table td {
     width: 33%;

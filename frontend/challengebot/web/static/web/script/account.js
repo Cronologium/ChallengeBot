@@ -30,7 +30,6 @@ $(document).ready(function () {
             success: function(data) {
                 if (data['msg'] == 'success') {
                     location.reload();
-<<<<<<< HEAD
                     FlashService.clear('flash-container');
                 }
                 else {
@@ -39,16 +38,6 @@ $(document).ready(function () {
             },
             error: function() {
                 FlashService.error('auth-error', 'A problem occurred on the server.');
-=======
-                    $('#auth-error').text('\n');
-                }
-                else {
-                    $('#auth-error').text(data['msg']);
-                }
-            },
-            error: function() {
-                $('#auth-error').text('A problem occured on the server.');
->>>>>>> master
             }
         });
     });
@@ -88,11 +77,7 @@ $(document).ready(function () {
                 }
             },
             error: function() {
-<<<<<<< HEAD
                 FlashService.error('reg-confirm-error', 'A problem occurred on the server');
-=======
-                $('#reg-confirm-error').text('A problem occured on the server.');
->>>>>>> master
             }
         });
     });
