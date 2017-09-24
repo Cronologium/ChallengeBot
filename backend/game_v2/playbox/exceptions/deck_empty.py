@@ -1,0 +1,2 @@
+class DeckEmpty(object):
+    pass
