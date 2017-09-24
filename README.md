@@ -213,4 +213,5 @@ Such undiscussed/unapproved changes will not be taken into consideration.
 
 * **Adding perma-redirects (302) to links will most likely result in losing rights to access the repo.**
 * **Any intentional security back-door introduces in the website will result in automatically losing rights**
+* **Lack of contribution or communication with others results in exclusion without notice**
 
