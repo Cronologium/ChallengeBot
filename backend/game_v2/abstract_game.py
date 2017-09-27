@@ -1,23 +1,24 @@
 from backend.game_v2.playbox.exceptions.game_over_exception import GameOver
 from backend.game_v2.status import Status
+from backend.communication_v2.server import Server
 
 class Game(object):
-    def __init__(self, debug_logger, screen, server, players, turns=99999999, required_players=2, accept_timeouts=False):
+    def __init__(self, debug_logger, screen, players, turns=99999999, required_players=2, accept_timeouts=False):
         self.screen = screen
         self.debug_logger = debug_logger
-        self.server = server
         self.turns = turns
         self.required_players = required_players
         self.players = {}
         self.accept_timeouts = accept_timeouts
         self.win_pos = 1
         self.lose_pos = len(players)
+        self.server = Server()
         for player in players:
             self.players[player.name] = player
 
     def join_player(self, player_name):
         player = self.players[player_name]
-        self.server.connect(player.name, player.timeout, player.port)
+        self.server.connect(player.name, player.port, player.timeout)
         player.joined = True
 
     def exit_player(self, player_name):

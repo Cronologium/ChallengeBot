@@ -7,8 +7,8 @@ import threading
 
 
 class CEnvironment(Environment):
-    def __init__(self, source, solution, port):
-        super(CEnvironment, self).__init__(source, solution, port)
+    def __init__(self, source, solution, port, memory_limit):
+        super(CEnvironment, self).__init__(source, solution, port, memory_limit)
         self.dir_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'template-c', '.')
 
     def build(self):

@@ -19,11 +19,10 @@ class PythonEnvironment(Environment):
 
         p = None
 
-        cmd = ['cp', self.source, os.path.join(self.solution, 'solution', 'solution.py')]
+        cmd = ['cp', self.source, os.path.join(self.solution, 'solution.py')]
         p = subprocess.Popen(cmd, stdout=DEVNULL)
         p.wait()
 
     def run(self):
-
-        cmd = 'usr/bin/python ./main.py'
+        cmd = '/usr/bin/python ./main.py'
         self.netcat_run(cmd)

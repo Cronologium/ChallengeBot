@@ -2,7 +2,7 @@ import Queue
 import socket
 from threading import Thread
 
-from backend.communication.channel import Channel
+from backend.communication_v2.channel import Channel
 
 
 class Server:

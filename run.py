@@ -1,6 +1,6 @@
 import sys
 
-from backend.dispatcher import Dispatcher
+from backend.dispatcher_v2 import Dispatcher
 
 if __name__ == '__main__':
     d = None
@@ -8,5 +8,5 @@ if __name__ == '__main__':
         d = Dispatcher(start_port=int(sys.argv[1]))
     else:
         d = Dispatcher()
-    d.reval()
+    d.clear()
     d.run()

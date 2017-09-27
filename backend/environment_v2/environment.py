@@ -6,12 +6,11 @@ import psutil
 import sys
 
 class Environment(object):
-    def __init__(self, source, solution, port, memory_limit, id):
+    def __init__(self, source, solution, port, memory_limit):
         self.source = source
         self.port = port
         self.solution = solution
         self.memory_limit = memory_limit
-        self.id = id
 
     def build(self):
         pass
@@ -32,8 +31,9 @@ class Environment(object):
     def netcat_run(self, cmd):
         pipe_file = os.path.join(self.solution, 'pipe')
         os.mkfifo(pipe_file)
-        cmd = 'nc -l -p %d < %s | %s > %s' % (self.port, pipe_file, cmd, pipe_file)
-        proc = subprocess.Popen(cmd.split(), cwd=self.solution, stdout=subprocess.PIPE)  # hide errors (we want this?)
+        cmd = 'nc localhost %d < %s | %s > %s' % (self.port, pipe_file, cmd, pipe_file)
+        print cmd.split()
+        proc = subprocess.Popen(cmd.split(), shell=True, executable='/bin/bash', cwd=self.solution, stdout=subprocess.PIPE)  # hide errors (we want this?)
         threading.Thread(target=self.monitor, args=(proc.pid,)).start()  # monitor memory consumption
         out, err = proc.communicate()
         rc = proc.returncode

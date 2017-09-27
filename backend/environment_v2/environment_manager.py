@@ -1,7 +1,7 @@
 import os
 import random
 
-from environment_cpp import CppEnvironment
+#from environment_cpp import CppEnvironment
 from environment_python import PythonEnvironment
 from environment_c import CEnvironment
 
@@ -29,8 +29,8 @@ class EnvironmentManager:
             os.mkdir(self.env_root)
         if source.endswith('.py'):
             env = PythonEnvironment(source=source, solution=self.env_root + random_string, port=port, memory_limit=memory_limit)
-        elif source.endswith('.cpp') or source.endswith('.cpp"'):
-            env = CppEnvironment(source=source, solution=self.env_root + random_string, port=port, memory_limit=memory_limit)
+        #elif source.endswith('.cpp') or source.endswith('.cpp"'):
+        #    env = CppEnvironment(source=source, solution=self.env_root + random_string, port=port, memory_limit=memory_limit)
         elif source.endswith('.c') or source.endswith('.c"'):
             env = CEnvironment(source=source, solution=self.env_root + random_string, port=port, memory_limit=memory_limit)
 
@@ -40,10 +40,10 @@ class EnvironmentManager:
             return env.solution
         return None
 
-    def run(self, solution, memory_limit, user, id):
+    def run(self, solution):
         for environment in self.environments:
             if environment.solution == solution:
-                environment.run(memory_limit, user, id)
+                environment.run()
 
     def delete_environment(self, solution):
         for environment in self.environments:

@@ -8,10 +8,9 @@ from backend.game_v2.status import Status
 
 
 class XandoGame(Game):
-    def __init__(self, debug_logger, logger, server, players):
+    def __init__(self, debug_logger, logger, players):
         super(XandoGame, self).__init__(debug_logger,
                                         XandoScreen(logger, players[0][0], players[1][0]),
-                                        server,
                                         [Player(player[0], player[1], player[2]) for player in players],
                                         required_players=2,
                                         turns=9)
