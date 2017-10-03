@@ -24,8 +24,7 @@ class Server:
         return self.channels[player_name].get_message()
 
     def send_message(self, player_name, message):
-        if message != '':
-            self.channels[player_name].send_message(message + '\n')
+        self.channels[player_name].send_message(message + '\n')
 
     def close_channel(self, player_name):
         self.channels[player_name].close()

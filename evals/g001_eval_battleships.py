@@ -1,12 +1,11 @@
 import random
-
+import sys
 
 def read_int():
-    return int(raw_input())
-
+    return int(sys.stdin.readline())
 
 def read_string():
-    return str(raw_input())
+    return str(sys.stdin.readline())
 
 
 def main():
@@ -23,6 +22,7 @@ def main():
         size = read_int()
         ship = sizes[size][0]
         print ship
+        sys.stdout.flush()
         if len(sizes[size]) > 1:
             sizes[size] = sizes[size][1:]
 
@@ -31,8 +31,9 @@ def main():
         while board[x][y]:
             x, y = random.randint(0, 9), random.randint(0, 9)
         print x, y
+        sys.stdout.flush()
         status = read_string()
-
+        board[x][y] = True
 
 if __name__ == '__main__':
     main()

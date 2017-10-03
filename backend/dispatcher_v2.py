@@ -111,7 +111,7 @@ class Dispatcher:
                 for x in xrange(len(players)):
                     tupls.append((players[x], time_limit, ports[x]))
                 game = self.games[run_data['job']['game_id']](EmptyLogger(), logger, tupls)
-
+                time.sleep(3) # make sure 100% that the game starts after all other clients
                 game.play()
                 for t in th:
                     t.join(0.5) # threads should be done by now, close them forcefully in 0.5s

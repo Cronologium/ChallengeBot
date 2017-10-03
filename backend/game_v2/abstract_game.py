@@ -22,11 +22,15 @@ class Game(object):
         player.joined = True
 
     def exit_player(self, player_name):
+        self.server.send_message(player_name, '$exit')
         self.server.close_channel(player_name)
         self.players[player_name].joined = False
 
     def interact(self, player_name):
         return self.server.send_and_receive(player_name, self.players[player_name].get_data())
+
+    def receive(self, player_name):
+        return server
 
     def announce(self, player_name):
         self.server.send_message(player_name, self.players[player_name].get_data())
