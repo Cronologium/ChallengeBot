@@ -89,22 +89,31 @@ class Solution:
         return "0 0"
     </textarea>
     <textarea class="hidden-help-code" id="c-code">
-#include &lt;stdlib.h&gt;
+#include &lt;stdio.h&gt;
 
-typedef struct {
-    char board[3][3];
+int main() {
     char playing;
-} Api;
-
-__attribute__((visibility("default"))) char* put(Api api, char** buffer)
-{
-    char* result = malloc(4); // "x y"
-    result[0] = result[2] = '0';
-    result[1] = ' ';
-    result[3] = '\0';
-
-
-    *buffer = result; // "0 0"
+    int i;
+    scanf("%c", &playing);
+    if (playing == 'X')
+    {
+        for (i = 0; i < 5; ++i)
+        {
+            int x, y;
+            printf("0 0\n");
+            fflush(stdout);
+            scanf("%d %d", &x, &y);
+        }
+    } else {
+        for (i = 0; i < 4; ++i)
+        {
+            int x, y;
+            scanf("%d %d", &x, &y);
+            printf("0 0\n");
+            fflush(stdout);
+        }
+    }
+    return 0;
 }
     </textarea>
     {% endif %}

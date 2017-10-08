@@ -20,7 +20,6 @@ class Game(object):
 
     def interact(self, player_name):
         message = self.players[player_name].get_data()
-        print message
         return self.environment_manager.interact(self.players[player_name].id, message)
 
     def queue_command(self, player_name, data):

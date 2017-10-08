@@ -10,6 +10,7 @@ class CEnvironment(Environment):
     def __init__(self, source, solution, memory_limit, time_limit):
         super(CEnvironment, self).__init__(source, solution, memory_limit, time_limit)
         self.dir_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'template-c', '.')
+        self.cmd = './solution'
 
     def build(self):
         os.mkdir(self.solution)
@@ -39,8 +40,4 @@ class CEnvironment(Environment):
         proc = subprocess.Popen(cmd, stdout=DEVNULL)
         proc.wait()
 
-
-    def run(self):
-        cmd = './solution'
-        self.netcat_run(cmd)
 

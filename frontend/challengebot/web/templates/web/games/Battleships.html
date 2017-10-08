@@ -168,62 +168,54 @@
     </div>
     {% if request.user.is_authenticated %}
     <textarea class="hidden-help-code" id="python-code">
-class Solution:
-    # api.next_ship_size - next ship size, only used in put()
-    # api.my_board - a matrix containing my board
-    # api.their_board - a matrix containing what is known about opponent board
+import sys
 
-    def put(self, api):
-        # Tip: use api.next_ship_size here
-        # Example:
-        # if api.next_ship_size == 2:   # next ship size is 2
-        #   return "0 0 0 1"            # ship spawning on two squares: (0, 0) and (0, 1)
+def read_int():
+    return int(sys.stdin.readline())
 
-        """ Insert code here for ship placement """
+def read_string():
+    return str(sys.stdin.readline())
 
 
-        return "0 0 0 0"
+def main():
+    for x in xrange(5):
+        print '0 0 0 0'
+        sys.stdout.flush()
 
-    def shoot(self, api):
-        # Tip: use api.their_board
-        # Example:
-        # if api.their_board[4][5] == '':   # check if (4, 5) has not been tried yet
-        #   return "4 5"                    # shoot (4, 5)
+    for x in xrange(100):
+        print 0, 0
+        sys.stdout.flush()
+        status = read_string()
+        if status == 'miss:
+            pass
+        if status == 'hit':
+            pass
 
-        """ Insert code here for shooting """
+if __name__ == '__main__':
+    main()
 
-
-        return "shoot 0 0"
     </textarea>
     <textarea class="hidden-help-code" id="c-code">
-#include &lt;stdlib.h&gt;
+#include &lt;stdio.h>&gt;
 
-typedef struct {
-    char* my_board[10][10];
-    char* their_board[10][10];
-    int next_ship_size;
-} Api;
-
-__attribute__((visibility("default"))) char* put(Api api, char** buffer)
-{
-    char* result = malloc(8); // "x y z t";
-    result[0] = result[2] = result[4] = result[6] = '0';
-    result[1] = result[3] = result[5] = ' ';
-    result[7] = '\0\'
-
-
-    *buffer = result; // "0 0 0 0"
-}
-
-__attribute__((visibility("default"))) char* shoot(Api api, char** buffer)
-{
-    char* result = malloc(4);//"x y";
-    result[0] = result[2] = '0';
-    result[1] = ' ';
-    result[3] = '\0';
-
-
-    *buffer = result; // "0 0"
+int main() {
+    int i = 0;
+    int size;
+    for (i = 0; i < 5; ++i)
+    {
+        scanf("%d", &size);
+        printf("%d %d %d %d\n", 0, 0, 0, 0);
+        fflush(stdout);
+    }
+    char st[9];
+    int x, y;
+    for (x = 0; x < 10; ++x)
+        for (y = 0; y < 10; ++y) {
+            printf("%d %d\n", x, y);
+            fflush(stdout);
+            scanf("%s", st);
+        }
+    return 0;
 }
     </textarea>
     {% endif %}

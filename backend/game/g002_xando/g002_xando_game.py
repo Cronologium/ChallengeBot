@@ -23,8 +23,8 @@ class XandoGame(Game):
 
     def start(self):
         super(XandoGame, self).start()
-        self.queue_command(self.playing_marks['X'], 'X')
-        self.queue_command(self.playing_marks['O'], 'O')
+        self.queue_command(self.marks_played['X'], 'X')
+        self.queue_command(self.marks_played['O'], 'O')
 
     def turn(self):
         msg = self.interact(self.player_turn)
@@ -37,10 +37,11 @@ class XandoGame(Game):
                 raise Exception
 
             x, y = int(data[0]), int(data[1])
+
             if self.board.put_square(x, y, self.playing_marks[self.player_turn]) is False:
                 raise Exception
             self.screen.put(x, y, self.playing_marks[self.player_turn])
-            self.players[self.not_player_turn].add_cmd('update', str(x) + ' ' + str(y))
+            self.queue_command(self.not_player_turn, str(x) + ' ' + str(y))
 
         except Exception:
             print traceback.format_exc()
