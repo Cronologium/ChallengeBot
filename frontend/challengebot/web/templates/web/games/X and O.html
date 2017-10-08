@@ -8,40 +8,14 @@
         </p>
         <h3>Code description</h3>
         <p class="description-text">
-            Your program must implement a single function, named 'put', inside the class 'Solution' which will return
-            a square to put your mark on.
-        </p>
-        <h4>Return type</h4>
-        <p class="description-text">
-            Your function will as a string, the coordinates of the square, as such: "x y".
-        </p>
-        <h4>Api description</h4>
-        <p class="description-text">
-            You are provided with an API object as parameter. The object has two fields available.
-        </p>
-        <table class="game-table">
-            <tr>
-                <th>Name</th>
-                <th>Role</th>
-                <th>Type</th>
-            </tr>
-            <tr>
-                <td>api.board</td>
-                <td>Stores the status of the board</td>
-                <td>char[][]</td>
-            </tr>
-            <tr>
-                <td>api.playing</td>
-                <td>The mark ('X' or 'O') you are playing with</td>
-                <td>char</td>
-            </tr>
-        </table>
-        <p class="description-text">
-            Each square of api.board can take the values 'X', ' ', 'O' (This is a big letter o, not a zero!)
+            You must implement a program which, at the begining, gets the playing mark. If playing with X, prints the
+            coordinates of where X should be put, then reads the position of an O put by the opponent. If playing with
+            O, your program reads the coordinates of an X put by the opponent then prints the coordinates of an O.
         </p>
         <h3>Specifications</h3>
         <ul>
             <li>The memory limit is applied to the whole program</li>
+            <li>The time limit is applied for everything that happens in between reads and writes.</li>
             <li>Before challenging others, you program must be validated</li>
         </ul>
         <h3>Examples</h3>
@@ -49,44 +23,69 @@
         <table class="game-table">
             <tr>
                 <th>
-                    &lt;function&gt;(input string)
+                    Input
                 </th>
                 <th>
-                    user example output
+                    Ouput
                 </th>
                 <th>
-                    explanation
+                    Explanation
                 </th>
             </tr>
             <tr>
                 <td class="input">
-                    put(api)
+                    "1 1"
                 </td>
                 <td class="output">
                     "0 0"
                 </td>
                 <td class="description">
-                    write your mark on (0, 0)
+                    Opponent plays on (1, 1), you write your mark on (0, 0)
                 </td>
             </tr>
         </table>
     </div>
     {% if request.user.is_authenticated %}
     <textarea class="hidden-help-code" id="python-code">
-class Solution:
-    # api.board - a matrix containing the board
-    # api.playing - the mark we are playing this match
-
-    def put(self, api):
-        # Tip: use all apis here
-        # Example:
-        # if api.playing == 'X' and api.board[1][1] == ' ':# if we play with X and the middle is free
-        #   return "1 1"                                   # put X in the middle
-
-        """ Insert code here for mark placement """
+import sys
 
 
-        return "0 0"
+def read_int():
+    return int(raw_input())
+
+def read_string():
+    return str(raw_input())
+
+def main():
+    board = [[' ' for x in xrange(3)] for y in xrange(3)]
+    i_play = read_string()
+    if i_play == 'X':
+        for i in xrange(5):
+            print 0, 0
+            sys.stdout.flush()
+
+            inp = read_string()
+            x, y = inp.split(' ')
+            x = int(x)
+            y = int(y)
+
+    else:
+        inp = ' '.join(i_play.split(' ')[1:])
+        x, y = inp.split(' ')
+        x = int(x)
+        y = int(y)
+        for i in xrange(4):
+            print 0, 0
+            sys.stdout.flush()
+
+            inp = read_string()
+            x, y = inp.split(' ')
+            x = int(x)
+            y = int(y)
+
+
+if __name__ == '__main__':
+    main()
     </textarea>
     <textarea class="hidden-help-code" id="c-code">
 #include &lt;stdio.h&gt;
