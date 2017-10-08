@@ -4,8 +4,8 @@ from backend.game.player import Player
 
 
 class BattleshipPlayer(Player):
-    def __init__(self, name, timeout):
-        super(BattleshipPlayer, self).__init__(name, timeout)
+    def __init__(self, name, timeout, id):
+        super(BattleshipPlayer, self).__init__(name, timeout, id)
         self.board = BattleshipsBoard()
         self.my_message = ''
         self.their_message = ''

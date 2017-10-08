@@ -8,11 +8,11 @@ from backend.game.status import Status
 
 
 class XandoGame(Game):
-    def __init__(self, debug_logger, logger, server, players):
+    def __init__(self, debug_logger, logger, players, environment_manager):
         super(XandoGame, self).__init__(debug_logger,
                                         XandoScreen(logger, players[0][0], players[1][0]),
-                                        server,
-                                        [Player(player[0], player[1]) for player in players],
+                                        [Player(player[0], player[1], player[2]) for player in players],
+                                        environment_manager,
                                         required_players=2,
                                         turns=9)
         self.player_turn = players[0][0]
@@ -23,9 +23,10 @@ class XandoGame(Game):
 
     def start(self):
         super(XandoGame, self).start()
+        self.queue_command(self.playing_marks['X'], 'X')
+        self.queue_command(self.playing_marks['O'], 'O')
 
     def turn(self):
-        self.queue_command(self.player_turn, 'request', 'play ' + self.playing_marks[self.player_turn])
         msg = self.interact(self.player_turn)
         try:
             if msg is None:
@@ -39,8 +40,7 @@ class XandoGame(Game):
             if self.board.put_square(x, y, self.playing_marks[self.player_turn]) is False:
                 raise Exception
             self.screen.put(x, y, self.playing_marks[self.player_turn])
-            self.players[self.player_turn].add_cmd('update', str(x) + ' ' + str(y) + ' ' + self.playing_marks[self.player_turn])
-            self.players[self.not_player_turn].add_cmd('update', str(x) + ' ' + str(y) + ' ' + self.playing_marks[self.player_turn])
+            self.players[self.not_player_turn].add_cmd('update', str(x) + ' ' + str(y))
 
         except Exception:
             print traceback.format_exc()

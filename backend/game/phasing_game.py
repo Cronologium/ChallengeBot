@@ -3,8 +3,8 @@ from backend.game.playbox.exceptions.game_over_exception import GameOver
 
 
 class PhasingGame(Game):
-    def __init__(self, debug_logger, logger, server, players, turns=99999999, required_players=2, phases={}):
-        super(PhasingGame, self).__init__(debug_logger, logger, server, players, turns, required_players)
+    def __init__(self, debug_logger, screen, players, environment_manager,turns=99999999, required_players=2, phases={}):
+        super(PhasingGame, self).__init__(debug_logger, screen, players, environment_manager, turns, required_players)
         self.phase = 1
         self.phases = phases
 

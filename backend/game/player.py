@@ -1,27 +1,19 @@
-import json
-
 from backend.game.status import Status
 
 
 class Player(object):
-    def __init__(self, name, timeout):
-        self.joined = False
+    def __init__(self, name, timeout, id):
         self.name = name
+        self.id = id
         self.timeout = timeout
         self.status = Status.PLAYS
         self.position = 50
-        self.cmds = {
-            'request': [],
-            'update': [],
-            'meta': [],
-        }
+        self.queue = []
 
-    def get_cmds(self):
-        msg = json.dumps(self.cmds)
-        self.cmds['request'] = []
-        self.cmds['update'] = []
-        self.cmds['meta'] = []
-        return msg
+    def store_data(self, data):
+        self.queue.append(data)
 
-    def add_cmd(self, cmd_type, cmd):
-        self.cmds[cmd_type].append(cmd)
+    def get_data(self):
+        data = (' '.join(self.queue) if len(self.queue) > 0 else '') + '\n'
+        self.queue = []
+        return data

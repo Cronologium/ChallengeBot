@@ -10,8 +10,8 @@ import threading
 
 
 class PythonEnvironment(Environment):
-    def __init__(self, source, solution, port, memory_limit):
-        super(PythonEnvironment, self).__init__(source, solution, port, memory_limit)
+    def __init__(self, source, solution, memory_limit, time_limit):
+        super(PythonEnvironment, self).__init__(source, solution, memory_limit, time_limit)
         self.cmd = 'python solution.py'
 
     def build(self):
