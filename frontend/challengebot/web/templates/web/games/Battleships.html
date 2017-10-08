@@ -55,75 +55,38 @@
         </p>
         <h4>Return types</h4>
         <p class="description-text">
-            You will implement the class 'Solution' which contains two functions: 'put' which solves the positioning of
-            the ships and 'shoot' which will handle the shooting phase. For both functions, a string object is required
-            as return value. For the 'put' function, your program will return a string consisting of 4 integers
-            delimited by spaces. The first two represent the starting (x, y) of the ship and the last two, the ending
-            (x, y). For 'shoot', you will return a string "x y", where (x, y) represent the coordinates to shoot.
-        </p>
-        <h4>API description</h4>
-        <p class="description-text">
-            You are provided with an API object as parameter. The object has three fields available.
-        </p>
-        <table class="game-table">
-            <tr>
-                <th>Name</th>
-                <th>Role</th>
-                <th>Type</th>
-            </tr>
-            <tr>
-                <td>api.my_board</td>
-                <td>Stores the status of your board</td>
-                <td>string[][]</td>
-            </tr>
-            <tr>
-                <td>api_their_board</td>
-                <td>Stores the status of enemy board</td>
-                <td>string[][]</td>
-            </tr>
-            <tr>
-                <td>api.next_ship_size</td>
-                <td>When putting ships on grid, you are requested to provide coordinates of a ship with this size</td>
-                <td>int</td>
-            </tr>
-        </table>
-        <p class="description-text">
-            Each API field has a different set of values. The their_board field can take only the values: 'hit', 'miss' or
-            '' (empty string, if square has unknown status). The my_board field takes all values from their_board, but can
-            also store if a ship is positioned on a square ('ship' string).
+            You will implement a program which interacts through stdin/stdout. In the first phase of the game, you are
+            provided through stdin with an integer, denoting the size of the ship required. You will return the 4
+            coordinates of the ship (start x, start y, end x, end y) followed by and endline. If your language of choice
+            does not automatically flush the output, you need to do it yourself. After all 5 ships are positioned, your
+            solution will print coordinates to shoot and will recieve whether a ships was or not on that position.
         </p>
         <h3>Tips</h3>
         <ul>
-            <li>The time limit is applied to each individual function</li>
+            <li>The time limit is applied to breaks between reads and writes</li>
             <li>The memory limit is applied to the whole program</li>
             <li>Before challenging others, your program must to be validated</li>
             <li>Your program will end automatically after a player wins</li>
         </ul>
-        <h3>Specifications</h3>
-        <ul>
-            <li>For 'put' function, if the 4 values are "x y z w", either x == z or y == w</li>
-            <li>All values returned must be between 0 and 9</li>
-            <li>Your program cannot shoot a square twice, nor put a ship twice in the same spot</li>
-        </ul>
-        <h3>Examples</h3>
+        <h3>Phase 1 examples</h3>
         <table class="game-table">
             <tr>
                 <th>
-                    &lt;function&gt;(api)
+                    Input
                 </th>
                 <th>
-                    user example output
+                    Output
                 </th>
                 <th>
-                    explanation
+                    Explanation
                 </th>
             </tr>
             <tr>
                 <td class="input">
-                    put(api)
+                    2
                 </td>
                 <td class="output">
-                    "1 2 1 3"
+                    1 2 1 3\n
                 </td>
                 <td class="description">
                     a ship of size 2 is put on (1, 2), (1, 3)
@@ -131,10 +94,10 @@
             </tr>
             <tr>
                 <td class="input">
-                    put(api)
+                    4
                 </td>
                 <td class="output">
-                    "1 3 1 6"
+                    1 3 1 6\n
                 </td>
                 <td class="description">
                     a ship of size 4 is put on (1, 3), (1, 4), (1, 5), (1, 6)
@@ -142,88 +105,103 @@
             </tr>
             <tr>
                 <td class="input">
-                    put(api)
+                    3
                 </td>
                 <td class="output">
-                    "2 4 4 4"
+                    2 4 4 4\n
                 </td>
                 <td class="description">
                     a ship of size 3 is put on (2, 4), (3, 4), (4, 4)
                 </td>
             </tr>
+        </table>
+        <h3>Phase 2 examples</h3>
+        <table class="game-table">
             <tr>
-                <td class="input">
-                    shoot(api)
-                </td>
+                <th>
+                    Output
+                </th>
+                <th>
+                    Input
+                </th>
+                <th>
+                    Explanation
+                </th>
+            </tr>
+            <tr>
                 <td class="output">
-                    "1 2"
+                    1 2\n
+                </td>
+                <td class="input">
+                    miss
                 </td>
                 <td class="description">
-                    we are shooting (1, 2) on the enemy board
+                    we are shooting (1, 2) on the enemy board but a ship is not there
+                </td>
+            </tr>
+            <tr>
+                <td class="output">
+                    9 9\n
+                </td>
+                <td class="input">
+                    hit
+                </td>
+                <td class="description">
+                    we are shooting (9, 9) on the enemy board and a ship was found
                 </td>
             </tr>
         </table>
-        <p class="description-text"><b>Observation: you will return a variable as string, you do <i>not</i> need to return the "" at the begining
-            and the end of the string</b></p>
     </div>
     {% if request.user.is_authenticated %}
     <textarea class="hidden-help-code" id="python-code">
-class Solution:
-    # api.next_ship_size - next ship size, only used in put()
-    # api.my_board - a matrix containing my board
-    # api.their_board - a matrix containing what is known about opponent board
+import sys
 
-    def put(self, api):
-        # Tip: use api.next_ship_size here
-        # Example:
-        # if api.next_ship_size == 2:   # next ship size is 2
-        #   return "0 0 0 1"            # ship spawning on two squares: (0, 0) and (0, 1)
+def read_int():
+    return int(sys.stdin.readline())
 
-        """ Insert code here for ship placement """
+def read_string():
+    return str(sys.stdin.readline())
 
 
-        return "0 0 0 0"
+def main():
+    for x in xrange(5):
+        print '0 0 0 0'
+        sys.stdout.flush()
 
-    def shoot(self, api):
-        # Tip: use api.their_board
-        # Example:
-        # if api.their_board[4][5] == '':   # check if (4, 5) has not been tried yet
-        #   return "4 5"                    # shoot (4, 5)
+    for x in xrange(100):
+        print 0, 0
+        sys.stdout.flush()
+        status = read_string()
+        if status == 'miss:
+            pass
+        if status == 'hit':
+            pass
 
-        """ Insert code here for shooting """
+if __name__ == '__main__':
+    main()
 
-
-        return "shoot 0 0"
     </textarea>
     <textarea class="hidden-help-code" id="c-code">
-#include &lt;stdlib.h&gt;
+#include &lt;stdio.h>&gt;
 
-typedef struct {
-    char* my_board[10][10];
-    char* their_board[10][10];
-    int next_ship_size;
-} Api;
-
-__attribute__((visibility("default"))) char* put(Api api, char** buffer)
-{
-    char* result = malloc(8); // "x y z t";
-    result[0] = result[2] = result[4] = result[6] = '0';
-    result[1] = result[3] = result[5] = ' ';
-    result[7] = '\0\'
-
-
-    *buffer = result; // "0 0 0 0"
-}
-
-__attribute__((visibility("default"))) char* shoot(Api api, char** buffer)
-{
-    char* result = malloc(4);//"x y";
-    result[0] = result[2] = '0';
-    result[1] = ' ';
-    result[3] = '\0';
-
-
-    *buffer = result; // "0 0"
+int main() {
+    int i = 0;
+    int size;
+    for (i = 0; i < 5; ++i)
+    {
+        scanf("%d", &size);
+        printf("%d %d %d %d\n", 0, 0, 0, 0);
+        fflush(stdout);
+    }
+    char st[9];
+    int x, y;
+    for (x = 0; x < 10; ++x)
+        for (y = 0; y < 10; ++y) {
+            printf("%d %d\n", x, y);
+            fflush(stdout);
+            scanf("%s", st);
+        }
+    return 0;
 }
     </textarea>
     {% endif %}

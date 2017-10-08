@@ -7,7 +7,7 @@ from backend.game.status import Status
 
 
 class BattleshipGame(PhasingGame):
-    def __init__(self, debug_logger, logger, server, players):
+    def __init__(self, debug_logger, logger, players, environment_manager):
         self.ships_to_put = [
             ('destroyer', 2),
             ('submarine', 3),
@@ -17,8 +17,8 @@ class BattleshipGame(PhasingGame):
         ]
         super(BattleshipGame, self).__init__(debug_logger,
                                              BattleshipsScreen(logger, players[0][0], players[1][0]),
-                                             server,
-                                             [BattleshipPlayer(player[0], player[1]) for player in players],
+                                             [BattleshipPlayer(player[0], player[1], player[2]) for player in players],
+                                             environment_manager,
                                              phases={1: self.put_ship_turn, 2: self.shoot_ships_turn},
                                              turns=220,
                                              required_players=2)
@@ -35,9 +35,8 @@ class BattleshipGame(PhasingGame):
     def put_ship_turn(self):
         if len(self.ships_to_put):
             for player in self.players:
-                self.queue_command(player, 'request', 'put ' + str(self.ships_to_put[0][1]))
+                self.queue_command(player, str(self.ships_to_put[0][1]))
                 msg = self.interact(player)
-
                 if msg is None:
                     self.players_dsq([(player, Status.TIMEOUT_EXCEEDED)])
                 else:
@@ -48,7 +47,6 @@ class BattleshipGame(PhasingGame):
                         data = [int(x) for x in data]
                         if self.players[player].put_ship(self.ships_to_put[0][0], data, self.ships_to_put[0][1]) is None:
                             raise Exception
-                        self.queue_command(player, 'update', 'put ' + msg)
                         self.log_ship_putting(player, data)
 
                     except Exception:
@@ -76,8 +74,7 @@ class BattleshipGame(PhasingGame):
                 self.log_ship_shooting(self.phase2_not_turn, data, result)
                 if result is None:
                     raise Exception
-                self.queue_command(self.phase2_not_turn, 'update', 'this ' + str(result) + ' ' + msg)
-                self.queue_command(self.phase2_turn, 'update', 'opponent ' + str(result) + ' ' + msg)
+                self.queue_command(self.phase2_turn, str(result))
 
             except Exception:
                 self.players_dsq([(self.phase2_turn, Status.INVALID_PUT)])

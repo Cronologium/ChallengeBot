@@ -1,26 +1,26 @@
-#include <stdlib.h>
 #include <stdio.h>
 
-//class Solution
-
-typedef struct {
-    char board[3][3];
+int main() {
     char playing;
-} Api;
-
-__attribute__((visibility("default"))) char* put(Api api, char** buffer)
-{
-    char* result = malloc(4);
-
-    int i = 0;
-    while (i < 9 && api.board[i / 3][i % 3] != ' ')
+    int i;
+    scanf("%c", &playing);
+    if (playing == 'X')
     {
-        ++i;
+        for (i = 0; i < 5; ++i)
+        {
+            int x, y;
+            printf("%d %d\n", (i * 2) / 3, (i * 2) % 3);
+            fflush(stdout);
+            scanf("%d %d", &x, &y);
+        }
+    } else {
+        for (i = 0; i < 4; ++i)
+        {
+            int x, y;
+            scanf("%d %d", &x, &y);
+            printf("%d %d\n", ((i * 2) + 1) / 3, ((i * 2) + 1) % 3);
+            fflush(stdout);
+        }
     }
-    --i;
-    result[0] = (char)((i / 3) + '0');
-    result[1] = ' ';
-    result[2] = (char)((i % 3) + '0');
-    result[3] = 0;
-    *buffer = result;
+    return 0;
 }
